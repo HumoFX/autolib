@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'mptt',
     'rest_framework',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'Apps.User.apps.UserConfig',
     'Apps.Book.apps.BookConfig',
     'Apps.Order.apps.OrderConfig',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
