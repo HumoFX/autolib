@@ -7,7 +7,7 @@ from .models import Category, UDC, Book
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'udc', 'author')
     ordering = ('title', 'author')
-    search_fields = ('title', 'udc', 'author', 'date_of_pub', 'date_of_get')
+    search_fields = ('title', 'udc', 'author')
 
 
 admin.site.register(Category)
