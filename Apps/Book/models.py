@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -37,7 +38,7 @@ class Book(models.Model):
     udc = models.ForeignKey(Category, on_delete=models.CASCADE)
     key_words = models.TextField(name="ключевые слова", default='')
     img = models.ImageField(upload_to='img/books')
-    # university = models.ForeignKey(University, on_delete=models.CASCADE)
+    university = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     faculty = models.ForeignKey('University.Faculty', on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.FloatField(name='Цена')
