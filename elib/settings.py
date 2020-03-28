@@ -32,17 +32,20 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'mptt',
+    'model_clone',
     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Apps.University.apps.UniversityConfig',
-    'Apps.User.apps.UserConfig',
-    'Apps.Book.apps.BookConfig',
-    'Apps.Order.apps.OrderConfig',
-    'django.contrib.admin',
+    'University',
+    'User',
+    'Book',
+    'Order',
+
 ]
 
 MIDDLEWARE = [
@@ -87,6 +90,16 @@ DATABASES = {
 }
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    'DEFAULT_RENDERER_CLASSES': (
+        'app.renderers.UTF8CharsetJSONRenderer',
+    ),
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -105,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'User.MyUser'
+AUTH_USER_MODEL = 'User.Profile'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 

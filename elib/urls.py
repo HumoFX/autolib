@@ -19,7 +19,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('Apps.Book.urls')),
+    path('', include('Book.urls')),
+    path('', include('User.urls')),
+    path('', include('University.urls')),
+    path('', include('Order.urls')),
     path('admin/', admin.site.urls),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
