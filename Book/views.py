@@ -86,3 +86,5 @@ def category_detail(request, pk):
     elif request.method == 'DELETE':
         category.delete()
         return HttpResponse(status=204)
+
+

@@ -1,17 +1,50 @@
 from django.contrib import admin
-from .models import Category, UDC, Book
+from import_export import resources, widgets, fields
+from import_export.admin import ImportExportModelAdmin, ExportActionMixin, ImportExportActionModelAdmin
+
+from .models import Category, UDC, Book, ALL
 from University.models import University
 
 
 # Register your models here.
+class BookResource(resources.ModelResource):
+    class Meta:
+        model = Book
+        skip_unchanged = True
+
+        fields = ('id','Название', 'Автор', 'УДК', 'ключевые_слова', 'Обложка(Фото)', 'Электроная_версия', 'Файл',
+                  'Опубликовано')
+        # exlude = 'id'
 
 
-@admin.register(Book)
-class BookAdmin(admin.ModelAdmin):
+class AllResource(resources.ModelResource):
+    class Meta:
+        model = ALL
+        skip_unchanged = True
+        import_id_fields = ('Название', 'Автор', 'Опубликовано')
+        fields = ('id', 'Название', 'Автор', 'УДК', 'ключевые_слова', 'Обложка(Фото)', 'Электроная_версия', 'Файл',
+                  'Опубликовано')
+
+
+class ALLAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
+    # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
+
+    ordering = ('Автор', 'УДК__name')
+    search_fields = ['УДК__name', 'УДК__udc_id__id_number', 'Название', 'Автор']
+    list_display = ('Название', 'Автор', 'УДК', 'Опубликовано')
+    resource_class = AllResource
+
+
+class BookAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
+    # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
+
     ordering = ('Автор', 'УДК__name')
     search_fields = ['УДК__name', 'УДК__udc_id__id_number', 'Название', 'Автор', 'Получено', 'Опубликовано']
     list_filter = ('УДК', 'Университет')
     list_display = ('Название', 'Автор', 'УДК', 'Получено', 'Опубликовано', 'Рейтинг', 'Использовано')
+    resource_class = BookResource
+
+    # skip_unchanged = True
 
     def get_queryset(self, request):
         if request.user.is_superuser:
@@ -21,6 +54,30 @@ class BookAdmin(admin.ModelAdmin):
             return Book.objects.filter(Университет__university_id__id=univer)
 
 
+#    # def has_change_permission(self, request, obj=None):
+#     univer = request.user.university_id.id
+#     obj = Book.objects.all()
+#     if request.user.is_staff:
+#         for objs in obj:
+#             print(objs)
+#             print(objs.Университет.university_id.id)
+#             print(request.user.university_id.id)
+#             if objs.Университет.university_id.id == request.user.university_id.id:
+#                 return True
+#             else:
+#                 return False
+
+
+# class BookAdmin( admin.ModelAdmin):
+#     pass
+
+#
+# class BookAdmin(ImportExportModelAdmin):
+#     resource_class = BookResource
+
+
+admin.site.register(Book, BookAdmin)
+admin.site.register(ALL, ALLAdmin)
 admin.site.register(Category)
 admin.site.register(UDC)
 # admin.site.register(Book)

@@ -1,6 +1,7 @@
 from .models import User, Profile
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from rest_framework import permissions
 
 
 # from .models import MyUser
@@ -107,7 +108,7 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
                                             'email', 'university_id')}),
         ('Уровень доступа', {'fields': ('is_active', 'is_staff', 'is_superuser',
                                         'groups', 'user_permissions')}),
-        ('Важные даты', {'fields': ('last_login',  'date_joined')}),
+        ('Важные даты', {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
@@ -118,10 +119,6 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     list_display = ('username', 'is_staff', 'date_joined', 'university_id')
     search_fields = ('email', 'first_name', 'last_name',)
     ordering = ('username',)
-
-    # @staticmethod
-    # def get_fullname(obj):
-    #     return "{} {}".format(obj.first_name, obj.last_name)
 
 
 # @admin.register(Profile)
