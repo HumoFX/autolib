@@ -24,7 +24,7 @@ SECRET_KEY = 'sdr3^hbs(mb7vazj!d41lgwwdy-n9vl76#rrif8d#e)l*12c%k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
