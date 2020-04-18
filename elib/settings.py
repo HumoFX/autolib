@@ -29,6 +29,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'ajax_select',
     'pymarc',
     'corsheaders',
     'import_export',
@@ -129,6 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'User.Profile'
+
 # AUTHENTICATION_BACKENDS = 'django.contrib.auth.backends.ModelBackend'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

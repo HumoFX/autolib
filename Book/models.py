@@ -15,13 +15,13 @@ class UDC(models.Model):
         return self.id_number
 
 
-class Category(MPTTModel):
-    udc_id = models.OneToOneField(UDC, on_delete=models.CASCADE)
+class Category(models.Model):
+    udc_id = models.CharField(max_length=64, unique=True)
     name = models.CharField(max_length=64, unique=True)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
 
-    class MPTTMeta:
-        order_insertion_by = ['name']
+    # class MPTTMeta:
+    #     order_insertion_by = ['name']
 
     class Meta:
         verbose_name = 'Категорий'
@@ -58,7 +58,6 @@ class Book(models.Model):
         verbose_name = 'Книгу'
         verbose_name_plural = 'Книги'
         constraints = [models.UniqueConstraint(fields=['Название', 'Автор', 'Опубликовано'], name='book')]
-        # ordering=['created',]
 
     def __str__(self):
         return "{} - {}".format(self.Название, self.УДК)

@@ -2,8 +2,11 @@ from django.contrib import admin
 from import_export import resources, widgets, fields
 from import_export.admin import ImportExportModelAdmin, ExportActionMixin, ImportExportActionModelAdmin
 
+from .forms import DocumentForm
 from .models import Category, UDC, Book, ALL
 from University.models import University
+from ajax_select.admin import AjaxSelectAdmin
+from ajax_select import make_ajax_form
 
 
 # Register your models here.
@@ -12,7 +15,7 @@ class BookResource(resources.ModelResource):
         model = Book
         skip_unchanged = True
 
-        fields = ('id','Название', 'Автор', 'УДК', 'ключевые_слова', 'Обложка(Фото)', 'Электроная_версия', 'Файл',
+        fields = ('id', 'Название', 'Автор', 'УДК', 'ключевые_слова', 'Обложка(Фото)', 'Электроная_версия', 'Файл',
                   'Опубликовано')
         # exlude = 'id'
 
@@ -35,8 +38,20 @@ class ALLAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
     resource_class = AllResource
 
 
-class BookAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
+class CategoryAdmin(AjaxSelectAdmin):
+    form = make_ajax_form(Category, {
+        # fieldname: channel_name
+        'udc_id': 'category',
+        'parent': 'parent_id'
+    })
+
+
+class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin):
     # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
+    form = make_ajax_form(Book, {
+        # fieldname: channel_name
+        'УДК': 'УДК'
+    })
 
     ordering = ('Автор', 'УДК__name')
     search_fields = ['УДК__name', 'УДК__udc_id__id_number', 'Название', 'Автор', 'Получено', 'Опубликовано']
@@ -78,6 +93,6 @@ class BookAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(ALL, ALLAdmin)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC)
 # admin.site.register(Book)
