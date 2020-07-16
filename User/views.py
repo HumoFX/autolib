@@ -1,16 +1,34 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from .models import User
+from .models import Users
 from .serializers import UserSerializer
+from rest_framework.generics import (ListCreateAPIView, RetrieveUpdateDestroyAPIView, )
+from rest_framework.permissions import IsAuthenticated
+from .permissions import IsOwnerOrReadOnly
 
 
 # Create your views here.
+class UserCreateListView(ListCreateAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+
+
+class UserDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
+
 
 @csrf_exempt
 def user_list(request):
     if request.method == 'GET':
-        user = User.objects.all()
+        user = Users.objects.all()
         serializer = UserSerializer(user, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -26,8 +44,8 @@ def user_list(request):
 @csrf_exempt
 def user_detail(request, pk):
     try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist:
+        user = Users.objects.get(pk=pk)
+    except Users.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
@@ -45,4 +63,3 @@ def user_detail(request, pk):
     elif request.method == 'DELETE':
         user.delete()
         return HttpResponse(status=204)
-

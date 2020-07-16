@@ -3,10 +3,11 @@ from import_export import resources, widgets, fields
 from import_export.admin import ImportExportModelAdmin, ExportActionMixin, ImportExportActionModelAdmin
 
 from .forms import DocumentForm
-from .models import Category, UDC, Book, ALL
+from .models import Category, UDC, Book
 from University.models import University
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
+from .permissions import IsOwnerOrReadOnly
 
 
 # Register your models here.
@@ -15,27 +16,27 @@ class BookResource(resources.ModelResource):
         model = Book
         skip_unchanged = True
 
-        fields = ('id', 'Название', 'Автор', 'УДК', 'ключевые_слова', 'Обложка(Фото)', 'Электроная_версия', 'Файл',
-                  'Опубликовано')
+        fields = ('id', 'title', 'author', 'udc', 'keywords', 'img', 'e_book', 'file',
+                  'date_pub')
         # exlude = 'id'
 
 
-class AllResource(resources.ModelResource):
-    class Meta:
-        model = ALL
-        skip_unchanged = True
-        import_id_fields = ('Название', 'Автор', 'Опубликовано')
-        fields = ('id', 'Название', 'Автор', 'УДК', 'ключевые_слова', 'Обложка(Фото)', 'Электроная_версия', 'Файл',
-                  'Опубликовано')
-
-
-class ALLAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
-    # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
-
-    ordering = ('Автор', 'УДК__name')
-    search_fields = ['УДК__name', 'УДК__udc_id__id_number', 'Название', 'Автор']
-    list_display = ('Название', 'Автор', 'УДК', 'Опубликовано')
-    resource_class = AllResource
+# class AllResource(resources.ModelResource):
+#     class Meta:
+#         model = ALL
+#         skip_unchanged = True
+#         import_id_fields = ('title', 'author', 'date_pub')
+#         fields = ('id', 'title', 'author', 'udc', 'keywords', 'img', 'e_book', 'file',
+#                   'date_pub')
+#
+#
+# class ALLAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
+#     # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
+#
+#     ordering = ('author', 'udc')
+#     search_fields = ['udc', 'udc__udc_id__id_number', 'title', 'author']
+#     list_display = ('title', 'author', 'udc', 'date_pub')
+#     resource_class = AllResource
 
 
 class CategoryAdmin(AjaxSelectAdmin):
@@ -50,49 +51,45 @@ class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin)
     # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
     form = make_ajax_form(Book, {
         # fieldname: channel_name
-        'УДК': 'УДК'
+        'udc': 'udc'
     })
 
-    ordering = ('Автор', 'УДК__name')
-    search_fields = ['УДК__name', 'УДК__udc_id__id_number', 'Название', 'Автор', 'Получено', 'Опубликовано']
-    list_filter = ('УДК', 'Университет')
-    list_display = ('Название', 'Автор', 'УДК', 'Получено', 'Опубликовано', 'Рейтинг', 'Использовано')
+    ordering = ('author', 'udc__name')
+    search_fields = ['udc__name', 'udc__udc_id', 'title', 'author', 'date_get', 'date_pub']
+    list_filter = ('university', 'rating')
+    list_display = ('title', 'author', 'udc', 'date_get', 'date_pub', 'rating', 'used')
     resource_class = BookResource
 
     # skip_unchanged = True
-
-    def get_queryset(self, request):
+    # class IsOwnerOrReadOnly(permissions.BasePermission):
+    #     def has_object_permission(self, request, view, obj):
+    #         if request.method in permissions.SAFE_METHODS:
+    #             return True
+    #         return obj.user == request.user
+    def has_change_permission(self, request, obj=None):
+        univer = request.user.university_id.id
         if request.user.is_superuser:
-            return Book.objects.all()
-        if request.user.is_staff:
-            univer = request.user.university_id.id
-            return Book.objects.filter(Университет__university_id__id=univer)
+            return True
+        if obj is not None and obj.university.university_id.id != univer:
+            return False
 
+    def has_delete_permission(self, request, obj=None):
+        univer = request.user.university_id.id
+        if request.user.is_superuser:
+            return True
+        if obj is not None and obj.university.university_id.id != univer:
+            return False
 
-#    # def has_change_permission(self, request, obj=None):
-#     univer = request.user.university_id.id
-#     obj = Book.objects.all()
-#     if request.user.is_staff:
-#         for objs in obj:
-#             print(objs)
-#             print(objs.Университет.university_id.id)
-#             print(request.user.university_id.id)
-#             if objs.Университет.university_id.id == request.user.university_id.id:
-#                 return True
-#             else:
-#                 return False
-
-
-# class BookAdmin( admin.ModelAdmin):
-#     pass
-
-#
-# class BookAdmin(ImportExportModelAdmin):
-#     resource_class = BookResource
+    # def get_queryset(self, request):
+    #     if request.user.is_superuser:
+    #         return Book.objects.all()
+    #     if request.user.is_staff:
+    #         univer = request.user.university_id.id
+    #         return Book.objects.filter(university__university_id__id=univer)
 
 
 admin.site.register(Book, BookAdmin)
-admin.site.register(ALL, ALLAdmin)
+# admin.site.register(ALL, ALLAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC)
 # admin.site.register(Book)

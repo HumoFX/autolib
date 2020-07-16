@@ -1,20 +1,38 @@
 from django.db import models
+
+
 from Book.models import Book
-from Order.models import BookInUse
+# from Order.models import BookInUse
 from django.contrib.auth.models import (
-    AbstractBaseUser,
     AbstractUser)
 
 
 # Create your models here.
 
-class User(models.Model):
-    qr_number = models.CharField(max_length=16)
+class Profile(AbstractUser):
     full_name = models.CharField(max_length=256)
-    logo = models.ImageField(name="Аватар", upload_to='img/users')
-    role = models.CharField(max_length=20)
-    # university = models.ForeignKey('University.University', on_delete=models.PROTECT, related_name='Университет')
+    # username = None
+    email = models.EmailField(unique=True)
+    university_id = models.ForeignKey('University.University', on_delete=models.PROTECT, related_name='Университет')
     faculty = models.ForeignKey('University.Faculty', on_delete=models.PROTECT, related_name='Факультет')
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['full_name', 'university_id', 'faculty']
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+    def __str__(self):
+        return "{}".format(self.university_id)
+
+
+class Users(models.Model):
+    user = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name="profile")
+    logo = models.ImageField(name="Аватар", upload_to='img/users')
+    birth_date = models.DateField(null=True, blank=True)
+    qr_number = models.CharField(max_length=16)
+    # university = models.ForeignKey('University.University', on_delete=models.PROTECT, related_name='Университет')
+    # USERNAME_FIELD = 'full_name'
 
     # reading_books = models.ManyToManyField(Book, name='Полученные книги')
 
@@ -30,7 +48,6 @@ class User(models.Model):
 
     def __unicode__(self):
         return self.full_name
-
 
 #
 # class MyUserManager(BaseUserManager):
@@ -101,14 +118,3 @@ class User(models.Model):
 #         return self.is_admin
 
 #
-class Profile(AbstractUser):
-    university_id = models.ForeignKey('University.University', on_delete=models.PROTECT, related_name='Университет')
-    location = models.CharField(max_length=30, blank=True)
-    birth_date = models.DateField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Админ'
-        verbose_name_plural = 'Админ'
-
-    def __str__(self):
-        return "{}".format(self.university_id)

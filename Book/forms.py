@@ -7,4 +7,4 @@ class DocumentForm(ModelForm):
     class Meta:
         model = Book
         fields = '__all__'
-    tags = AutoCompleteSelectField('УДК', required=False, help_text=None)
+    tags = AutoCompleteSelectField('udc', required=False, help_text=None)

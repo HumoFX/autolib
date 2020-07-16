@@ -16,9 +16,11 @@ class UDC(models.Model):
 
 
 class Category(models.Model):
-    udc_id = models.CharField(max_length=64, unique=True)
-    name = models.CharField(max_length=64, unique=True)
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
+
+    udc_id = models.CharField(max_length=64, unique=True,)
+    name = models.CharField(max_length=256, unique=True)
+    parent = models.ForeignKey('self', null=True, default="", blank=True, related_name='children',
+                               on_delete=models.CASCADE)
 
     # class MPTTMeta:
     #     order_insertion_by = ['name']
@@ -33,48 +35,48 @@ class Category(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=512, name='Название')
-    author = models.CharField(max_length=512, name='Автор')
-    udc = models.ForeignKey(Category, on_delete=models.CASCADE, name='УДК')
+    title = models.CharField(max_length=512, verbose_name='Название', blank=False, default='')
+    author = models.CharField(max_length=512, verbose_name='Автор', default='', unique=False)
+    udc = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='УДК', null=True, to_field='udc_id')
     isbn = models.CharField(max_length=512, default='')
-    key_words = models.TextField(name="ключевые_слова", default='')
-    img = models.ImageField(upload_to='img/books', name='Обложка(Фото)', null=True)
-    university = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, name='Университет')
-    faculty = models.ForeignKey('University.Faculty', on_delete=models.CASCADE, name='Факультет', null=True)
-    quantity = models.IntegerField(name='Количество', default=0)
-    price = models.FloatField(name='Цена', default=0)
-    rating = models.FloatField(name='Рейтинг', default=0)
-    used = models.IntegerField(name='Использовано', default=0)
-    e_book = models.BooleanField(name='Электроная_версия', default=False)
-    file = models.FileField(upload_to='file/e_books', null=True, blank=True, name='Файл')
-    printed_book = models.BooleanField(name='Печатная_версия', default=False)
-    special_books = models.BooleanField(name='Редкая_книга')
-    work_book = models.BooleanField(name='Учебное_пособие')
-    date_pub = models.DateField(auto_now_add=False, name='Опубликовано', null=True)
-    date_get = models.DateField(auto_now_add=False, name='Получено', null=True)
+    key_words = models.TextField(verbose_name="Ключевые слова", default='')
+    img = models.ImageField(upload_to='img/books', verbose_name='Обложка(Фото)', null=True)
+    university = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Университет',
+                                   blank=False)
+    faculty = models.ForeignKey('University.Faculty', on_delete=models.CASCADE, verbose_name='Факультет', null=True,
+                                blank=False)
+    quantity = models.IntegerField(verbose_name='Количество', default=0)
+    price = models.FloatField(verbose_name='Цена', default=0)
+    rating = models.FloatField(verbose_name='Рейтинг', default=0)
+    used = models.IntegerField(verbose_name='Использовано', default=0)
+    e_book = models.BooleanField(verbose_name='Электроная_версия', default=False)
+    file = models.FileField(upload_to='file/e_books', null=True, blank=True, verbose_name='Файл')
+    printed_book = models.BooleanField(verbose_name='Печатная версия', default=False)
+    special_books = models.BooleanField(verbose_name='Редкая книга', default=False)
+    work_book = models.BooleanField(verbose_name='Учебное пособие', default=False)
+    date_pub = models.DateField(auto_now_add=False, verbose_name='Опубликовано', null=True)
+    date_get = models.DateField(auto_now_add=False, verbose_name='Получено', null=True)
     created = models.DateField(auto_now_add=True, )
 
     class Meta:
         verbose_name = 'Книгу'
         verbose_name_plural = 'Книги'
-        constraints = [models.UniqueConstraint(fields=['Название', 'Автор', 'Опубликовано'], name='book')]
 
     def __str__(self):
-        return "{} - {}".format(self.Название, self.УДК)
+        return "{} - {}".format(self.title, self.udc)
         # return self.name
 
+# class ALL(models.Model):
+#     title = models.TextField(verbose_name='Название')
+#     author = models.TextField(verbose_name='Автор')
+#     udc = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='УДК')
+#     key_words = models.TextField(verbose_name='ключевые_слова', default='')
+#     img = models.ImageField(upload_to='img/books', verbose_name='Обложка(Фото)')
+#     e_book = models.BooleanField(name='Электроная_версия', default=False)
+#     file = models.FileField(upload_to='file/e_books', null=True, blank=True, verbose_name='Файл')
+#     date_pub = models.DateField(auto_now_add=False, verbose_name='Опубликовано', null=True)
 
-class ALL(models.Model):
-    title = models.CharField(max_length=512, name='Название')
-    author = models.CharField(max_length=512, name='Автор')
-    udc = models.ForeignKey(Category, on_delete=models.CASCADE, name='УДК')
-    key_words = models.TextField(name="ключевые_слова", default='')
-    img = models.ImageField(upload_to='img/books', name='Обложка(Фото)')
-    e_book = models.BooleanField(name='Электроная_версия', default=False)
-    file = models.FileField(upload_to='file/e_books', null=True, blank=True, name='Файл')
-    date_pub = models.DateField(auto_now_add=False, name='Опубликовано', null=True)
-
-    class Meta:
-        verbose_name = 'Книгу'
-        verbose_name_plural = 'Все Книги'
-        constraints = [models.UniqueConstraint(fields=['id', 'Название', 'Автор', 'Опубликовано'], name='allbooks')]
+# class Meta:
+#     verbose_name = 'Книгу'
+#     verbose_name_plural = 'Все Книги'
+#     constraints = [models.UniqueConstraint(fields=['id', 'title', 'author', 'pub_date'], name='allbooks')]

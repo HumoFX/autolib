@@ -1,11 +1,17 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import generics
 from rest_framework.parsers import JSONParser
 from .models import Order, BookInUse
 from .serializers import OrderSerializer, BookInUseSerializer
+from rest_framework.permissions import AllowAny
 
 
 # Create your views here.
+class OrderListView(generics.ListCreateAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
+    permission_classes = [AllowAny]
 
 @csrf_exempt
 def order_list(request):

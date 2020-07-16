@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="fc96677f-20e3-4625-8beb-9d9ba3e4272f" name="Elib" url="https://www.pythonanywhere.com">
+        <fileTransfer host="https://www.pythonanywhere.com" port="21">
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

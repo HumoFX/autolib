@@ -1,13 +1,15 @@
 from django.db import models
-
+# from User.models import Users
 
 # Create your models here.
 
 
 class Order(models.Model):
-    user = models.ForeignKey('User.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('User.Users', on_delete=models.CASCADE)
     book = models.ForeignKey('Book.Book', on_delete=models.CASCADE)
-    time_of_get = models.DateTimeField()
+    time_of_get = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(verbose_name='Активный', default=False)
+    done = models.BooleanField(verbose_name='Заказ получен', default=False)
 
     class Meta:
         verbose_name = 'Заказ'
