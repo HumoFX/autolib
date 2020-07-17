@@ -167,7 +167,7 @@ MEDIA_URL = '/templates/assets/'
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'auth/users/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
 }
@@ -202,7 +202,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'otahanovhumo@gmail.com'
+EMAIL_HOST_USER = 'humootahanov79@gmail.com'
 EMAIL_HOST_PASSWORD = 'Humo6779!'
 # EMAIL_HOST = 'smtp.mailtrap.io'
 # EMAIL_HOST_USER = 'b2c6a20cb8fe19'
