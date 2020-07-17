@@ -112,7 +112,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('full_name', 'email', 'university_id')
+        fields = ('full_name', 'email', 'university_id', 'faculty')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -157,7 +157,7 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     fieldsets = (
         ('Основные данные', {'fields': ('username', 'email', 'password',)}),
         ('Персональные данные', {'fields': ('full_name',
-                                            'university_id', 'faculty_id')}),
+                                            'university_id', 'faculty')}),
         ('Уровень доступа', {'fields': ('is_active', 'is_staff', 'is_superuser',
                                         'groups', 'user_permissions')}),
         ('Важные даты', {'fields': ('last_login', 'date_joined')}),
@@ -165,7 +165,7 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     add_fieldsets = (
         (None, {
             # 'classes': ('wide',),
-            'fields': ('username', 'full_name', 'university_id', 'email', 'password1', 'password2',),
+            'fields': ('username', 'full_name', 'university_id', 'email', 'faculty', 'password1', 'password2',),
         }),
     )
     list_display = ('username', 'is_staff', 'date_joined', 'university_id')
