@@ -101,14 +101,13 @@ ACCOUNT_ACTIVATION_DAYS = 7
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Elib',
-        'USER': 'postgres',
-        'PASSWORD': 'Humo6779',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': 'dk6jrue7v3d8l',
+        'USER': 'riaztzeoxzmwek',
+        'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
+        'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
+        'PORT': 5432,
     }
 }
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
