@@ -15,8 +15,8 @@ class Profile(AbstractUser):
     email = models.EmailField(unique=True)
     university_id = models.ForeignKey('University.University', on_delete=models.PROTECT, related_name='Университет')
     faculty = models.ForeignKey('University.Faculty', on_delete=models.PROTECT, related_name='Факультет')
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['full_name', 'university_id', 'faculty']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'full_name', 'university_id', 'faculty']
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -44,10 +44,10 @@ class Users(models.Model):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return self.full_name
+        return self.user.full_name
 
     def __unicode__(self):
-        return self.full_name
+        return self.user.full_name
 
 #
 # class MyUserManager(BaseUserManager):

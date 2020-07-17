@@ -155,7 +155,7 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     # form = UserChangeForm
     # add_form = UserCreationForm
     fieldsets = (
-        ('Основные данные', {'fields': ('email', 'password',)}),
+        ('Основные данные', {'fields': ('username', 'email', 'password',)}),
         ('Персональные данные', {'fields': ('full_name',
                                             'university_id', 'faculty_id')}),
         ('Уровень доступа', {'fields': ('is_active', 'is_staff', 'is_superuser',
@@ -165,12 +165,12 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     add_fieldsets = (
         (None, {
             # 'classes': ('wide',),
-            'fields': ('full_name', 'university_id', 'email', 'password1', 'password2',),
+            'fields': ('username', 'full_name', 'university_id', 'email', 'password1', 'password2',),
         }),
     )
-    list_display = ('email', 'is_staff', 'date_joined', 'university_id')
+    list_display = ('username', 'is_staff', 'date_joined', 'university_id')
     search_fields = ('email', 'first_name', 'last_name',)
-
+    ordering = ('username',)
 
 # @admin.register(Profile)
 # class UserAdmin(BaseUserAdmin):
