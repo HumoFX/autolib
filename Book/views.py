@@ -5,7 +5,7 @@ from rest_framework.parsers import JSONParser
 from .models import Book, Category, UDC
 from rest_framework import generics, permissions
 from .serializers import BookSerializer, CategorySerializer, UDCSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -13,13 +13,13 @@ from .permissions import IsOwnerOrReadOnly
 class BookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookSerializer
     queryset = Book.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 class CategoryListView(generics.ListAPIView):

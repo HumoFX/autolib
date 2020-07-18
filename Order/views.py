@@ -4,14 +4,14 @@ from rest_framework import generics
 from rest_framework.parsers import JSONParser
 from .models import Order, BookInUse
 from .serializers import OrderSerializer, BookInUseSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 # Create your views here.
 class OrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 @csrf_exempt
 def order_list(request):
