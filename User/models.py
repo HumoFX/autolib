@@ -30,7 +30,7 @@ class Profile(AbstractUser):
     position = models.TextField(verbose_name='Должность')
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'role', 'full_name', 'university_id', 'faculty', 'group_name', 'passport_serial_id',
-                       'tel_num']
+                       'kafedra', 'position', 'tel_num']
 
     class Meta:
         verbose_name = 'Пользователь'
