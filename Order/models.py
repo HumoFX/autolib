@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Order(models.Model):
-    user = models.ForeignKey('User.Users', on_delete=models.CASCADE)
+    user = models.ForeignKey('User.Profile', on_delete=models.CASCADE)
     book = models.ForeignKey('Book.Book', on_delete=models.CASCADE)
     time_of_get = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(verbose_name='Активный', default=False)

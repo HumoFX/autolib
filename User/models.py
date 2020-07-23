@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -10,13 +11,26 @@ from django.contrib.auth.models import (
 # Create your models here.
 
 class Profile(AbstractUser):
-    full_name = models.CharField(max_length=256)
+    ROLE_CHOICES = (
+        ("S", "Student"),
+        ("T", "Teacher"),
+        ("L", "Librarian"),
+    )
     # username = None
     email = models.EmailField(unique=True)
+    role = models.TextField(choices=ROLE_CHOICES)
+    full_name = models.TextField(verbose_name='ФИО')
+
     university_id = models.ForeignKey('University.University', on_delete=models.PROTECT, related_name='Университет')
     faculty = models.ForeignKey('University.Faculty', on_delete=models.PROTECT, related_name='Факультет')
+    group_name = models.TextField(verbose_name='Номер группы')
+    passport_serial_id = models.CharField(max_length=9, verbose_name='Серийный номер пасспорта')
+    tel_num = models.CharField(max_length=9, validators=[RegexValidator(r'^\d{1,10}$')], verbose_name='Номер телефона')
+    kafedra = models.TextField(verbose_name='Кафедра')
+    position = models.TextField(verbose_name='Должность')
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'full_name', 'university_id', 'faculty']
+    REQUIRED_FIELDS = ['email', 'role', 'full_name', 'university_id', 'faculty', 'group_name', 'passport_serial_id',
+                       'tel_num']
 
     class Meta:
         verbose_name = 'Пользователь'
