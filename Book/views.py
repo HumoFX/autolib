@@ -25,7 +25,7 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
