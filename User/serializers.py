@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Users, Profile
+from .models import Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'last_login',
             'is_superuser',
-            # 'username',
+            'username',
             'full_name',
             'university_id',
             'faculty',
@@ -21,4 +21,5 @@ class UserSerializer(serializers.ModelSerializer):
             'date_joined',
         ]
 
+        # fields = '__all__'
 
