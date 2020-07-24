@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
             'id',
             'last_login',
             'is_superuser',
-            'username',
+            # 'username',
             'full_name',
             'university_id',
             'faculty',
