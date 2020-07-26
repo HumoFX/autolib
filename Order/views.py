@@ -10,7 +10,13 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 # Create your views here.
 class OrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
-    queryset = Order.objects.all()
+    queryset = Order.objects.all().prefetch_related('user', 'book')
+    permission_classes = [IsAuthenticated]
+
+
+class BookInUseListView(generics.ListCreateAPIView):
+    serializer_class = BookInUseSerializer
+    queryset = BookInUse.objects.all().prefetch_related('book', 'order_id')
     permission_classes = [IsAuthenticated]
 
 @csrf_exempt

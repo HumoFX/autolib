@@ -16,9 +16,8 @@ class UDC(models.Model):
 
 
 class Category(models.Model):
-
-    udc_id = models.CharField(max_length=64, unique=True,)
-    name = models.CharField(max_length=256, unique=True)
+    udc_id = models.CharField(max_length=64, unique=True, )
+    name = models.TextField(unique=True)
     parent = models.ForeignKey('self', null=True, default="", blank=True, related_name='children',
                                on_delete=models.CASCADE)
 
@@ -62,9 +61,12 @@ class Book(models.Model):
         verbose_name = 'Книгу'
         verbose_name_plural = 'Книги'
 
+    # def __str__(self):
+    #     return "{} - {}".format(self.title, self.udc)
+    # return self.name
+
     def __str__(self):
-        return "{} - {}".format(self.title, self.udc)
-        # return self.name
+        return '%s - %s' % (self.title, self.author)
 
 # class ALL(models.Model):
 #     title = models.TextField(verbose_name='Название')

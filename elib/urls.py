@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from django_registration.backends.activation.views import RegistrationView
-
+from rest_framework_simplejwt import views as jwt_views
 from User.forms import MyCustomUserForm
 
 urlpatterns = [
@@ -34,6 +34,8 @@ urlpatterns = [
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.authtoken')),
     path('auth/', include('djoser.urls.jwt')),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 
     # path to our account's app endpoints
     path('api/accounts/', include("User.urls")),
