@@ -1,9 +1,13 @@
+from datetime import time
+
 from django.conf import settings
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
-
 # Create your models here.
+from requests import Response
+
+
 class UDC(models.Model):
     id_number = models.CharField(max_length=128, default='0')
 

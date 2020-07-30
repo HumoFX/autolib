@@ -32,6 +32,9 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'silk',
+    'adminlte3',
+    'adminlte3_theme',
     'serpy',
     'djoser',
     'ajax_select',
@@ -56,6 +59,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -70,9 +74,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
+    'http://localhost:8000',
 ]
 CORS_ORIGIN_REGEX_WHITELIST = [
     'http://localhost:8080',
+    'http://localhost:8000',
 ]
 
 ROOT_URLCONF = 'elib.urls'
@@ -103,9 +109,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dk6jrue7v3d8l',
+        # 'NAME': 'Elib',
         'USER': 'riaztzeoxzmwek',
+        # 'USER': 'postgres',
         'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
+        # 'PASSWORD': 'Humo6779',
         'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
+        # 'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -120,7 +130,6 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 4
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -141,6 +150,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'User.Profile'
+SILKY_PYTHON_PROFILER = True
 
 # AUTHENTICATION_BACKENDS = 'django.contrib.auth.backends.ModelBackend'
 # Internationalization
@@ -163,8 +173,13 @@ django_heroku.settings(locals())
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATICFILES_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = (os.path.join('static'),)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'templates/assets')
 MEDIA_URL = '/templates/assets/'
+# STATICFILES_FINDERS = ( 'django.contrib.staticfiles.finders.FileSystemFinder',
+# 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
@@ -199,7 +214,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-
+APPEND_SLASH = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -210,3 +225,5 @@ EMAIL_HOST_PASSWORD = 'Humofx6779'
 # EMAIL_HOST_USER = 'b2c6a20cb8fe19'
 # EMAIL_HOST_PASSWORD = '0e511052448635'
 # EMAIL_PORT = '2525'
+
+# jet-django integration

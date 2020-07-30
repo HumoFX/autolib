@@ -14,7 +14,7 @@ from University.serializers import UniversitySerializer, FacultySerializer
 
 
 class BookSerpy(serpy.Serializer):
-    time = datetime.now()
+    # time = datetime.now()
     id = serpy.MethodField()
     title = serpy.StrField()
     author = serpy.StrField()
@@ -56,8 +56,8 @@ class BookSerpy(serpy.Serializer):
         if obj is not None:
             return obj.faculty.pk
 
-    time1 = datetime.now()
-    print('\n serpy=', time1 - time)
+    # time1 = datetime.now()
+    # print('\n serpy=', time1 - time)
 
 
 class CategorySerpy(serpy.Serializer):
@@ -157,7 +157,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    time = datetime.now()
+    # time = datetime.now()
     #
     # udc = UDCSerializer
     # university = UserSerializer
@@ -187,7 +187,7 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         # fields = ('id', 'title', 'author', 'udc', 'isbn', 'key_words', 'img',
-        #           'university', 'faculty', 'quantity', 'price', 'rating',
+        #           'faculty', 'quantity', 'price', 'rating',
         #           'used', 'e_book', 'file', 'printed_book', 'special_books',
         #           'work_book', 'date_pub', 'date_get', 'created')
         fields = '__all__'
@@ -196,5 +196,5 @@ class BookSerializer(serializers.ModelSerializer):
         #                     'used', 'e_book', 'file', 'printed_book', 'special_books',
         #                     'work_book', 'date_pub', 'date_get', 'created')
 
-    time1 = datetime.now()
-    print('\n ModelSerializer', time1 - time)
+    # time1 = datetime.now()
+    # print('\n ModelSerializer', time1 - time)

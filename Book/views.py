@@ -1,10 +1,12 @@
 from datetime import datetime
 
+
+from django.core.signals import request_started, request_finished
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, renderer_classes
-
+import time
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -17,19 +19,80 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .permissions import IsOwnerOrReadOnly
 
+
 # Create your views here.
-time4 = datetime.now()
 
 
 class BookListView(generics.ListAPIView):
-    # time = datetime.now()
     queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
-    # time1 = datetime.now()
     serializer_class = BookSerializer
-    # time2 = datetime.now()
     permission_classes = [IsAuthenticated]
-    # time3 = datetime.now()
-    # print('time1=', time1 - time, '\n time2=', time2 - time1, '\n time3=', time3 - time3, '  time=', time3 - time4)
+
+    # serializer_time = time.time() - serializer_start
+    # if request_started:
+    #     db_start = datetime.now()
+    #     db_time = datetime.now() - db_start
+    #
+    #     serializer_start = datetime.now()
+    #     # time1 = datetime.now()
+    #     serializer_class = BookSerializer
+    #     serializer_time = datetime.now() - serializer_start
+    #     # time2 = datetime.now()
+    #     permission_classes = [AllowAny]
+    #     # time3 = datetime.now() print('time1=', time1 - time, '\n time2=', time2 - time1, '\n time3=',
+    #     # time3 - time3, '  time=', time3 - time4)
+    #     print('db_time', db_time, '\nserializer_time=', serializer_time)
+    #
+    # if request_finished:
+    #     end_time = datetime.now() - db_start
+    #     print('end_time=', end_time)
+    # def list(self, request):
+    #     global serializer_time
+    #     global db_time
+    #
+    #     db_start = time.time()
+    #     books = Book.objects.all()
+    #     # print(books)
+    #     db_time = time.time() - db_start
+    #     serializer_start = time.time()
+    #     serializer = BookSerializer(books, many=True)
+    #     # print(serializer)
+    #     serializer_time = time.time() - serializer_start
+    #
+    #     return Response(serializer.data)
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     global dispatch_time
+    #     global render_time
+    #
+    #     dispatch_start = time.time()
+    #     ret = super(BookListView, self).dispatch(request, *args, **kwargs)
+    #     render_start = time.time()
+    #     ret.render()
+    #     render_time = time.time() - render_start
+    #
+    #     dispatch_time = time.time() - dispatch_start
+    #
+    #     return ret
+    #
+    # def started(sender, **kwargs):
+    #     global started
+    #     started = time.time()
+    #
+    # def finished(sender, **kwargs):
+    #     total = time.time() - started
+    #     api_view_time = dispatch_time - (render_time + serializer_time + db_time)
+    #     request_response_time = total - dispatch_time
+    #
+    #     print("Database lookup               | %.4fs" % db_time)
+    #     print("Serialization                 | %.4fs" % serializer_time)
+    #     print("Django request/response       | %.4fs" % request_response_time)
+    #     print("API view                      | %.4fs" % api_view_time)
+    #     print("Response rendering            | %.4fs" % render_time)
+    #
+    # request_started.connect(started)
+    # request_finished.connect(finished)
+
 
 #
 # time5 = datetime.now()
@@ -60,6 +123,7 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     permission_classes = [IsAuthenticated]
+
 
 @csrf_exempt
 @api_view(('GET',))
