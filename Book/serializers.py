@@ -145,15 +145,18 @@ class CategorySerpy(serpy.Serializer):
 class UDCSerializer(serializers.ModelSerializer):
     class Meta:
         model = UDC
-        fields = ('id', 'id_number')
+        # fields = ('id', 'id_number')
+
+    fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    udc_id = UDCSerializer
+    # udc_id = UDCSerializer
 
     class Meta:
         model = Category
-        fields = ('id', 'udc_id', 'name', 'parent')
+        # fields = ('id', 'udc_id', 'name', 'parent')
+        fields = '__all__'
 
 
 class BookSerializer(serializers.ModelSerializer):
