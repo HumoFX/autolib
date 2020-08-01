@@ -21,6 +21,8 @@ from django.urls import path, include
 from django.conf.urls import url
 from django_registration.backends.activation.views import RegistrationView
 from rest_framework_simplejwt import views as jwt_views
+
+from Book import views
 from User.forms import MyCustomUserForm
 
 urlpatterns = [
