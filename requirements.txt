@@ -11,7 +11,7 @@ dateparser==0.7.6
 defusedxml==0.6.0
 diff-match-patch==20181111
 dj-database-url==0.5.0
-Django==3.0.4
+Django==3.0.7
 django-3-jet==1.0.8
 django-adminlte3==0.1.6
 django-ajax-selects==1.9.1
