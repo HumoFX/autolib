@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'silk',
     'adminlte3',
     'adminlte3_theme',
     'serpy',
