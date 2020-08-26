@@ -7,8 +7,8 @@ from django.db import models
 class Order(models.Model):
     user = models.ForeignKey('User.Profile', on_delete=models.CASCADE)
     book = models.ForeignKey('Book.Book', on_delete=models.CASCADE)
-    time_of_get = models.DateTimeField()
-    time_of_order = models.DateTimeField(auto_now_add=True)
+    time_of_get = models.DateTimeField(auto_now_add=False, verbose_name='Время полчения книги', null=False)
+    time_of_order = models.DateTimeField(auto_now_add=True, verbose_name='Время заказа')
     active = models.BooleanField(verbose_name='Активный', default=False)
     done = models.BooleanField(verbose_name='Заказ получен', default=False)
 
