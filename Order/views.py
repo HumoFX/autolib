@@ -14,9 +14,21 @@ class OrderListView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
+class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all().prefetch_related('user', 'book')
+    permission_classes = [IsAuthenticated]
+
+
 class BookInUseListView(generics.ListCreateAPIView):
     serializer_class = BookInUseSerializer
     queryset = BookInUse.objects.all().prefetch_related('book', 'order_id')
+    permission_classes = [IsAuthenticated]
+
+
+class BookInUseDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
 
 @csrf_exempt
