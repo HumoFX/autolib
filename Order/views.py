@@ -17,7 +17,8 @@ class OrderListView(generics.ListCreateAPIView):
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().prefetch_related('user', 'book')
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny
+                          ]
 
 
 class BookInUseListView(generics.ListCreateAPIView):

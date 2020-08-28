@@ -22,10 +22,10 @@ class Order(models.Model):
 
 class BookInUse(models.Model):
     order_id = models.ForeignKey(Order, on_delete=models.PROTECT)
-    # user_id = models.ForeignKey('User.User', on_delete=models.CASCADE)
+    user_id = models.ForeignKey('User.Profile', on_delete=models.CASCADE)
     book = models.ForeignKey('Book.Book', on_delete=models.CASCADE, default='')
-    time_of_get = models.DateTimeField()
-    time_of_pass = models.DateTimeField()
+    time_of_get = models.DateTimeField(auto_now_add=False, verbose_name='Время полчения книги', null=False)
+    time_of_pass = models.DateTimeField(auto_now_add=False, verbose_name='Время возврата книги', null=True)
 
     class Meta:
         verbose_name = 'Архив пользований книг'
