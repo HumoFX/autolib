@@ -31,6 +31,7 @@ class BookInUseDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
 
+
 @csrf_exempt
 def order_list(request):
     if request.method == 'GET':

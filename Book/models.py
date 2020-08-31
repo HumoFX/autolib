@@ -49,6 +49,7 @@ class Book(models.Model):
     faculty = models.ForeignKey('University.Faculty', on_delete=models.CASCADE, verbose_name='Факультет', null=True,
                                 blank=False)
     quantity = models.IntegerField(verbose_name='Количество', default=0)
+    real_time_count = models.IntegerField(verbose_name='Кол-во книги на данный момент', default=0)
     price = models.FloatField(verbose_name='Цена', default=0)
     rating = models.FloatField(verbose_name='Рейтинг', default=0)
     used = models.IntegerField(verbose_name='Использовано', default=0)

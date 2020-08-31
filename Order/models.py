@@ -1,4 +1,6 @@
 from django.db import models
+
+
 # from User.models import Users
 
 # Create your models here.
@@ -9,15 +11,16 @@ class Order(models.Model):
     book = models.ForeignKey('Book.Book', on_delete=models.CASCADE)
     time_of_get = models.DateTimeField(auto_now_add=False, verbose_name='Время полчения книги', null=False)
     time_of_order = models.DateTimeField(auto_now_add=True, verbose_name='Время заказа')
-    active = models.BooleanField(verbose_name='Активный', default=False)
+    active = models.BooleanField(verbose_name='Активный', default=True)
     done = models.BooleanField(verbose_name='Заказ получен', default=False)
+    retrieved = models.BooleanField(verbose_name='Возвращен', default=False)
 
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return "{} - {}".format(self.user, self.time_of_get)
+        return "{} - {}".format(self.id, self.user)
 
 
 class BookInUse(models.Model):
