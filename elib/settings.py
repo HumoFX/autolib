@@ -211,10 +211,14 @@ MEDIA_URL = '/templates/assets/'
 # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'auth/users/reset_password_confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'auth/users/reset_username_confirm/{uid}/{token}',
     'ACTIVATION_URL': 'auth/users/activation/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
     'SERIALIZERS': {},
 }
 
@@ -247,11 +251,9 @@ SIMPLE_JWT = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-# EMAIL_USE_SSL = True
-# EMAIL_PORT = 465
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'humootahanov79@gmail.com'
-EMAIL_HOST_PASSWORD = 'Humofx99'
+EMAIL_HOST_PASSWORD = 'UyceW9hBtqaPVxC'
 # EMAIL_HOST = 'smtp.mailtrap.io'
 # EMAIL_HOST_USER = 'b2c6a20cb8fe19'
 # EMAIL_HOST_PASSWORD = '0e511052448635'

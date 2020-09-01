@@ -1,7 +1,10 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
+from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import JSONParser
+from Book.models import Book
+from Book.views import BookDetailView
 from .models import Order, BookInUse
 from .serializers import OrderSerializer, BookInUseSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -12,6 +15,12 @@ class OrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
+
+    # book_id = get_object_or_404(Book, id=OrderListView.request.data)
+    def perform_create(self, serializer):
+        book_id = self.request.data.get('book')
+        Book.update_info(Book, book_id)
+        return serializer.save()
 
 
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):

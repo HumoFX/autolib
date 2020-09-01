@@ -48,11 +48,11 @@ class Book(models.Model):
                                    blank=False)
     faculty = models.ForeignKey('University.Faculty', on_delete=models.CASCADE, verbose_name='Факультет', null=True,
                                 blank=False)
-    quantity = models.IntegerField(verbose_name='Количество', default=0)
-    real_time_count = models.IntegerField(verbose_name='Кол-во книги на данный момент', default=0)
+    quantity = models.PositiveSmallIntegerField(verbose_name='Количество', default=0)
+    real_time_count = models.PositiveSmallIntegerField(verbose_name='Кол-во книги на данный момент', default=0)
     price = models.FloatField(verbose_name='Цена', default=0)
     rating = models.FloatField(verbose_name='Рейтинг', default=0)
-    used = models.IntegerField(verbose_name='Использовано', default=0)
+    used = models.PositiveIntegerField(verbose_name='Использовано', default=0)
     e_book = models.BooleanField(verbose_name='Электроная_версия', default=False)
     file = models.FileField(upload_to='file/e_books', null=True, blank=True, verbose_name='Файл')
     printed_book = models.BooleanField(verbose_name='Печатная версия', default=False)
@@ -73,6 +73,17 @@ class Book(models.Model):
     def __str__(self):
         return '%s - %s' % (self.title, self.author)
 
+    def update_info(self, book_id):
+        """
+
+        :rtype: object
+        """
+        query = self.objects.get(id=book_id)
+        # print(query.real_time_count, '\n')
+        query.real_time_count = query.real_time_count - 1
+        # print('query= ', query)
+        # print('\n query.count=', query.real_time_count)
+        return query.save()
 # class ALL(models.Model):
 #     title = models.TextField(verbose_name='Название')
 #     author = models.TextField(verbose_name='Автор')
