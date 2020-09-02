@@ -209,7 +209,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'templates/assets')
 MEDIA_URL = '/templates/assets/'
 # STATICFILES_FINDERS = ( 'django.contrib.staticfiles.finders.FileSystemFinder',
 # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
-DOMAIN = '192.168.0.112:8080'
+DOMAIN = 'localhost:8080'
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'change-password/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'auth/users/reset_username_confirm/{uid}/{token}',
