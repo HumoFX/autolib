@@ -1,8 +1,10 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from .models import University
-from .serializers import UniversitySerializer
+from .models import University, Faculty
+from .serializers import UniversitySerializer, FacultySerializer
+from rest_framework.generics import (ListAPIView, RetrieveUpdateDestroyAPIView, )
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 
 # Create your views here.
@@ -46,3 +48,8 @@ def university_detail(request, pk):
         university.delete()
         return HttpResponse(status=204)
 
+
+class FacultyListView(ListAPIView):
+    queryset = Faculty.objects.all()
+    serializer_class = FacultySerializer
+    permission_classes = [AllowAny]

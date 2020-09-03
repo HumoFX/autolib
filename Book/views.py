@@ -23,10 +23,15 @@ from .permissions import IsOwnerOrReadOnly
 
 
 class BookListView(generics.ListAPIView):
-    queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
+    # queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
+
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university'
+                                                                                                    , 'faculty', 'udc')
+        return queryset
     # serializer_time = time.time() - serializer_start
     # if request_started:
     #     db_start = datetime.now()
@@ -107,9 +112,15 @@ class BookListView(generics.ListAPIView):
 
 
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
+    # queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university'
+                                                                                                       , 'faculty',
+                                                                                                       'udc')
+        return queryset
 
 
 class CategoryListView(generics.ListAPIView):
