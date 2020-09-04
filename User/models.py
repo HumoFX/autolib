@@ -20,7 +20,7 @@ class Profile(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.TextField(choices=ROLE_CHOICES)
     full_name = models.TextField(verbose_name='ФИО')
-
+    avatar = models.ImageField(verbose_name='Аватар', upload_to='img/users', null=True)
     university_id = models.ForeignKey('University.University', on_delete=models.PROTECT, related_name='Университет')
     faculty = models.ForeignKey('University.Faculty', on_delete=models.PROTECT, related_name='Факультет')
     group_name = models.TextField(verbose_name='Номер группы')
