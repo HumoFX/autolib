@@ -155,9 +155,10 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     # form = UserChangeForm
     # add_form = UserCreationForm
     fieldsets = (
-        ('Основные данные', {'fields': ('username', 'email', 'password',)}),
+        ('Основные данные', {'fields': ('username', 'email', 'password', 'role')}),
         ('Персональные данные', {'fields': ('full_name',
-                                            'university_id', 'faculty')}),
+                                            'university_id', 'faculty', 'group_name','avatar', 'kafedra', 'position',
+                                            'passport_serial_id','tel_num',)}),
         ('Уровень доступа', {'fields': ('is_active', 'is_staff', 'is_superuser',
                                         'groups', 'user_permissions')}),
         ('Важные даты', {'fields': ('last_login', 'date_joined')}),
@@ -165,10 +166,11 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     add_fieldsets = (
         (None, {
             # 'classes': ('wide',),
-            'fields': ('username', 'full_name', 'university_id', 'email', 'faculty', 'password1', 'password2',),
+            'fields': ('username', 'full_name', 'university_id', 'email', 'faculty', 'password1', 'password2',
+                       'group_name','avatar', 'kafedra', 'position','passport_serial_id','tel_num',),
         }),
     )
-    list_display = ('username', 'is_staff', 'date_joined', 'university_id')
+    list_display = ('username', 'is_staff', 'date_joined', 'university_id','role',)
     search_fields = ('email', 'first_name', 'last_name',)
     ordering = ('username',)
 
