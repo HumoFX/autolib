@@ -12,7 +12,7 @@ from .permissions import IsOwnerOrReadOnly
 class UserCreateListView(ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def perform_create(self, serializer):
         user = self.request.user
