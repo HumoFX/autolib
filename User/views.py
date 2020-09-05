@@ -14,15 +14,15 @@ class UserCreateListView(ListCreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        serializer.save(user=user)
+    # def perform_create(self, serializer):
+    #     user = self.request.user
+    #     serializer.save(user=user)
 
 
 class UserDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
+    permission_classes = [IsOwnerOrReadOnly, AllowAny]
 
 #
 # @csrf_exempt
