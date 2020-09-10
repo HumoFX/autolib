@@ -15,6 +15,7 @@ from .models import Book, Category, UDC
 from rest_framework import generics, permissions, viewsets, status
 from .serializers import BookSerializer, CategorySerializer, UDCSerializer, BookSerpy, CategorySerpy
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import filters
 
 from .permissions import IsOwnerOrReadOnly
 
@@ -23,15 +24,16 @@ from .permissions import IsOwnerOrReadOnly
 
 
 class BookListView(generics.ListAPIView):
-    # queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
-
+    queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'author', 'udc__name', 'key_words']
 
-    def get_queryset(self):
-        queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university'
-                                                                                                    , 'faculty', 'udc')
-        return queryset
+    # def get_queryset(self):
+    #     queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university'
+    #                                                                                                 ,'faculty')
+    #     return queryset
     # serializer_time = time.time() - serializer_start
     # if request_started:
     #     db_start = datetime.now()
@@ -115,6 +117,7 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
     # queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter]
 
     def get_queryset(self):
         queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university'

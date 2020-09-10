@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     # 'admin_tools.theming',
     # 'admin_tools.menu',
     # 'admin_tools.dashboard',
+    'django_filters',
     'adminlte3',
     'adminlte3_theme',
     'serpy',
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
     'University',
     'User',
     'Book',
@@ -147,6 +149,7 @@ DATABASES = {
     }
 }
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
     ],
