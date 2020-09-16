@@ -15,6 +15,7 @@ class OrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
+    pagination_class = None
 
     # book_id = get_object_or_404(Book, id=OrderListView.request.data)
     def perform_create(self, serializer):
@@ -27,18 +28,21 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
+    pagination_class = None
 
 
 class BookInUseListView(generics.ListCreateAPIView):
     serializer_class = BookInUseSerializer
     queryset = BookInUse.objects.all().prefetch_related('book', 'order_id')
     permission_classes = [IsAuthenticated]
+    pagination_class = None
 
 
 class BookInUseDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
+    pagination_class = None
 
 
 @csrf_exempt
