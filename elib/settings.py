@@ -211,11 +211,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'templates/assets')
 MEDIA_URL = '/templates/assets/'
 # STATICFILES_FINDERS = ( 'django.contrib.staticfiles.finders.FileSystemFinder',
 # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
+PROTOCOL = 'http'
 DOMAIN = 'localhost:8080'
+SITE_NAME = 'Autolib'
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'change-password/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'auth/users/reset_username_confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'auth/users/activation/{uid}/{token}',
+    'ACTIVATION_URL': 'email-confirm/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SEND_CONFIRMATION_EMAIL': True,
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
