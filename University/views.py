@@ -53,7 +53,7 @@ class UniversityListView(ListAPIView):
     queryset = University.objects.all()
     serializer_class = UniversitySerializer
     permission_classes = [AllowAny]
-    pagination_class = None
+    # pagination_class = None
 
 
 # class UniversityDeatilView(ListAPIView):
@@ -65,7 +65,7 @@ class FacultyListView(ListAPIView):
     queryset = Faculty.objects.all()
     serializer_class = FacultySerializer
     permission_classes = [AllowAny]
-    pagination_class = None
+    # pagination_class = None
 
 # @csrf_exempt
 # def faculty(request):

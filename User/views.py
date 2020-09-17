@@ -13,7 +13,7 @@ class UserCreateListView(ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
-    pagination_class = None
+    # pagination_class = None
 
     # def perform_create(self, serializer):
     #     user = self.request.user
@@ -24,7 +24,7 @@ class UserDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsOwnerOrReadOnly, AllowAny]
-    pagination_class = None
+    # pagination_class = None
 
 
 #
