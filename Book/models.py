@@ -73,7 +73,7 @@ class Book(models.Model):
     def __str__(self):
         return '%s - %s' % (self.title, self.author)
 
-    def update_info(self, book_id):
+    def decrement_book(self, book_id):
         """
 
         :rtype: object
@@ -81,6 +81,18 @@ class Book(models.Model):
         query = self.objects.get(id=book_id)
         # print(query.real_time_count, '\n')
         query.real_time_count = query.real_time_count - 1
+        # print('query= ', query)
+        # print('\n query.count=', query.real_time_count)
+        return query.save()
+
+    def increment_book(self, book_id):
+        """
+
+        :rtype: object
+        """
+        query = self.objects.get(id=book_id)
+        # print(query.real_time_count, '\n')
+        query.real_time_count = query.real_time_count + 1
         # print('query= ', query)
         # print('\n query.count=', query.real_time_count)
         return query.save()

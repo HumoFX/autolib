@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import JSONParser
+
 from Book.models import Book
 from Book.views import BookDetailView
 from .models import Order, BookInUse
@@ -15,12 +16,13 @@ class OrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
+
     # pagination_class = None
 
     # book_id = get_object_or_404(Book, id=OrderListView.request.data)
     def perform_create(self, serializer):
         book_id = self.request.data.get('book')
-        Book.update_info(Book, book_id)
+        Book.decrement_book(Book, book_id)
         return serializer.save()
 
 
@@ -28,6 +30,11 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all().prefetch_related('user', 'book')
     permission_classes = [IsAuthenticated]
+
+    def perform_update(self, serializer):
+        book_id = self.request.data.get('book')
+        Book.increment_book(Book, book_id)
+        return serializer.save()
     # pagination_class = None
 
 
