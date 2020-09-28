@@ -110,7 +110,7 @@ ROOT_URLCONF = 'elib.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'staticfiles/../static/templates')],
         # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -207,12 +207,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATICFILES_DIRS = (os.path.join('static'),)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'templates/assets')
-MEDIA_URL = '/templates/assets/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/templates/assets')
+MEDIA_URL = 'static/templates/assets/'
 # STATICFILES_FINDERS = ( 'django.contrib.staticfiles.finders.FileSystemFinder',
 # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
-PROTOCOL = 'http'
-DOMAIN = 'localhost:8080'
+PROTOCOL = 'https'
+DOMAIN = 'hungry-poincare-0054dd.netlify.app'
 SITE_NAME = 'Autolib'
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'change-password/{uid}/{token}',
