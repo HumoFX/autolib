@@ -127,7 +127,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'elib.wsgi.application'
+# WSGI_APPLICATION = 'elib.wsgi.application'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 # Database
@@ -178,9 +178,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 AUTH_USER_MODEL = 'User.Profile'
-
 
 # AUTHENTICATION_BACKENDS = 'django.contrib.auth.backends.ModelBackend'
 # Internationalization
@@ -262,5 +260,3 @@ EMAIL_HOST_PASSWORD = 'UyceW9hBtqaPVxC'
 # EMAIL_HOST_USER = 'b2c6a20cb8fe19'
 # EMAIL_HOST_PASSWORD = '0e511052448635'
 # EMAIL_PORT = '2525'
-
-# jet-django integration

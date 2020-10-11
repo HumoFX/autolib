@@ -1,7 +1,21 @@
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
 from django.urls import path
+from tornado.web import url
+
 from Book import views
 #
 from Book.models import Category
+from djangochannelsrestframework.consumers import view_as_consumer
+# from .views import BookListView
+
+# application = ProtocolTypeRouter({
+#     "websocket": AuthMiddlewareStack(
+#         URLRouter([
+#             url(r"^front(end)/$", view_as_consumer(views)),
+#         ])
+#     ),
+#  })
 
 urlpatterns = [
     # path('books/', views.book_list),

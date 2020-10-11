@@ -1,11 +1,17 @@
 from django.http import HttpResponse, JsonResponse
+from pytz import timezone
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import JSONParser
-
+from rest_framework.response import Response
+from datetime import datetime, timedelta
+from elib.settings import TIME_ZONE
+from User.models import Profile
 from Book.models import Book
+from django.utils.timezone import now
 from Book.views import BookDetailView
+import calendar
 from .models import Order, BookInUse
 from .serializers import OrderSerializer, BookInUseSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -14,8 +20,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 # Create your views here.
 class OrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
-    queryset = Order.objects.all().prefetch_related('user', 'book')
-    permission_classes = [IsAuthenticated]
+    queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+    permission_classes = [AllowAny]
 
     # pagination_class = None
 
@@ -28,7 +34,7 @@ class OrderListView(generics.ListCreateAPIView):
 
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
-    queryset = Order.objects.all().prefetch_related('user', 'book')
+    queryset = Order.objects.all()
     permission_classes = [IsAuthenticated]
 
     def perform_update(self, serializer):
@@ -36,6 +42,145 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
         Book.increment_book(Book, book_id)
         return serializer.save()
     # pagination_class = None
+
+
+class StatsPerDay(OrderListView):
+    @staticmethod
+    def summarize(request, *args, **kwargs):
+        """This can be moved to a Mixin class."""
+        # make sure the filters of the parent class get applied
+        tz = timezone(TIME_ZONE)
+        date = datetime.now().astimezone(tz)
+        time1 = date.replace(hour=9, minute=0, second=0)
+        list1 = []
+        list2 = []
+        for i in range(1, 10):
+            count = Order.objects.filter(time_of_get__gte=time1,
+                                         time_of_get__lt=time1.replace(hour=time1.hour + 1))
+            count1 = count.filter(active=False, done=True).count()
+            count2 = count.filter(active=False, done=False).count()
+            time1 = time1.replace(hour=time1.hour + 1)
+            list1.append(count1)
+            list2.append(count2)
+        total_accepted = sum(list1)
+        total_rejected = sum(list2)
+        total = total_accepted + total_rejected
+        stats = {
+            'count_accepted': list1,
+            'count_rejected': list2,
+            'total_accepted': total_accepted,
+            'total_rejected': total_rejected,
+            'total': total,
+        }
+        return Response(stats)
+
+    def get(self, request, *args, **kwargs):
+        return self.summarize(request, *args, **kwargs)
+
+
+class StatsPerWeek(OrderListView):
+
+    @staticmethod
+    def summarize(request, *args, **kwargs):
+        date = datetime.today().date()
+        print(date)
+        start_week = date - timedelta(date.weekday())
+        end_week = start_week + timedelta(7)
+        list1 = []
+        list2 = []
+        while start_week != end_week:
+            print('days ', start_week)
+            count = Order.objects.filter(time_of_get__year=start_week.year, time_of_get__month=start_week.month,
+                                         time_of_order__day=start_week.day)
+            start_week = start_week + timedelta(days=1)
+            count1 = count.filter(active=False, done=True).count()
+            count2 = count.filter(active=False, done=False).count()
+            print(count)
+            list1.append(count1)
+            list2.append(count2)
+        total_accepted = sum(list1)
+        total_rejected = sum(list2)
+        total = total_accepted + total_rejected
+        stats = {
+            'count_accepted': list1,
+            'count_rejected': list2,
+            'total_accepted': total_accepted,
+            'total_rejected': total_rejected,
+            'total': total,
+        }
+        return Response(stats)
+
+    def get(self, request, *args, **kwargs):
+        return self.summarize(request, *args, **kwargs)
+
+
+class StatsPerMonth(OrderListView):
+
+    @staticmethod
+    def summarize(request, *args, **kwargs):
+        date = datetime.today().date()
+        print(date)
+        start_month = date.replace(day=1)
+        end_month = calendar.monthrange(date.year, date.month)[1]
+        print('end = ', end_month)
+
+        list1 = []
+        list2 = []
+        for i in range(1, end_month + 1):
+            print('days ', i)
+            count = Order.objects.filter(time_of_get__year=start_month.year, time_of_get__month=start_month.month,
+                                         time_of_get__day=start_month.day)
+            start_month = start_month + timedelta(days=1)
+            count1 = count.filter(active=False, done=True).count()
+            count2 = count.filter(active=False, done=False).count()
+            list1.append(count1)
+            list2.append(count2)
+        total_accepted = sum(list1)
+        total_rejected = sum(list2)
+        total = total_accepted + total_rejected
+        stats = {
+            'count_accepted': list1,
+            'count_rejected': list2,
+            'total_accepted': total_accepted,
+            'total_rejected': total_rejected,
+            'total': total,
+        }
+        return Response(stats)
+
+    def get(self, request, *args, **kwargs):
+        return self.summarize(request, *args, **kwargs)
+
+
+class StatsPerYear(OrderListView):
+
+    @staticmethod
+    def summarize(request, *args, **kwargs):
+        date = datetime.today().date()
+        print(date)
+        list1 = []
+        list2 = []
+        for i in range(1, 13):
+            # print(i)
+            start_month = date.replace(month=i)
+            count = Order.objects.filter(time_of_get__year=start_month.year, time_of_get__month=start_month.month)
+            count1 = count.filter(active=False, done=True).count()
+            count2 = count.filter(active=False, done=False).count()
+            list1.append(count1)
+            list2.append(count2)
+        total_accepted = sum(list1)
+        total_rejected = sum(list2)
+        total = total_accepted + total_rejected
+        stats = {
+            'count_accepted': list1,
+            'count_rejected': list2,
+            'total_accepted': total_accepted,
+            'total_rejected': total_rejected,
+            'total': total,
+        }
+        return Response(stats)
+
+    def get(self, request, *args, **kwargs):
+        return self.summarize(request, *args, **kwargs)
 
 
 class BookInUseListView(generics.ListCreateAPIView):
@@ -67,6 +212,21 @@ def order_list(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
+
+@csrf_exempt
+def order_detail_search(request, user_id, book_id):
+    try:
+        user = Profile.objects.get(pk=user_id)
+        book = Book.objects.get(pk=book_id)
+    except Order.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        users_orders = Order.objects.filter(user == user_id)
+        print(users_orders)
+
+
+#
 
 @csrf_exempt
 def order_detail(request, pk):
