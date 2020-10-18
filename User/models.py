@@ -37,7 +37,7 @@ class Profile(AbstractUser):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return "{}".format(self.university_id)
+        return "{}".format(self.username)
 
 
 class Users(models.Model):

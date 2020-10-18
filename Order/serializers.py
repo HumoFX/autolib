@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Order, BookInUse
+from .models import Order
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -9,7 +9,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BookInUseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BookInUse
-        fields = '__all__'
+# class BookInUseSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = BookInUse
+#         fields = '__all__'

@@ -80,7 +80,10 @@ class Book(models.Model):
         """
         query = self.objects.get(id=book_id)
         # print(query.real_time_count, '\n')
-        query.real_time_count = query.real_time_count - 1
+        if query.real_time_count > 0:
+            query.real_time_count = query.real_time_count - 1
+        # else:
+        #     query.real_time_count = 0
         # print('query= ', query)
         # print('\n query.count=', query.real_time_count)
         return query.save()
@@ -92,7 +95,10 @@ class Book(models.Model):
         """
         query = self.objects.get(id=book_id)
         # print(query.real_time_count, '\n')
-        query.real_time_count = query.real_time_count + 1
+        if query.quantity > query.real_time_count:
+            query.real_time_count = query.real_time_count + 1
+        # else:
+        #     query.real_time_count = query.quantity
         # print('query= ', query)
         # print('\n query.count=', query.real_time_count)
         return query.save()

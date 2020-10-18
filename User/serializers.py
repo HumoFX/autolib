@@ -13,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
             'full_name',
             'university_id',
             'faculty',
+            'group_name',
             'avatar',
             'kafedra',
             'position',

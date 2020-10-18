@@ -12,16 +12,24 @@ from Book.models import Book
 from django.utils.timezone import now
 from Book.views import BookDetailView
 import calendar
-from .models import Order, BookInUse
-from .serializers import OrderSerializer, BookInUseSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from .models import Order
+from .serializers import OrderSerializer
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from .permissions import IsOwnerOrReadOnly
 
 
 # Create your views here.
 class OrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
-    queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
-    permission_classes = [AllowAny]
+    # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+        user = self.request.user
+        if not user.is_staff:
+            queryset = queryset.filter(user__id=user.id)
+        return queryset
 
     # pagination_class = None
 
@@ -182,111 +190,111 @@ class StatsPerYear(OrderListView):
     def get(self, request, *args, **kwargs):
         return self.summarize(request, *args, **kwargs)
 
-
-class BookInUseListView(generics.ListCreateAPIView):
-    serializer_class = BookInUseSerializer
-    queryset = BookInUse.objects.all().prefetch_related('book', 'order_id')
-    permission_classes = [IsAuthenticated]
-    # pagination_class = None
-
-
-class BookInUseDetailView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = OrderSerializer
-    queryset = Order.objects.all().prefetch_related('user', 'book')
-    permission_classes = [IsAuthenticated]
-    # pagination_class = None
-
-
-@csrf_exempt
-def order_list(request):
-    if request.method == 'GET':
-        orders = Order.objects.all()
-        serializer = OrderSerializer(orders, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = OrderSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
-def order_detail_search(request, user_id, book_id):
-    try:
-        user = Profile.objects.get(pk=user_id)
-        book = Book.objects.get(pk=book_id)
-    except Order.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        users_orders = Order.objects.filter(user == user_id)
-        print(users_orders)
-
-
 #
-
-@csrf_exempt
-def order_detail(request, pk):
-    try:
-        order = Order.objects.get(pk=pk)
-    except Order.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = OrderSerializer(order)
-        return JsonResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = OrderSerializer(order, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        order.delete()
-        return HttpResponse(status=204)
-
-
-@csrf_exempt
-def book_inuse_list(request):
-    if request.method == 'GET':
-        book = BookInUse.objects.all()
-        serializer = OrderSerializer(book, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = BookInUseSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
-def book_inuse_detail(request, pk):
-    try:
-        book_inuse = BookInUse.objects.get(pk=pk)
-    except BookInUse.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = BookInUseSerializer(book_inuse)
-        return JsonResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = BookInUseSerializer(book_inuse, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        book_inuse.delete()
-        return HttpResponse(status=204)
+# class BookInUseListView(generics.ListCreateAPIView):
+#     serializer_class = BookInUseSerializer
+#     queryset = BookInUse.objects.all().prefetch_related('book', 'order_id')
+#     permission_classes = [IsAuthenticated]
+#     # pagination_class = None
+#
+#
+# class BookInUseDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = OrderSerializer
+#     queryset = Order.objects.all().prefetch_related('user', 'book')
+#     permission_classes = [IsAuthenticated]
+#     # pagination_class = None
+#
+#
+# @csrf_exempt
+# def order_list(request):
+#     if request.method == 'GET':
+#         orders = Order.objects.all()
+#         serializer = OrderSerializer(orders, many=True)
+#         return JsonResponse(serializer.data, safe=False)
+#
+#     elif request.method == 'POST':
+#         data = JSONParser().parse(request)
+#         serializer = OrderSerializer(data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JsonResponse(serializer.data, status=201)
+#         return JsonResponse(serializer.errors, status=400)
+#
+#
+# @csrf_exempt
+# def order_detail_search(request, user_id, book_id):
+#     try:
+#         user = Profile.objects.get(pk=user_id)
+#         book = Book.objects.get(pk=book_id)
+#     except Order.DoesNotExist:
+#         return HttpResponse(status=404)
+#
+#     if request.method == 'GET':
+#         users_orders = Order.objects.filter(user == user_id)
+#         print(users_orders)
+#
+#
+# #
+#
+# @csrf_exempt
+# def order_detail(request, pk):
+#     try:
+#         order = Order.objects.get(pk=pk)
+#     except Order.DoesNotExist:
+#         return HttpResponse(status=404)
+#
+#     if request.method == 'GET':
+#         serializer = OrderSerializer(order)
+#         return JsonResponse(serializer.data)
+#
+#     elif request.method == 'PUT':
+#         data = JSONParser().parse(request)
+#         serializer = OrderSerializer(order, data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JsonResponse(serializer.data)
+#         return JsonResponse(serializer.errors, status=400)
+#
+#     elif request.method == 'DELETE':
+#         order.delete()
+#         return HttpResponse(status=204)
+#
+#
+# @csrf_exempt
+# def book_inuse_list(request):
+#     if request.method == 'GET':
+#         book = BookInUse.objects.all()
+#         serializer = OrderSerializer(book, many=True)
+#         return JsonResponse(serializer.data, safe=False)
+#
+#     elif request.method == 'POST':
+#         data = JSONParser().parse(request)
+#         serializer = BookInUseSerializer(data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JsonResponse(serializer.data, status=201)
+#         return JsonResponse(serializer.errors, status=400)
+#
+#
+# @csrf_exempt
+# def book_inuse_detail(request, pk):
+#     try:
+#         book_inuse = BookInUse.objects.get(pk=pk)
+#     except BookInUse.DoesNotExist:
+#         return HttpResponse(status=404)
+#
+#     if request.method == 'GET':
+#         serializer = BookInUseSerializer(book_inuse)
+#         return JsonResponse(serializer.data)
+#
+#     elif request.method == 'PUT':
+#         data = JSONParser().parse(request)
+#         serializer = BookInUseSerializer(book_inuse, data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JsonResponse(serializer.data)
+#         return JsonResponse(serializer.errors, status=400)
+#
+#     elif request.method == 'DELETE':
+#         book_inuse.delete()
+#         return HttpResponse(status=204)
