@@ -1,9 +1,15 @@
+from datetime import datetime
+
+from dateutil.utils import today
 from django.db import models
 
 
 # from User.models import Users
 
 # Create your models here.
+from pytz import timezone
+
+from elib.settings import TIME_ZONE
 
 
 class Order(models.Model):
@@ -11,8 +17,10 @@ class Order(models.Model):
     book = models.ForeignKey('Book.Book', on_delete=models.CASCADE)
     time_of_get = models.DateTimeField(auto_now_add=False, verbose_name='Время получения книги(заказ)', null=False)
     time_of_order = models.DateTimeField(auto_now_add=True, verbose_name='Время заказа')
-    time_of_take_away = models.DateTimeField(auto_now_add=False, verbose_name='Время унесения книги', null=True)
-    time_of_pass = models.DateTimeField(auto_now_add=False, verbose_name='Время возвращения книги', null=True)
+    time_of_take_away = models.DateTimeField(auto_now_add=False, verbose_name='Время унесения книги',
+                                             blank=True, null=True)
+    time_of_pass = models.DateTimeField(auto_now_add=False, verbose_name='Время возвращения книги',
+                                        blank=True, null=True)
     active = models.BooleanField(verbose_name='Активный', default=True)
     done = models.BooleanField(verbose_name='Заказ получен', default=False)
     retrieved = models.BooleanField(verbose_name='Возвращен', default=False)

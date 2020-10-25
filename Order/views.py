@@ -13,7 +13,7 @@ from django.utils.timezone import now
 from Book.views import BookDetailView
 import calendar
 from .models import Order
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, OrderDetailSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .permissions import IsOwnerOrReadOnly
 
@@ -38,6 +38,60 @@ class OrderListView(generics.ListCreateAPIView):
         book_id = self.request.data.get('book')
         Book.decrement_book(Book, book_id)
         return serializer.save()
+
+
+class ActiveOrderListView(generics.ListAPIView):
+    serializer_class = OrderDetailSerializer
+    # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Order.objects.filter(active=True).order_by('-time_of_get')
+        user = self.request.user
+        if not user.is_staff:
+            queryset = queryset.filter(user__id=user.id)
+        return queryset
+
+
+class ActiveOrderDetailView(generics.UpdateAPIView):
+    serializer_class = OrderDetailSerializer
+    # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+    permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = 'id'
+
+    def get_queryset(self):
+        queryset = Order.objects.get(id=self.kwargs['id'])
+        user = self.request.user
+        if not user.is_staff:
+            queryset = queryset.filter(user__id=user.id)
+        return queryset
+
+
+class BookInUseListView(generics.ListAPIView):
+    serializer_class = OrderDetailSerializer
+    # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Order.objects.filter(active=False, done=True, retrieved=False).order_by('-time_of_get')
+        user = self.request.user
+        if not user.is_staff:
+            queryset = queryset.filter(user__id=user.id)
+        return queryset
+
+
+class BookInUseDetailView(generics.UpdateAPIView):
+    serializer_class = OrderDetailSerializer
+    # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+    permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = 'id'
+
+    def get_queryset(self):
+        queryset = Order.objects.get(id=self.kwargs['id'])
+        user = self.request.user
+        if not user.is_staff:
+            queryset = queryset.filter(user__id=user.id)
+        return queryset
 
 
 class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
