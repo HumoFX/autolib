@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     # 'admin_tools.theming',
     # 'admin_tools.menu',
     # 'admin_tools.dashboard',
+    'django_celery_beat',
     'adminlte3',
     'adminlte3_theme',
     'serpy',

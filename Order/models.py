@@ -32,6 +32,11 @@ class Order(models.Model):
     def __str__(self):
         return "{} - {}".format(self.id, self.user)
 
+    # @property
+    # def is_order_expired(self):
+    #     tz = timezone(TIME_ZONE)
+    #     if self.time_of_get >= datetime.today(tz)
+
 
 # class BookInUse(models.Model):
 #     order_id = models.ForeignKey(Order, on_delete=models.PROTECT)

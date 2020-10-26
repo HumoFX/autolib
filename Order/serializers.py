@@ -18,7 +18,8 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['id', 'user', 'book', 'time_of_get', 'time_of_order', 'active', 'done', 'retrieved']
+        fields = ['id', 'user', 'book', 'time_of_get', 'time_of_order', 'time_of_take_away', 'time_of_pass',
+                  'active', 'done', 'retrieved']
         # fields = '__all__'
 
 
