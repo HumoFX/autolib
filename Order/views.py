@@ -61,9 +61,6 @@ class ActiveOrderDetailView(generics.UpdateAPIView):
 
     def get_queryset(self):
         queryset = Order.objects.get(id=self.kwargs['id'])
-        user = self.request.user
-        if not user.is_staff:
-            queryset = queryset.filter(user__id=user.id)
         return queryset
 
 
@@ -88,9 +85,6 @@ class BookInUseDetailView(generics.UpdateAPIView):
 
     def get_queryset(self):
         queryset = Order.objects.get(id=self.kwargs['id'])
-        user = self.request.user
-        if not user.is_staff:
-            queryset = queryset.filter(user__id=user.id)
         return queryset
 
 
