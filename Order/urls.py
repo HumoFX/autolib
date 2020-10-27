@@ -4,7 +4,7 @@ from Order import views
 urlpatterns = [
     path('orders/', views.OrderListView.as_view()),
     path('active_orders/', views.ActiveOrderListView.as_view()),
-    path('active_orders/<int:id>', views.ActiveOrderDetailView.as_view()),
+    path('active_orders/<int:order_id>', views.ActiveOrderDetailView.as_view()),
     path('book_in_use/', views.BookInUseListView.as_view()),
     path('book_in_use/<int:id>', views.BookInUseDetailView.as_view()),
     path('stats_per_day/', views.StatsPerDay.as_view()),
