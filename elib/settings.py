@@ -36,9 +36,10 @@ INSTALLED_APPS = [
     # 'admin_tools.theming',
     # 'admin_tools.menu',
     # 'admin_tools.dashboard',
+    'channels',
     'django_celery_beat',
-    'adminlte3',
-    'adminlte3_theme',
+    # 'adminlte3',
+    # 'adminlte3_theme',
     'serpy',
     'djoser',
     'ajax_select',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'notifications',
     'University',
     'User',
     'Book',
@@ -261,3 +263,4 @@ EMAIL_HOST_PASSWORD = 'UyceW9hBtqaPVxC'
 # EMAIL_HOST_USER = 'b2c6a20cb8fe19'
 # EMAIL_HOST_PASSWORD = '0e511052448635'
 # EMAIL_PORT = '2525'
+ASGI_APPLICATION = 'elib.routing.application'

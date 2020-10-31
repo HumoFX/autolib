@@ -1,3 +1,4 @@
+from notifications.signals import notify
 from rest_framework import serializers
 from User.serializers import UserSerializer
 from Book.serializers import BookSerializer
@@ -5,6 +6,10 @@ from .models import Order
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    user = UserSerializer(read_only=True)
+    book = BookSerializer(read_only=True)
+
     class Meta:
         model = Order
         # fields = ['id', 'user', 'book', 'time_of_get', 'time_of_order']
@@ -22,17 +27,25 @@ class OrderDetailSerializer(serializers.ModelSerializer):
                   'active', 'done', 'retrieved')
         # fields = '__all__'
 
+    def update(self, instance, validated_data):
+        active = validated_data['active']
+        done = validated_data['done']
+        retrieved = validated_data['retrieved']
+        user = instance.user
+        print(user)
+        if instance.active and not active:
+            if done:
+                notify.send(user, recipient=user, verb='you took a book')
+            else:
+                notify.send(user, recipient=user, verb='your order where deactivated')
+        elif not instance.active and instance.done:
+            if not instance.retrieved and retrieved:
+                notify.send(user, recipient=user, verb='you received a book to library')
 
-# class BookInUseSerializer(serializers.ModelSerializer):
-#     id = serializers.IntegerField(read_only=True)
-#     user = UserSerializer(read_only=True)
-#     book = BookSerializer(read_only=True)
-#     class Meta:
-#         model = Order
-#         # fields = ['id', 'user', 'book', 'time_of_get', 'time_of_order']
-#         fields = ['id', 'user', 'book', 'time_of_get', 'time_of_order', 'active', 'done', 'retrieved']
-
-# class BookInUseSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = BookInUse
-#         fields = '__all__'
+        instance.active = active
+        instance.done = done
+        instance.retrieved = retrieved
+        instance.time_of_pass = validated_data.get('time_of_pass', instance.time_of_pass)
+        instance.time_of_take_away = validated_data.get('time_of_take_away', instance.time_of_take_away)
+        instance.save()
+        return instance
