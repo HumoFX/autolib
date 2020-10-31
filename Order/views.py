@@ -79,12 +79,11 @@ class BookInUseListView(generics.ListAPIView):
 
 class BookInUseDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderDetailSerializer
-    # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
     permission_classes = [IsAuthenticated]
-    lookup_url_kwarg = 'id'
+    lookup_url_kwarg = 'order_id'
 
     def get_queryset(self):
-        queryset = Order.objects.get(id=self.kwargs['id'])
+        queryset = Order.objects.filter(id=self.kwargs['order_id'])
         return queryset
 
 
