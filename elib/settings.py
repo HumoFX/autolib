@@ -32,10 +32,6 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    # 'admin_tools',
-    # 'admin_tools.theming',
-    # 'admin_tools.menu',
-    # 'admin_tools.dashboard',
     'channels',
     'django_celery_beat',
     # 'adminlte3',
@@ -58,11 +54,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'notifications',
-    'University',
-    'User',
-    'Book',
-    'Order',
-
+    'api.v1.University',
+    'api.v1.User',
+    'api.v1.Book',
+    'api.v1.Order',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -159,6 +155,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     # 'PAGE_SIZE': 20
 }
@@ -208,8 +205,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATICFILES_DIRS = (os.path.join('static'),)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/templates/assets')
-MEDIA_URL = 'static/templates/assets/'
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # STATICFILES_FINDERS = ( 'django.contrib.staticfiles.finders.FileSystemFinder',
 # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
 PROTOCOL = 'https'

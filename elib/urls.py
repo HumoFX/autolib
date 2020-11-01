@@ -14,37 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import notifications.urls
-from ajax_select import urls as ajax_select_urls
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import url
-from django_registration.backends.activation.views import RegistrationView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 from rest_framework_simplejwt import views as jwt_views
 
-from Book import views
-from User.forms import MyCustomUserForm
-
 urlpatterns = [
-    url(r'^ajax_select/', include(ajax_select_urls)),
-    path('', include('Book.urls')),
-    path('', include('User.urls')),
-    path('', include('University.urls')),
-    path('', include('Order.urls')),
 
+    path('api/v1/client/', include('api.client.urls')),
+    path('api/v1/admin/', include('api.admin.urls')),
     # path to djoser end points
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.authtoken')),
-    path('auth/', include('djoser.urls.jwt')),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
     # path to our account's app endpoints
-    path('api/accounts/', include("User.urls")),
-    # url(r'^admin_tools/', include('admin_tools.urls')),
+    path('auth/', include('djoser.urls')),
     path('admin/', admin.site.urls),
-    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications of user')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
