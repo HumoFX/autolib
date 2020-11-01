@@ -5,6 +5,14 @@ from Book.serializers import BookSerializer
 from .models import Order
 
 
+class OrderCreateSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+
 class OrderSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)

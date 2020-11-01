@@ -13,13 +13,13 @@ from django.utils.timezone import now
 from Book.views import BookDetailView
 import calendar
 from .models import Order
-from .serializers import OrderSerializer, OrderDetailSerializer
+from .serializers import OrderSerializer, OrderDetailSerializer, OrderCreateSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .permissions import IsOwnerOrReadOnly
 
 
 # Create your views here.
-class OrderListView(generics.ListCreateAPIView):
+class OrderListView(generics.ListAPIView):
     serializer_class = OrderSerializer
     # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
     permission_classes = [IsAuthenticated]
@@ -34,6 +34,20 @@ class OrderListView(generics.ListCreateAPIView):
     # pagination_class = None
 
     # book_id = get_object_or_404(Book, id=OrderListView.request.data)
+
+
+class OrderCreateView(generics.CreateAPIView):
+    serializer_class = OrderCreateSerializer
+    # queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+        user = self.request.user
+        if not user.is_staff:
+            queryset = queryset.filter(user__id=user.id)
+        return queryset
+
     def perform_create(self, serializer):
         book_id = self.request.data.get('book')
         Book.decrement_book(Book, book_id)
