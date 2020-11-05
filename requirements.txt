@@ -48,7 +48,7 @@ django-timezone-field==4.0
 djangochannelsrestframework==0.1.1
 djangorestframework==3.11.0
 djangorestframework-jwt==1.11.0
-djangorestframework-simplejwt==4.4.0
+djangorestframework-simplejwt==4.3.0
 djoser==2.0.3
 drf-spectacular==0.10.0
 et-xmlfile==1.0.1

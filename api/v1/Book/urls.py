@@ -23,6 +23,7 @@ urlpatterns = [
     path('books/<int:pk>', BookDetailView.as_view()),
     path('category/', CategoryListView.as_view()),
     path('category/<int:pk>', CategoryDetailView.as_view()),
+    path('category/<int:category_id>/books', BookCategoryDetailView.as_view()),
 
 ]
 # from rest_framework import routers

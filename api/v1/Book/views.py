@@ -26,7 +26,7 @@ from .permissions import IsOwnerOrReadOnly
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'author', 'udc__name', 'key_words']
 
@@ -125,16 +125,28 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
         return queryset
 
 
+class BookCategoryDetailView(generics.ListAPIView):
+    # queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
+    serializer_class = BookSerializer
+    permission_classes = [AllowAny]
+    filter_backends = [filters.SearchFilter]
+    lookup_url_kwarg = ['category_id']
+
+    def get_queryset(self):
+        queryset = Book.objects.filter(udc_id=self.kwargs['category_id'])
+        return queryset
+
+
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 
 # ADMIN VIEW
