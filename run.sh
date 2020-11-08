@@ -10,6 +10,6 @@ python manage.py collectstatic --noinput
 # Start server
 echo "Starting server"
 #python manage.py runserver 0.0.0.0:8000
-gunicorn --bind 0.0.0.0:8000 elib.wsgi
+gunicorn --bind 0.0.0.0:8080 elib.wsgi
 
 #gunicorn -b 0.0.0.0 -p 8000 wsgi.asgi:application
