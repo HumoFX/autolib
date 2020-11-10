@@ -49,4 +49,9 @@ class UserSerializer(serializers.ModelSerializer):
             'date_joined',
         ]
 
+    def to_representation(self, instance):
+        response = super(UserSerializer, self).to_representation(instance)
+        if instance.avatar:
+            response['avatar'] = instance.avatar.url
+        return response
         # fields = '__all__'
