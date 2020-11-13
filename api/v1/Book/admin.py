@@ -63,27 +63,24 @@ class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin)
     #         if request.method in permissions.SAFE_METHODS:
     #             return True
     #         return obj.user == request.user
+
     def has_change_permission(self, request, obj=None):
         univer = request.user.university_id.id
         if request.user.is_superuser:
             return True
-        if obj is not None and obj.university.id != univer:
+        if obj is not None and obj.university.id == univer:
+            return True
+        else:
             return False
 
     def has_delete_permission(self, request, obj=None):
         univer = request.user.university_id.id
         if request.user.is_superuser:
             return True
-        if obj is not None and obj.university.id != univer:
+        if obj is not None and obj.university.id == univer:
+            return True
+        else:
             return False
-
-    # def get_queryset(self, request):
-    #     if request.user.is_superuser:
-    #         return Book.objects.all()
-    #     if request.user.is_staff:
-    #         univer = request.user.university_id.id
-    #         return Book.objects.filter(university__university_id__id=univer)
-
 
 admin.site.register(Book, BookAdmin)
 # admin.site.register(ALL, ALLAdmin)
