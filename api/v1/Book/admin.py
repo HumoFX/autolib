@@ -67,14 +67,14 @@ class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin)
         univer = request.user.university_id.id
         if request.user.is_superuser:
             return True
-        if obj is not None and obj.university.university_id.id != univer:
+        if obj is not None and obj.university.id != univer:
             return False
 
     def has_delete_permission(self, request, obj=None):
         univer = request.user.university_id.id
         if request.user.is_superuser:
             return True
-        if obj is not None and obj.university.university_id.id != univer:
+        if obj is not None and obj.university.id != univer:
             return False
 
     # def get_queryset(self, request):
