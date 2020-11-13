@@ -211,7 +211,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # STATICFILES_FINDERS = ( 'django.contrib.staticfiles.finders.FileSystemFinder',
 # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
 PROTOCOL = 'https'
-DOMAIN = 'hungry-poincare-0054dd.netlify.app'
+DOMAIN = 'autolib.tdtu.uz'
 SITE_NAME = 'Autolib'
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'change-password/{uid}/{token}',

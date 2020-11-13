@@ -7,7 +7,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 # Create your models here.
 from requests import Response
 
-from api.v1.University.models import Faculty
+from api.v1.University.models import Faculty, University
 
 
 class UDC(models.Model):
@@ -43,13 +43,13 @@ class Book(models.Model):
     title = models.CharField(max_length=512, verbose_name='Название', blank=False, default='')
     author = models.CharField(max_length=512, verbose_name='Автор', default='', unique=False)
     udc = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='УДК', null=True, to_field='udc_id')
-    isbn = models.CharField(max_length=512, default='')
-    key_words = models.TextField(verbose_name="Ключевые слова", default='')
+    isbn = models.CharField(max_length=512, default='', blank=True)
+    key_words = models.TextField(verbose_name="Ключевые слова", default='', blank=True)
     img = models.ImageField(upload_to='img/books', verbose_name='Обложка(Фото)', null=True)
-    university = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Университет',
+    university = models.ForeignKey(University, on_delete=models.CASCADE, verbose_name='Университет',
                                    blank=False)
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, verbose_name='Факультет', null=True,
-                                blank=False)
+                                blank=True)
     quantity = models.PositiveSmallIntegerField(verbose_name='Количество', default=0)
     real_time_count = models.PositiveSmallIntegerField(verbose_name='Кол-во книги на данный момент', default=0)
     price = models.FloatField(verbose_name='Цена', default=0)
