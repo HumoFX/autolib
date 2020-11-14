@@ -31,7 +31,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             'id',
-            'last_login',
             'is_superuser',
             'username',
             'full_name',
@@ -46,7 +45,6 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'is_staff',
             'is_active',
-            'date_joined',
         ]
 
     def to_representation(self, instance):
