@@ -151,44 +151,15 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    # time = datetime.now()
-    #
-    # udc = UDCSerializer
-    # university = UserSerializer
-    # faculty = FacultySerializer
-
-    # id = serializers.IntegerField()
-    # title = serializers.CharField()
-    # author = serializers.CharField()
-    # udc = serializers.PrimaryKeyRelatedField(read_only=True)
-    # isbn = serializers.CharField()
-    # key_words = serializers.CharField()
-    # university = serializers.PrimaryKeyRelatedField(read_only=True)
-    # faculty = serializers.PrimaryKeyRelatedField(read_only=True)
-    # quantity = serializers.IntegerField()
-    # price = serializers.FloatField()
-    # rating = serializers.FloatField()
-    # used = serializers.IntegerField()
-    # img = serializers.ImageField()
-    # e_book = serializers.BooleanField()
-    # file = serializers.FileField()
-    # printed_book = serializers.BooleanField()
-    # special_books = serializers.BooleanField()
-    # work_book = serializers.BooleanField()
-    # date_pub = serializers.DateField()
-    # date_get = serializers.DateField()
-    # created = serializers.DateField()
     class Meta:
         model = Book
-        # fields = ('id', 'title', 'author', 'udc', 'isbn', 'key_words', 'img',
-        #           'faculty', 'quantity', 'price', 'rating',
-        #           'used', 'e_book', 'file', 'printed_book', 'special_books',
-        #           'work_book', 'date_pub', 'date_get', 'created')
         fields = '__all__'
-        # read_only_fields = ('id', 'title', 'author', 'udc', 'isbn', 'key_words', 'img',
-        #                     'university', 'faculty', 'quantity', 'price', 'rating',
-        #                     'used', 'e_book', 'file', 'printed_book', 'special_books',
-        #                     'work_book', 'date_pub', 'date_get', 'created')
 
-    # time1 = datetime.now()
-    # print('\n ModelSerializer', time1 - time)
+    def to_representation(self, instance):
+        response = super(BookSerializer, self).to_representation(instance)
+        print(instance.file)
+        if instance.img:
+            response['img'] = instance.img.url
+        if instance.file:
+            response['file'] = instance.file.url
+        return response
