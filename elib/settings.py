@@ -210,7 +210,6 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # STATICFILES_FINDERS = ( 'django.contrib.staticfiles.finders.FileSystemFinder',
 # 'django.contrib.staticfiles.finders.AppDirectoriesFinder',    #causes verbose duplicate notifications in django 1.9 )
-PROTOCOL = 'https'
 DOMAIN = 'autolib.tdtu.uz'
 SITE_NAME = 'Autolib'
 DJOSER = {
