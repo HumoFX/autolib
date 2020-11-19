@@ -19,14 +19,14 @@ class Profile(AbstractUser):
     email = models.EmailField(unique=True)
     role = models.TextField(choices=ROLE_CHOICES)
     full_name = models.TextField(verbose_name='ФИО')
-    avatar = models.ImageField(verbose_name='Аватар', upload_to='img/users', null=True)
+    avatar = models.ImageField(verbose_name='Аватар', upload_to='img/users', null=True, blank=True)
     university_id = models.ForeignKey(University, on_delete=models.PROTECT, related_name='Университет')
     faculty = models.ForeignKey(Faculty, on_delete=models.PROTECT, related_name='Факультет', null=True)
-    group_name = models.TextField(verbose_name='Номер группы', null=True)
-    passport_serial_id = models.CharField(max_length=9, verbose_name='Серийный номер пасспорта')
-    tel_num = models.CharField(max_length=9, validators=[RegexValidator(r'^\d{1,10}$')], verbose_name='Номер телефона')
-    kafedra = models.TextField(verbose_name='Кафедра', null=True)
-    position = models.TextField(verbose_name='Должность', null=True)
+    group_name = models.TextField(verbose_name='Номер группы', null=True,blank=True)
+    passport_serial_id = models.CharField(max_length=9, verbose_name='Серийный номер пасспорта', blank=True, null=True)
+    tel_num = models.CharField(max_length=9, validators=[RegexValidator(r'^\d{1,10}$')], verbose_name='Номер телефона', blank=True)
+    kafedra = models.TextField(verbose_name='Кафедра', null=True, blank=True)
+    position = models.TextField(verbose_name='Должность', null=True, blank=True)
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'role', 'full_name', 'university_id', 'faculty', 'group_name', 'passport_serial_id',
                        'kafedra', 'position', 'tel_num']

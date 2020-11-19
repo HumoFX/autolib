@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+import td_biblio
 
 urlpatterns = [
 
@@ -33,6 +34,7 @@ urlpatterns = [
 
     # path to our account's app endpoints
     path('auth/', include('djoser.urls')),
+    url(r'^admin_tools/', include('admin_tools.urls')),
     path('admin/', admin.site.urls),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications of user')),
 ]

@@ -2,20 +2,202 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
-from .models import Category, UDC, Book
+from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
+from .models import (
+    Author,
+    Editor,
+    Journal,
+    Publisher,
+    Collection,
+    AuthorEntryRank,
+    Language
+)
+
+
+class LibraryStorageAdmin(admin.ModelAdmin):
+    model = LibraryStorage
+    fields = ['name', 'abbreviation']
+
+    def save_model(self, request, obj, form, change):
+        university = request.user.university_id
+        obj.university = university
+        obj.save()
+
+
+class LibraryStorageEntryInline(admin.TabularInline):
+    extra = 1
+    model = LibraryStorageEntry
+    ordering = ("entry_number",)
+
+    def get_queryset(self, request):
+        queryset = LibraryStorageEntry.objects.filter(storage__university_id=request.user.university_id)
+        print(queryset)
+        return queryset
+
+
+class AuthorEntryRankInline(admin.TabularInline):
+    extra = 1
+    model = AuthorEntryRank
+    ordering = ("rank",)
+
+
+class AbstractHumanAdmin(admin.ModelAdmin):
+    list_display = ("last_name", "first_name")
+    ordering = ("last_name", "first_name")
+
+
+class AuthorAdmin(AbstractHumanAdmin):
+    list_display = ("last_name", "first_name", "user")
+    raw_id_fields = ("user",)
+
+
+class EditorAdmin(AbstractHumanAdmin):
+    raw_id_fields = ("user",)
+
+
+class AbstractEntityAdmin(admin.ModelAdmin):
+    ordering = ("name",)
+
+
+class JournalAdmin(AbstractEntityAdmin):
+    pass
+
+
+class PublisherAdmin(AbstractEntityAdmin):
+    pass
+
+
+class CategoryAdmin(AjaxSelectAdmin):
+    form = make_ajax_form(Category, {
+        # fieldname: channel_name
+        'udc_id': 'category',
+        'parent': 'parent_id'
+    })
+
+class UDCAdmin(AjaxSelectAdmin):
+    form = make_ajax_form(UDC, {
+        # fieldname: channel_name
+        'udc': 'udc_num',
+        'parent': 'parent'
+    })
+
+
+class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin):
+    # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
+    form = make_ajax_form(Book, {
+        # fieldname: channel_name
+        'udc': 'udc',
+        'udc_new': 'udc_new'
+    })
+
+    def has_change_permission(self, request, obj=None):
+        univer = request.user.university_id.id
+        if request.user.is_superuser:
+            return True
+        if obj is not None and obj.university.id == univer:
+            return True
+        else:
+            return False
+
+    def has_delete_permission(self, request, obj=None):
+        univer = request.user.university_id.id
+        if request.user.is_superuser:
+            return True
+        if obj is not None and obj.university.id == univer:
+            return True
+        else:
+            return False
+
+
+class EntryAdmin(BookAdmin, admin.ModelAdmin):
+    date_hierarchy = "publication_date"
+    form = make_ajax_form(Book, {
+        # fieldname: channel_name
+        'udc': 'udc',
+        'udc_new': 'udc_new',
+        'editors': 'editors',
+        'journal': 'journal',
+        'publisher': 'publisher'
+    })
+    fieldsets = (
+        (
+            "Основные поля публикации",
+            {
+                "fields": (
+                    "type",
+                    "title",
+                    "journal",
+                    "volume",
+                    ("pages", "language"),
+                    ("publication_date", "is_partial_publication_date"),
+                )
+            },
+        ),
+        ("Идентификаторы", {"fields": (("doi", "issn", "pmid"), ("isbn", "isbn2"))}),
+        ("Книжные поля", {"fields": (("booktitle", "edition", "chapter"), ("udc", "udc_new"))}),
+        ("Кандидатская диссертация", {"fields": ("school",)}),
+        ("Труды", {"fields": ("organization",)}),
+        (
+            "Разное",
+            {"fields": ("editors", "publisher", "address", "annote", "note")},
+        ),
+        ("Перекрестные ссылки", {"fields": ("crossref",)}),
+        (
+            "Дополнительная информациия",
+            {
+                "fields": (
+                    ("printed_book", "e_book", "special_books"),
+                    ("img", "file"),
+                    "key_words",
+                    ("quantity", "real_time_count"),
+                    "price",
+                    "used",
+                    "date_get"
+                )
+            }
+        )
+    )
+    inlines = (AuthorEntryRankInline, LibraryStorageEntryInline)
+    list_display = ("title", "first_author", "type", "publication_date", "journal")
+    list_filter = ("publication_date", "journal", "authors")
+    list_per_page = 100
+    list_select_related = True
+    ordering = ("-publication_date",)
+    raw_id_fields = ("authors", "crossref")
+    search_fields = ("title",)
+
+    def save_model(self, request, obj, form, change):
+        university = request.user.university_id
+        obj.university = university
+        print(obj)
+        obj.save()
+
+
+class CollectionAdmin(admin.ModelAdmin):
+    def size(self, obj):
+        """Get the number of entries in each collection"""
+        return obj.entries.count()
+
+    list_display = ("name", "size")
+    raw_id_fields = ("entries",)
+
+
+admin.site.register(LibraryStorageEntry)
+admin.site.register(LibraryStorage,LibraryStorageAdmin)
+admin.site.register(Language)
+admin.site.register(Author, AuthorAdmin)
+admin.site.register(Editor, EditorAdmin)
+admin.site.register(Journal, JournalAdmin)
+admin.site.register(Publisher, PublisherAdmin)
+admin.site.register(Book, EntryAdmin)
+admin.site.register(Collection, CollectionAdmin)
 
 # Register your models here.
-class BookResource(resources.ModelResource):
-    class Meta:
-        model = Book
-        skip_unchanged = True
 
-        fields = ('id', 'title', 'author', 'udc', 'keywords', 'img', 'e_book', 'file',
-                  'date_pub')
-        # exlude = 'id'
+# exlude = 'id'
 
 
 # class AllResource(resources.ModelResource):
@@ -36,54 +218,8 @@ class BookResource(resources.ModelResource):
 #     resource_class = AllResource
 
 
-class CategoryAdmin(AjaxSelectAdmin):
-    form = make_ajax_form(Category, {
-        # fieldname: channel_name
-        'udc_id': 'category',
-        'parent': 'parent_id'
-    })
-
-
-class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin):
-    # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
-    form = make_ajax_form(Book, {
-        # fieldname: channel_name
-        'udc': 'udc'
-    })
-
-    ordering = ('author', 'udc__name')
-    search_fields = ['udc__name', 'udc__udc_id', 'title', 'author', 'date_get', 'date_pub']
-    list_filter = ('university', 'rating')
-    list_display = ('title', 'author', 'udc', 'date_get', 'date_pub', 'rating', 'used')
-    resource_class = BookResource
-
-    # skip_unchanged = True
-    # class IsOwnerOrReadOnly(permissions.BasePermission):
-    #     def has_object_permission(self, request, view, obj):
-    #         if request.method in permissions.SAFE_METHODS:
-    #             return True
-    #         return obj.user == request.user
-
-    def has_change_permission(self, request, obj=None):
-        univer = request.user.university_id.id
-        if request.user.is_superuser:
-            return True
-        if obj is not None and obj.university.id == univer:
-            return True
-        else:
-            return False
-
-    def has_delete_permission(self, request, obj=None):
-        univer = request.user.university_id.id
-        if request.user.is_superuser:
-            return True
-        if obj is not None and obj.university.id == univer:
-            return True
-        else:
-            return False
-
-admin.site.register(Book, BookAdmin)
+# admin.site.register(Book, BookAdmin)
 # admin.site.register(ALL, ALLAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(UDC)
+admin.site.register(UDC, UDCAdmin)
 # admin.site.register(Book)
