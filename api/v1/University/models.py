@@ -16,7 +16,7 @@ class Faculty(models.Model):
 class University(models.Model):
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=25)
-    logo = models.ImageField(name="Логотип", upload_to='img/universities', null=True)
+    logo = models.ImageField(verbose_name="Логотип", upload_to='img/universities', null=True)
     faculties = models.ManyToManyField(Faculty)
 
     class Meta:
