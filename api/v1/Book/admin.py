@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
-from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage
+from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
@@ -194,32 +194,7 @@ admin.site.register(Journal, JournalAdmin)
 admin.site.register(Publisher, PublisherAdmin)
 admin.site.register(Book, EntryAdmin)
 admin.site.register(Collection, CollectionAdmin)
-
-# Register your models here.
-
-# exlude = 'id'
-
-
-# class AllResource(resources.ModelResource):
-#     class Meta:
-#         model = ALL
-#         skip_unchanged = True
-#         import_id_fields = ('title', 'author', 'date_pub')
-#         fields = ('id', 'title', 'author', 'udc', 'keywords', 'img', 'e_book', 'file',
-#                   'date_pub')
-#
-#
-# class ALLAdmin(ImportExportActionModelAdmin, admin.ModelAdmin):
-#     # fields = ('Факультет', 'Количество', 'Цена', ' Рейтинг', ' Использовано', 'Опубликовано', 'created')
-#
-#     ordering = ('author', 'udc')
-#     search_fields = ['udc', 'udc__udc_id__id_number', 'title', 'author']
-#     list_display = ('title', 'author', 'udc', 'date_pub')
-#     resource_class = AllResource
-
-
-# admin.site.register(Book, BookAdmin)
-# admin.site.register(ALL, ALLAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC, UDCAdmin)
-# admin.site.register(Book)
+admin.site.register(DocumentType)
+

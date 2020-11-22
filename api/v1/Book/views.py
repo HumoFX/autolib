@@ -28,7 +28,7 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [AllowAny]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'authors', 'udc__name', 'key_words']
+    search_fields = ['title', 'udc__name', 'key_words']
 
     # def get_queryset(self):
     #     queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university'
@@ -154,7 +154,7 @@ class BookListAdminView(generics.ListAPIView):
     serializer_class = BookSerializer
     permission_classes = [IsAdminUser]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'authors', 'udc__name', 'key_words']
+    search_fields = ['title', 'udc__name', 'key_words']
 
 
 class BookDetailAdminView(generics.RetrieveUpdateDestroyAPIView):
