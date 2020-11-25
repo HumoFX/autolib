@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.utils.translation import ugettext_lazy as _
+from partial_date import PartialDateField
 
 # Create your models here.
 from requests import Response
@@ -209,7 +210,7 @@ class Book(models.Model):
     journal = models.ForeignKey(
         "Journal", related_name="entries", blank=True, null=True, on_delete=models.CASCADE, verbose_name="Журнал"
     )
-    publication_date = models.DateField(_("Дата издания"), null=True)
+    publication_date = PartialDateField(_("Дата издания"), null=True)
     is_partial_publication_date = models.BooleanField(
         _("Дата частичной публикации?"),
         default=True,
@@ -258,6 +259,8 @@ class Book(models.Model):
     pmid = models.CharField(
         _("PMID"), blank=True, max_length=20, help_text=_("Pubmed ID")
     )
+    inventory_number = models.CharField(_("Invertory Number"), blank=True, max_length=100,
+                                        help_text=_("Инвертизационные номера, разделенные запятыми или двойным дефисом"))
 
     # Book
     booktitle = models.CharField(
@@ -337,6 +340,13 @@ class Book(models.Model):
         verbose_name_plural = _("Книги")
         ordering = ("-publication_date",)
 
+    # def clean(self):
+    #     if self.is_partial_publication_date:
+    #         fmt = "%Y"
+    #     else:
+    #         fmt = "%F %Y"
+    #     return self.publication_date.strftime(fmt)
+
     def __str__(self):
         """Format entry with a default bibliography style"""
         # Authors
@@ -349,17 +359,18 @@ class Book(models.Model):
         s += '"%(title)s", ' % self.__dict__
 
         # Journal
-        if self.journal.abbreviation:
-            s += "в %(abbreviation)s, " % self.journal.__dict__
-        else:
-            # fall back to the real name
-            s += "в %(name)s, " % self.journal.__dict__
+        if self.journal:
+            if self.journal.abbreviation:
+                s += "в %(abbreviation)s, " % self.journal.__dict__
+            else:
+                # fall back to the real name
+                s += "в %(name)s, " % self.journal.__dict__
 
         # Misc
         if self.volume and self.pages:
             s += "том. %(volume)s, стр. %(pages)s, " % self.__dict__
-        if self.publication_date:
-            s += "%s." % self.publication_date.strftime("%B %Y")
+        # if self.publication_date:
+        #     s += "%s." % self.publication_date.strftime("%B %Y")
 
         return s
 

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.admin.templatetags.admin_urls import register
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 
@@ -15,6 +16,16 @@ from .models import (
     AuthorEntryRank,
     Language
 )
+
+
+@register.filter
+def publication_date(entry):
+    """We expect an entry object to filter"""
+    if entry.is_partial_publication_date:
+        fmt = "%Y"
+    else:
+        fmt = "%F %Y"
+    return entry.publication_date.strftime(fmt)
 
 
 class LibraryStorageAdmin(admin.ModelAdmin):
@@ -77,6 +88,7 @@ class CategoryAdmin(AjaxSelectAdmin):
         'parent': 'parent_id'
     })
 
+
 class UDCAdmin(AjaxSelectAdmin):
     form = make_ajax_form(UDC, {
         # fieldname: channel_name
@@ -113,7 +125,7 @@ class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin)
 
 
 class EntryAdmin(BookAdmin, admin.ModelAdmin):
-    date_hierarchy = "publication_date"
+    # date_hierarchy = "publication_date"
     form = make_ajax_form(Book, {
         # fieldname: channel_name
         'udc': 'udc',
@@ -186,7 +198,7 @@ class CollectionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(LibraryStorageEntry)
-admin.site.register(LibraryStorage,LibraryStorageAdmin)
+admin.site.register(LibraryStorage, LibraryStorageAdmin)
 admin.site.register(Language)
 admin.site.register(Author, AuthorAdmin)
 admin.site.register(Editor, EditorAdmin)
@@ -197,4 +209,3 @@ admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC, UDCAdmin)
 admin.site.register(DocumentType)
-
