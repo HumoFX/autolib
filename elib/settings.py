@@ -32,9 +32,9 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
+    # 'admin_tools',
+    # 'admin_tools.theming',
+    # 'admin_tools.menu',
     # 'admin_tools.dashboard',
     'channels',
     'django_celery_beat',
@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'api.v1.User',
     'api.v1.Book',
     'api.v1.Order',
-    # 'api.v1.Biblio',
     'drf_spectacular',
 ]
 
@@ -114,7 +113,7 @@ ROOT_URLCONF = 'elib.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'staticfiles/../static/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         # 'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,8 +123,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'loaders': [
-                'admin_tools.template_loaders.Loader',
                 'django.template.loaders.filesystem.Loader',
+                'admin_tools.template_loaders.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
         },
@@ -141,14 +140,14 @@ ACCOUNT_ACTIVATION_DAYS = 7
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'dk6jrue7v3d8l',
-        'NAME': 'avtolib',
-        # 'USER': 'riaztzeoxzmwek',
-        'USER': 'postgres',
-        # 'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
-        'PASSWORD': 'postgres',
-        # 'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
-        'HOST': 'db',
+        'NAME': 'dk6jrue7v3d8l',
+        # 'NAME': 'avtolib',
+        'USER': 'riaztzeoxzmwek',
+        # 'USER': 'postgres',
+        'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
+        # 'PASSWORD': 'postgres',
+        'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
+        # 'HOST': 'db',
         'PORT': 5432,
     }
 }
@@ -190,7 +189,7 @@ AUTH_USER_MODEL = 'User.Profile'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+# LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Asia/Tashkent'
 

@@ -337,31 +337,31 @@ class Book(models.Model):
         verbose_name_plural = _("Книги")
         ordering = ("-publication_date",)
 
-    # def __str__(self):
-    #     """Format entry with a default bibliography style"""
-    #     # Authors
-    #     author_str = "%(last_name)s %(first_initial)s"
-    #     s = ", ".join([author_str % a.__dict__ for a in self.get_authors()])
-    #     s = ", и ".join(s.rsplit(", ", 1))  # last author case
-    #     s += ", "
-    #
-    #     # Title
-    #     s += '"%(title)s", ' % self.__dict__
-    #
-    #     # Journal
-    #     if self.journal.abbreviation:
-    #         s += "в %(abbreviation)s, " % self.journal.__dict__
-    #     else:
-    #         # fall back to the real name
-    #         s += "в %(name)s, " % self.journal.__dict__
-    #
-    #     # Misc
-    #     if self.volume and self.pages:
-    #         s += "том. %(volume)s, стр. %(pages)s, " % self.__dict__
-    #     if self.publication_date:
-    #         s += "%s." % self.publication_date.strftime("%B %Y")
-    #
-    #     return s
+    def __str__(self):
+        """Format entry with a default bibliography style"""
+        # Authors
+        author_str = "%(last_name)s %(first_initial)s"
+        s = ", ".join([author_str % a.__dict__ for a in self.get_authors()])
+        s = ", и ".join(s.rsplit(", ", 1))  # last author case
+        s += ", "
+
+        # Title
+        s += '"%(title)s", ' % self.__dict__
+
+        # Journal
+        if self.journal.abbreviation:
+            s += "в %(abbreviation)s, " % self.journal.__dict__
+        else:
+            # fall back to the real name
+            s += "в %(name)s, " % self.journal.__dict__
+
+        # Misc
+        if self.volume and self.pages:
+            s += "том. %(volume)s, стр. %(pages)s, " % self.__dict__
+        if self.publication_date:
+            s += "%s." % self.publication_date.strftime("%B %Y")
+
+        return s
 
     def _get_first_author(self):
         """
