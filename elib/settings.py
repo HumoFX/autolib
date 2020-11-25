@@ -140,14 +140,14 @@ ACCOUNT_ACTIVATION_DAYS = 7
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dk6jrue7v3d8l',
-        # 'NAME': 'avtolib',
-        'USER': 'riaztzeoxzmwek',
-        # 'USER': 'postgres',
-        'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
-        # 'PASSWORD': 'postgres',
-        'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
-        # 'HOST': 'db',
+        # 'NAME': 'dk6jrue7v3d8l',
+        'NAME': 'avtolib',
+        # 'USER': 'riaztzeoxzmwek',
+        'USER': 'postgres',
+        # 'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
+        'PASSWORD': 'postgres',
+        # 'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
+        'HOST': 'db',
         'PORT': 5432,
     }
 }
