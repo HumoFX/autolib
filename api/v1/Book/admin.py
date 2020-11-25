@@ -148,7 +148,7 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
                 )
             },
         ),
-        ("Идентификаторы", {"fields": (("doi", "issn", "pmid"), ("isbn", "isbn2"))}),
+        ("Идентификаторы", {"fields": (("doi", "issn", "pmid"), ("isbn", "isbn2", "inventory_number"))}),
         ("Книжные поля", {"fields": (("booktitle", "edition", "chapter"), ("udc", "udc_new"))}),
         ("Кандидатская диссертация", {"fields": ("school",)}),
         ("Труды", {"fields": ("organization",)}),

@@ -259,7 +259,7 @@ class Book(models.Model):
     pmid = models.CharField(
         _("PMID"), blank=True, max_length=20, help_text=_("Pubmed ID")
     )
-    inventory_number = models.CharField(_("Invertory Number"), blank=True, max_length=100,
+    inventory_number = models.CharField(_("Inventory Number"), blank=True, max_length=100,
                                         help_text=_("Инвертизационные номера, разделенные запятыми или двойным дефисом"))
 
     # Book
