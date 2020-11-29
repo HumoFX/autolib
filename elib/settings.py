@@ -32,10 +32,13 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    # 'grappelli',
     # 'admin_tools',
     # 'admin_tools.theming',
     # 'admin_tools.menu',
     # 'admin_tools.dashboard',
+    # 'admin_tools_stats',
+    # 'django_nvd3',
     'channels',
     'django_celery_beat',
     # 'adminlte3',
@@ -142,12 +145,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         # 'NAME': 'dk6jrue7v3d8l',
         'NAME': 'avtolib',
+        # 'NAME': 'autolib',
         # 'USER': 'riaztzeoxzmwek',
         'USER': 'postgres',
         # 'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
         'PASSWORD': 'postgres',
+        # 'PASSWORD': 'Humo6779',
         # 'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
         'HOST': 'db',
+        # 'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -189,7 +195,7 @@ AUTH_USER_MODEL = 'User.Profile'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-# LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Asia/Tashkent'
 
@@ -209,7 +215,9 @@ STATIC_URL = '/static/'
 # STATICFILES_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_FINDERS = {'django.contrib.staticfiles.finders.AppDirectoriesFinder'}
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 # STATICFILES_DIRS = (os.path.join('static'),)
 MEDIA_URL = "/media/"
 
@@ -263,13 +271,11 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_HOST_USER = 'rasulganiyev1999@gmail.com'
 EMAIL_HOST_PASSWORD = 'mSfUv4O9CgRXczEK'
-# EMAIL_HOST = 'smtp.mailtrap.io'
-# EMAIL_HOST_USER = 'b2c6a20cb8fe19'
-# EMAIL_HOST_PASSWORD = '0e511052448635'
-# EMAIL_PORT = '2525'
+
 ASGI_APPLICATION = 'elib.routing.application'
 
 ADMIN_TOOLS_MENU = 'elib.menu.CustomMenu'
 ADMIN_TOOLS_INDEX_DASHBOARD = 'elib.dashboard.CustomIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'elib.dashboard.CustomAppIndexDashboard'
 ADMIN_TOOLS_THEMING_CSS = 'css/theming.css'
+
