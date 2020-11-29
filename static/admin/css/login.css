@@ -6,8 +6,7 @@ body.login {
 
 .login #header {
     height: auto;
-    padding: 15px 16px;
-    justify-content: center;
+    padding: 5px 16px;
 }
 
 .login #header h1 {
@@ -56,8 +55,8 @@ body.login {
     padding: 8px;
     width: 100%;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .login span.help {

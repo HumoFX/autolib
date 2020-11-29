@@ -9,7 +9,7 @@ To activate your index dashboard add the following to your settings.py::
 And to activate the app index dashboard::
     ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'elib.dashboard.CustomAppIndexDashboard'
 """
-
+from admin_tools_stats.modules import get_active_graph, DashboardCharts
 from django.utils.translation import ugettext_lazy as _
 try:
     from django.urls import reverse
@@ -32,7 +32,7 @@ class CustomIndexDashboard(Dashboard):
             layout='inline',
             draggable=False,
             deletable=False,
-            collapsible=False,
+            collapsible=True,
             children=[
                 [_('Return to site'), '/'],
                 [_('Change password'),
@@ -56,34 +56,24 @@ class CustomIndexDashboard(Dashboard):
         # append a recent actions module
         self.children.append(modules.RecentActions(_('Recent Actions'), 5))
 
-        # append a feed module
-        self.children.append(modules.Feed(
-            _('Latest Django News'),
-            feed_url='http://www.djangoproject.com/rss/weblog/',
-            limit=5
+        self.children.append(modules.AppList(
+            _('Dashboard Stats Settings'),
+            models=('admin_tools_stats.*',),
         ))
 
-        # append another link list module for "support".
-        self.children.append(modules.LinkList(
-            _('Support'),
-            children=[
-                {
-                    'title': _('Django documentation'),
-                    'url': 'http://docs.djangoproject.com/',
-                    'external': True,
-                },
-                {
-                    'title': _('Django "django-users" mailing list'),
-                    'url': 'http://groups.google.com/group/django-users',
-                    'external': True,
-                },
-                {
-                    'title': _('Django irc channel'),
-                    'url': 'irc://irc.freenode.net/django',
-                    'external': True,
-                },
-            ]
-        ))
+        # Copy following code into your custom dashboard
+        # append following code after recent actions module or
+        # a link list module for "quick links"
+        graph_list = get_active_graph()
+        for i in graph_list:
+            kwargs = {}
+            kwargs['graph_key'] = i.graph_key
+            kwargs['require_chart_jscss'] = False
+
+            if context['request'].POST.get('select_box_' + i.graph_key):
+                kwargs['select_box_' + i.graph_key] = context['request'].POST['select_box_' + i.graph_key]
+
+            self.children.append(DashboardCharts(**kwargs))
 
 
 class CustomAppIndexDashboard(AppIndexDashboard):

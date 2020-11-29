@@ -142,8 +142,8 @@ class Publisher(AbstractEntity):
 
 class UDC(MPTTModel):
     """Universal Decimal Classification"""
-    udc = models.CharField(max_length=64)
-    name = models.TextField()
+    udc = models.CharField(max_length=64, verbose_name='Код УДК')
+    name = models.TextField(verbose_name='Описание')
     parent = TreeForeignKey('self', null=True, default="", blank=True, related_name='children',
                             on_delete=models.CASCADE, verbose_name='Родительский удк')
 
@@ -182,7 +182,7 @@ class Category(models.Model):
 
 
 class Book(models.Model):
-    udc = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='УДК', null=True, to_field='udc_id',
+    udc = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='УДК', null=True,
                             verbose_name="УДК", help_text="Временно")
     udc_new = models.ForeignKey(UDC, on_delete=models.CASCADE, null=True, verbose_name="УДК*",
                                 help_text="Универасальная "
@@ -259,8 +259,9 @@ class Book(models.Model):
     pmid = models.CharField(
         _("PMID"), blank=True, max_length=20, help_text=_("Pubmed ID")
     )
-    inventory_number = models.CharField(_("Inventory Number"), blank=True, max_length=100,
-                                        help_text=_("Инвертизационные номера, разделенные запятыми или двойным дефисом"))
+    inventory_number = models.CharField(_("Инвентарный номер"), blank=True, max_length=100,
+                                        help_text=_(
+                                            "Инвертизационные номера, разделенные запятыми или двойным дефисом"))
 
     # Book
     booktitle = models.CharField(
@@ -306,7 +307,7 @@ class Book(models.Model):
         verbose_name="Издатель"
     )
     address = models.CharField(
-        _("Address"),
+        _("Адрес"),
         max_length=250,
         blank=True,
         help_text=_(
@@ -491,3 +492,8 @@ class LibraryStorageEntry(models.Model):
             "entry": self.entry,
             "entry_number": self.entry_number,
         }
+
+
+class UDCImage(models.Model):
+    udc = models.OneToOneField(UDC, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='img/udc', verbose_name='Иконка')

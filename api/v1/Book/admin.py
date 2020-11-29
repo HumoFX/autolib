@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.admin.templatetags.admin_urls import register
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
-
-from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType
+from mptt.admin import DraggableMPTTAdmin, MPTTModelAdmin
+from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType, UDCImage
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
@@ -89,12 +89,19 @@ class CategoryAdmin(AjaxSelectAdmin):
     })
 
 
-class UDCAdmin(AjaxSelectAdmin):
+class UDCAdmin(AjaxSelectAdmin, DraggableMPTTAdmin):
     form = make_ajax_form(UDC, {
         # fieldname: channel_name
         'udc': 'udc_num',
         'parent': 'parent'
     })
+    list_display = (
+        'tree_actions',
+        'indented_title',
+        'name',
+        'udc',
+        'get_descendant_count'
+    )
 
 
 class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin):
@@ -174,12 +181,15 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
     )
     inlines = (AuthorEntryRankInline, LibraryStorageEntryInline)
     list_display = ("title", "first_author", "type", "publication_date", "journal")
-    list_filter = ("publication_date", "journal", "authors")
+    list_filter = ("publication_date", "journal", "authors", "type")
     list_per_page = 100
     list_select_related = True
     ordering = ("-publication_date",)
     raw_id_fields = ("authors", "crossref")
     search_fields = ("title",)
+    # save_as = True
+    # save_on_top = True
+    # change_list_template = 'Book/books.html'
 
     def save_model(self, request, obj, form, change):
         university = request.user.university_id
@@ -208,4 +218,5 @@ admin.site.register(Book, EntryAdmin)
 admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC, UDCAdmin)
+admin.site.register(UDCImage)
 admin.site.register(DocumentType)
