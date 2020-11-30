@@ -145,6 +145,4 @@ pgdata
 
 sqlite3.db
 
-static/
-
 media/
