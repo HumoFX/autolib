@@ -144,16 +144,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         # 'NAME': 'dk6jrue7v3d8l',
-        'NAME': 'avtolib',
-        # 'NAME': 'autolib',
+        # 'NAME': 'avtolib',
+        'NAME': 'autolib',
         # 'USER': 'riaztzeoxzmwek',
         'USER': 'postgres',
         # 'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
-        'PASSWORD': 'postgres',
-        # 'PASSWORD': 'Humo6779',
+        # 'PASSWORD': 'postgres',
+        'PASSWORD': 'Humo6779',
         # 'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
-        'HOST': 'db',
-        # 'HOST': 'localhost',
+        # 'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
