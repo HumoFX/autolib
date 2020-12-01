@@ -99,6 +99,7 @@ class AbstractEntity(models.Model):
         _("Аббревиатура/код объекта"),
         max_length=100,
         blank=True,
+        unique=True
     )
 
     class Meta:
@@ -178,7 +179,12 @@ class Category(models.Model):
 
     def __str__(self):
         return "{} - {}".format(self.name, self.udc_id)
-        # return self.name
+
+
+class CopyrightMark(AbstractEntity):
+    class Meta:
+        verbose_name = _("Авторсикй знак")
+        verbose_name_plural = _("Авторский знак")
 
 
 class Book(models.Model):
@@ -189,6 +195,7 @@ class Book(models.Model):
                                           "десятичная "
                                           "классификация(просим "
                                           "заполнять эту таблицу)")
+    copyright_mark = models.ForeignKey(CopyrightMark, on_delete=models.CASCADE, verbose_name="Авторский знак", null=True, blank=True)
     key_words = models.TextField(verbose_name="Ключевые слова", default='', blank=True)
     img = models.ImageField(upload_to='img/books', verbose_name='Обложка(Фото)', null=True)
     university = models.ForeignKey(University, on_delete=models.CASCADE, verbose_name='Университет',

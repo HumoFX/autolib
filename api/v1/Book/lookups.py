@@ -1,7 +1,7 @@
 from ajax_select import register, LookupChannel
 from django.db.models import Q
 
-from .models import Book, UDC, Category, Editor, Journal, Publisher
+from .models import Book, UDC, Category, Editor, Journal, Publisher, CopyrightMark
 
 
 @register('udc')
@@ -112,3 +112,13 @@ class UDCLookup(LookupChannel):
 
     def format_item_display(self, item):
         return u"<span class='tag'>%s</span>" % item
+
+@register('copyright_mark')
+class CopyrightMarkLookup(LookupChannel):
+    model = CopyrightMark
+
+    def get_query(self, q, request):
+        return self.model.objects.filter(Q(abbreviation__contains=q) | Q(name__contains=q))
+
+    def format_item_display(self, obj):
+        return u"<span class='tag'>%s</span>" % obj

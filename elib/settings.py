@@ -126,8 +126,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'loaders': [
-                'django.template.loaders.filesystem.Loader',
-                'admin_tools.template_loaders.Loader',
+                # 'django.template.loaders.filesystem.Loader',
+                # 'admin_tools.template_loaders.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
         },
@@ -143,7 +143,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'dk6jrue7v3d8l',
+        #
         'NAME': 'avtolib',
         # 'NAME': 'autolib',
         # 'USER': 'riaztzeoxzmwek',

@@ -3,7 +3,7 @@ from django.contrib.admin.templatetags.admin_urls import register
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 from mptt.admin import DraggableMPTTAdmin, MPTTModelAdmin
-from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType, UDCImage
+from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType, UDCImage, CopyrightMark
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
@@ -139,7 +139,8 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
         'udc_new': 'udc_new',
         'editors': 'editors',
         'journal': 'journal',
-        'publisher': 'publisher'
+        'publisher': 'publisher',
+        'copyright_mark': 'copyright_mark',
     })
     fieldsets = (
         (
@@ -156,7 +157,7 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
             },
         ),
         ("Идентификаторы", {"fields": (("doi", "issn", "pmid"), ("isbn", "isbn2", "inventory_number"))}),
-        ("Книжные поля", {"fields": (("booktitle", "edition", "chapter"), ("udc", "udc_new"))}),
+        ("Книжные поля", {"fields": (("booktitle", "edition", "chapter"), ("udc", "udc_new"), 'copyright_mark')}),
         ("Кандидатская диссертация", {"fields": ("school",)}),
         ("Труды", {"fields": ("organization",)}),
         (
@@ -219,4 +220,5 @@ admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC, UDCAdmin)
 admin.site.register(UDCImage)
+admin.site.register(CopyrightMark)
 admin.site.register(DocumentType)
