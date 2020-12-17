@@ -27,13 +27,14 @@ daphne==2.5.0
 dateparser==0.7.6
 Django==3.0.7
 django-3-jet==1.0.8
+django-adminlte-full==0.2.0
 django-admin-tools==0.9.0
 django-adminlte3==0.1.6
-django-ajax-selects==1.9.1
+django-ajax-selects==2.0.0
 django-appconf==1.0.4
-django-cache-url==2.0.0
+django-cache-url==3.1.2
 django-celery-beat==2.1.0
-django-cors-headers==3.3.0
+django-cors-headers==3.5.0
 django-dotenv==1.4.1
 django-filter==2.3.0
 django-guardian==2.2.0

@@ -38,7 +38,7 @@ class LibraryStorageAdmin(admin.ModelAdmin):
         obj.save()
 
 
-class LibraryStorageEntryInline(admin.TabularInline):
+class LibraryStorageEntryInline(admin.StackedInline):
     extra = 1
     model = LibraryStorageEntry
     ordering = ("entry_number",)
@@ -49,7 +49,7 @@ class LibraryStorageEntryInline(admin.TabularInline):
         return queryset
 
 
-class AuthorEntryRankInline(admin.TabularInline):
+class AuthorEntryRankInline(admin.StackedInline):
     extra = 1
     model = AuthorEntryRank
     ordering = ("rank",)
@@ -156,8 +156,8 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
                 )
             },
         ),
-        ("Идентификаторы", {"fields": (("doi", "issn", "pmid"), ("isbn", "isbn2", "inventory_number"))}),
-        ("Книжные поля", {"fields": (("booktitle", "edition", "chapter"), ("udc", "udc_new"), 'copyright_mark')}),
+        ("Идентификаторы", {"fields": ("doi", "issn", "pmid", "inventory_number", "isbn", "isbn2")}),
+        ("Книжные поля", {"fields": ("booktitle", "edition", "chapter", "udc", "udc_new", 'copyright_mark')}),
         ("Кандидатская диссертация", {"fields": ("school",)}),
         ("Труды", {"fields": ("organization",)}),
         (
@@ -170,11 +170,12 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
             {
                 "fields": (
                     ("printed_book", "e_book", "special_books"),
-                    ("img", "file"),
+                    "img", "file",
                     "key_words",
-                    ("quantity", "real_time_count"),
+                    "quantity", "real_time_count",
                     "price",
                     "used",
+                    "rating",
                     "date_get"
                 )
             }
@@ -220,5 +221,5 @@ admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC, UDCAdmin)
 admin.site.register(UDCImage)
-admin.site.register(CopyrightMark)
+admin.site.register(CopyrightMark, ImportExportActionModelAdmin)
 admin.site.register(DocumentType)

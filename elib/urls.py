@@ -18,11 +18,20 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
-import td_biblio
+from controlcenter.views import controlcenter
+
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
 
 urlpatterns = [
+
+    # sentry_sdk
+    path('sentry-debug/', trigger_error),
+
 
     path('api/v1/client/', include('api.client.urls')),
     path('api/v1/admin/', include('api.admin.urls')),
@@ -34,8 +43,8 @@ urlpatterns = [
 
     # path to our account's app endpoints
     path('auth/', include('djoser.urls')),
-    url(r'^admin_tools/', include('admin_tools.urls')),
     path('admin/', admin.site.urls),
+    path('admin/dashboard/', controlcenter.urls),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications of user')),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

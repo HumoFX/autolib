@@ -1,0 +1,677 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-15 02:00+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: api/v1/Book/models.py:21
+msgid "Имя"
+msgstr ""
+
+#: api/v1/Book/models.py:22
+msgid "Фамилия"
+msgstr ""
+
+#: api/v1/Book/models.py:23
+msgid "Инициалы"
+msgstr ""
+
+#: api/v1/Book/models.py:81
+msgid "Автор"
+msgstr ""
+
+#: api/v1/Book/models.py:82
+msgid "Авторы"
+msgstr ""
+
+#: api/v1/Book/models.py:90
+msgid "Редактор"
+msgstr ""
+
+#: api/v1/Book/models.py:91
+msgid "Редакторы"
+msgstr ""
+
+#: api/v1/Book/models.py:97
+msgid "Наименование"
+msgstr ""
+
+#: api/v1/Book/models.py:99
+msgid "Аббревиатура/код объекта"
+msgstr ""
+
+#: api/v1/Book/models.py:115
+msgid "Язык"
+msgstr ""
+
+#: api/v1/Book/models.py:116
+msgid "Языки"
+msgstr ""
+
+#: api/v1/Book/models.py:123
+msgid "Журнал"
+msgstr ""
+
+#: api/v1/Book/models.py:124
+msgid "Журналы"
+msgstr ""
+
+#: api/v1/Book/models.py:131
+msgid "Характер документа"
+msgstr ""
+
+#: api/v1/Book/models.py:132
+msgid "Характер документов"
+msgstr ""
+
+#: api/v1/Book/models.py:139
+msgid "Издатель"
+msgstr ""
+
+#: api/v1/Book/models.py:140
+msgid "Издатели"
+msgstr ""
+
+#: api/v1/Book/models.py:151 api/v1/Book/models.py:152
+msgid "УДК"
+msgstr ""
+
+#: api/v1/Book/models.py:165
+msgid "Место хранения документов"
+msgstr ""
+
+#: api/v1/Book/models.py:166
+msgid "Места хранения документов"
+msgstr ""
+
+#: api/v1/Book/models.py:185
+msgid "Авторсикй знак"
+msgstr ""
+
+#: api/v1/Book/models.py:186
+msgid "Авторский знак"
+msgstr ""
+
+#: api/v1/Book/models.py:211
+msgid "Заглавие"
+msgstr ""
+
+#: api/v1/Book/models.py:219
+msgid "Дата издания"
+msgstr ""
+
+#: api/v1/Book/models.py:221
+msgid "Дата частичной публикации?"
+msgstr ""
+
+#: api/v1/Book/models.py:224
+msgid ""
+"Отметьте это, если дата публикации не указана (например, если действителен "
+"только год)"
+msgstr ""
+
+#: api/v1/Book/models.py:228
+msgid "Том"
+msgstr ""
+
+#: api/v1/Book/models.py:231
+msgid "Том книги/журнала"
+msgstr ""
+
+#: api/v1/Book/models.py:234
+msgid "Страницы"
+msgstr ""
+
+#: api/v1/Book/models.py:237
+msgid "Номера страниц, разделенные запятыми или двойным дефисом"
+msgstr ""
+
+#: api/v1/Book/models.py:242
+msgid "DOI"
+msgstr ""
+
+#: api/v1/Book/models.py:245
+msgid "Идентификатор цифрового объекта этого ресурса"
+msgstr ""
+
+#: api/v1/Book/models.py:248
+msgid "ISSN"
+msgstr ""
+
+#: api/v1/Book/models.py:251
+msgid "Международный стандартный серийный номер"
+msgstr ""
+
+#: api/v1/Book/models.py:254
+msgid "ISBN"
+msgstr ""
+
+#: api/v1/Book/models.py:257 api/v1/Book/models.py:263
+msgid "Международный стандартный номер книги"
+msgstr ""
+
+#: api/v1/Book/models.py:260
+msgid "ISBN 2"
+msgstr ""
+
+#: api/v1/Book/models.py:266
+msgid "PMID"
+msgstr ""
+
+#: api/v1/Book/models.py:266
+msgid "Pubmed ID"
+msgstr ""
+
+#: api/v1/Book/models.py:268
+msgid "Инвентарный номер"
+msgstr ""
+
+#: api/v1/Book/models.py:270
+msgid "Инвертизационные номера, разделенные запятыми или двойным дефисом"
+msgstr ""
+
+#: api/v1/Book/models.py:274
+msgid "Название книги"
+msgstr ""
+
+#: api/v1/Book/models.py:277
+msgid "Название книги, если цитируется только ее часть"
+msgstr ""
+
+#: api/v1/Book/models.py:280
+msgid "Издание"
+msgstr ""
+
+#: api/v1/Book/models.py:284
+msgid "Издание книги"
+msgstr ""
+
+#: api/v1/Book/models.py:287
+msgid "Количество глав"
+msgstr ""
+
+#: api/v1/Book/models.py:291
+msgid "Школа"
+msgstr ""
+
+#: api/v1/Book/models.py:294
+msgid "Школа, в которой была написана диссертация"
+msgstr ""
+
+#: api/v1/Book/models.py:299
+msgid "Организция"
+msgstr ""
+
+#: api/v1/Book/models.py:302
+msgid "Спонсор конференции"
+msgstr ""
+
+#: api/v1/Book/models.py:316
+msgid "Адрес"
+msgstr ""
+
+#: api/v1/Book/models.py:320
+msgid "Адрес издателя"
+msgstr ""
+
+#: api/v1/Book/models.py:324 api/v1/Book/models.py:327
+msgid "Аннотация"
+msgstr ""
+
+#: api/v1/Book/models.py:330
+msgid "Заметка"
+msgstr ""
+
+#: api/v1/Book/models.py:330
+msgid "Разная дополнительная информация"
+msgstr ""
+
+#: api/v1/Book/models.py:346
+msgid "Книга"
+msgstr ""
+
+#: api/v1/Book/models.py:347
+msgid "Книги"
+msgstr ""
+
+#: api/v1/Book/models.py:447
+msgid "Название"
+msgstr ""
+
+#: api/v1/Book/models.py:448
+msgid "Краткое описание"
+msgstr ""
+
+#: api/v1/Book/models.py:452
+msgid "Коллекция"
+msgstr ""
+
+#: api/v1/Book/models.py:453
+msgid "Коллекции"
+msgstr ""
+
+#: api/v1/Book/models.py:465
+msgid "Ранг"
+msgstr ""
+
+#: api/v1/Book/models.py:465
+msgid "Место автора в последовательности авторов статьи"
+msgstr ""
+
+#: api/v1/Book/models.py:469 api/v1/Book/models.py:470
+msgid "Авторский рейтинг"
+msgstr ""
+
+#: api/v1/Book/models.py:487
+msgid "Количество книг"
+msgstr ""
+
+#: api/v1/Book/models.py:487
+msgid "Количество книг в местах для хранения"
+msgstr ""
+
+#: api/v1/Book/models.py:491 api/v1/Book/models.py:492
+msgid "Хранилище"
+msgstr ""
+
+#: elib/settings.py:289
+msgid "Statistics"
+msgstr "Статистика"
+
+#: templates/admin/actions.html:8
+msgid "Run the selected action"
+msgstr ""
+
+#: templates/admin/actions.html:9 templates/admin/index.html:47
+msgid "Go"
+msgstr ""
+
+#: templates/admin/actions.html:18
+msgid "Click here to select the objects across all pages"
+msgstr ""
+
+#: templates/admin/actions.html:19
+#, python-format
+msgid "Select all %(total_count)s %(module_name)s"
+msgstr ""
+
+#: templates/admin/actions.html:22
+msgid "Clear selection"
+msgstr ""
+
+#: templates/admin/app_index.html:11
+#: templates/admin/auth/user/change_password.html:13
+#: templates/admin/change_form.html:23 templates/admin/change_list.html:28
+#: templates/admin/delete_confirmation.html:14
+#: templates/admin/delete_selected_confirmation.html:14
+#: templates/admin/import_export/base.html:12
+#: templates/admin/object_history.html:6
+#: templates/admin/solo/change_form.html:6
+#: templates/admin/solo/object_history.html:6
+msgid "Home"
+msgstr "Главная"
+
+#: templates/admin/auth/user/add_form.html:6
+msgid ""
+"First, enter a username and password. Then, you'll be able to edit more user "
+"options."
+msgstr ""
+
+#: templates/admin/auth/user/add_form.html:8
+msgid "Enter a username and password."
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:17
+#: templates/admin/auth/user/change_password.html:22
+#: templates/admin/auth/user/change_password.html:95
+#: templates/admin/base.html:144
+msgid "Change password"
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:30
+#: templates/admin/change_form.html:55 templates/admin/change_list.html:57
+msgid "Please correct the error below."
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:32
+#: templates/admin/change_form.html:57 templates/admin/change_list.html:59
+msgid "Please correct the errors below."
+msgstr ""
+
+#: templates/admin/auth/user/change_password.html:40
+#, python-format
+msgid "Enter a new password for the user <strong>%(username)s</strong>."
+msgstr ""
+
+#: templates/admin/base.html:91 templates/admin/search_form.html:18
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/admin/base.html:141
+msgid "Account"
+msgstr "Аккаунт"
+
+#: templates/admin/base.html:148
+msgid "Log out"
+msgstr "Выйти"
+
+#: templates/admin/base.html:159
+msgid "See Profile"
+msgstr "Посмотреть профиль"
+
+#: templates/admin/base.html:199
+msgid "Dashboard"
+msgstr "Панель"
+
+#: templates/admin/base.html:312
+msgid "Jazzmin version"
+msgstr "Версия"
+
+#: templates/admin/base.html:315
+msgid "Copyright"
+msgstr ""
+
+#: templates/admin/base.html:315
+msgid "All rights reserved."
+msgstr ""
+
+#: templates/admin/base.html:331
+msgid "UI Configuration"
+msgstr ""
+
+#: templates/admin/base.html:335
+msgid "Copy this info your settings file to persist these UI changes"
+msgstr ""
+
+#: templates/admin/base.html:339 templates/admin/submit_line.html:40
+msgid "Close"
+msgstr ""
+
+#: templates/admin/change_form.html:34
+#: templates/admin/change_list_object_tools.html:7
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: templates/admin/change_form_object_tools.html:5
+#: templates/admin/object_history.html:10
+#: templates/admin/object_history.html:21
+#: templates/admin/solo/change_form.html:14
+#: templates/admin/solo/object_history.html:9
+msgid "History"
+msgstr ""
+
+#: templates/admin/change_form_object_tools.html:8
+#: templates/admin/edit_inline/stacked.html:34
+#: templates/admin/edit_inline/tabular.html:46
+#: templates/admin/solo/change_form.html:17
+msgid "View on site"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:18
+#: templates/admin/delete_confirmation.html:22
+#: templates/admin/delete_confirmation.html:30
+#: templates/admin/import_export/import.html:249
+#: templates/admin/submit_line.html:20
+msgid "Delete"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:37
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
+"related objects, but your account doesn't have permission to delete the "
+"following types of objects:"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:44
+#, python-format
+msgid ""
+"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
+"following protected related objects:"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:51
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
+"All of the following related items will be deleted:"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:54
+#: templates/admin/delete_selected_confirmation.html:53
+msgid "Objects"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:64
+#: templates/admin/delete_selected_confirmation.html:69
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: templates/admin/delete_confirmation.html:67
+#: templates/admin/delete_selected_confirmation.html:72
+msgid "No, take me back"
+msgstr ""
+
+#: templates/admin/delete_selected_confirmation.html:17
+#: templates/admin/delete_selected_confirmation.html:21
+#: templates/admin/delete_selected_confirmation.html:29
+msgid "Delete multiple objects"
+msgstr ""
+
+#: templates/admin/delete_selected_confirmation.html:36
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr ""
+
+#: templates/admin/delete_selected_confirmation.html:43
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
+msgstr ""
+
+#: templates/admin/delete_selected_confirmation.html:50
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+
+#: templates/admin/edit_inline/stacked.html:30
+#: templates/admin/import_export/import.html:245
+msgid "New"
+msgstr ""
+
+#: templates/admin/edit_inline/tabular.html:19
+msgid "Delete?"
+msgstr ""
+
+#: templates/admin/import_export/change_list_export_item.html:6
+#: templates/admin/import_export/export.html:12
+msgid "Export"
+msgstr ""
+
+#: templates/admin/import_export/change_list_import_item.html:6
+#: templates/admin/import_export/import.html:14
+msgid "Import"
+msgstr ""
+
+#: templates/admin/import_export/export.html:61
+#: templates/admin/import_export/import.html:112
+msgid "Submit"
+msgstr ""
+
+#: templates/admin/import_export/import.html:27
+#: templates/admin/import_export/import.html:65
+msgid "Confirm Import"
+msgstr ""
+
+#: templates/admin/import_export/import.html:34
+msgid ""
+"Below is a preview of data to be imported. If you are satisfied with the "
+"results, click 'Confirm import'"
+msgstr ""
+
+#: templates/admin/import_export/import.html:45
+#: templates/admin/import_export/import.html:107
+#: templates/admin/submit_line.html:8
+msgid "Actions"
+msgstr ""
+
+#: templates/admin/import_export/import.html:50
+msgid "Confirm import"
+msgstr ""
+
+#: templates/admin/import_export/import.html:90
+msgid "This importer will import the following fields: "
+msgstr ""
+
+#: templates/admin/import_export/import.html:129
+#: templates/admin/import_export/import.html:176
+msgid "Errors"
+msgstr ""
+
+#: templates/admin/import_export/import.html:148
+msgid "Line number"
+msgstr ""
+
+#: templates/admin/import_export/import.html:168
+msgid "Some rows failed to validate"
+msgstr ""
+
+#: templates/admin/import_export/import.html:170
+msgid ""
+"Please correct these errors in your data where possible, then reupload it "
+"using the form above."
+msgstr ""
+
+#: templates/admin/import_export/import.html:175
+msgid "Row"
+msgstr ""
+
+#: templates/admin/import_export/import.html:202
+msgid "Non field specific"
+msgstr ""
+
+#: templates/admin/import_export/import.html:228
+msgid "Preview"
+msgstr ""
+
+#: templates/admin/import_export/import.html:247
+msgid "Skipped"
+msgstr ""
+
+#: templates/admin/import_export/import.html:251
+msgid "Update"
+msgstr ""
+
+#: templates/admin/includes/object_delete_summary.html:2
+msgid "Summary"
+msgstr ""
+
+#: templates/admin/index.html:6 templates/admin/index.html:11
+msgid "Панель управления"
+msgstr ""
+
+#: templates/admin/index.html:10
+msgid "Главная"
+msgstr ""
+
+#: templates/admin/index.html:41
+msgid "Add"
+msgstr ""
+
+#: templates/admin/index.html:45
+msgid "View"
+msgstr ""
+
+#: templates/admin/index.html:47
+msgid "Change"
+msgstr ""
+
+#: templates/admin/index.html:72
+msgid "Recent actions"
+msgstr ""
+
+#: templates/admin/index.html:76
+msgid "None available"
+msgstr ""
+
+#: templates/admin/index.html:90
+#, python-format
+msgid "%(timesince)s ago"
+msgstr ""
+
+#: templates/admin/login.html:14
+msgid "Log in again"
+msgstr ""
+
+#: templates/admin/login.html:103
+msgid "Log in"
+msgstr ""
+
+#: templates/admin/object_history.html:58
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+
+#: templates/admin/pagination.html:14 templates/admin/search_form.html:26
+msgid "Show all"
+msgstr ""
+
+#: templates/admin/pagination.html:17 templates/admin/submit_line.html:14
+msgid "Save"
+msgstr ""
+
+#: templates/admin/popup_response.html:5
+msgid "Popup closing..."
+msgstr ""
+
+#: templates/admin/search_form.html:21
+#, python-format
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/admin/search_form.html:24
+#, python-format
+msgid "%(full_result_count)s total"
+msgstr ""
+
+#: templates/admin/submit_line.html:25
+msgid "Save as new"
+msgstr ""
+
+#: templates/admin/submit_line.html:30
+msgid "Save and add another"
+msgstr ""
+
+#: templates/admin/submit_line.html:35
+msgid "Save and continue editing"
+msgstr ""
+
+#: templates/admin/submit_line.html:35
+msgid "Save and view"
+msgstr ""

@@ -98,8 +98,7 @@ class AbstractEntity(models.Model):
     abbreviation = models.CharField(
         _("Аббревиатура/код объекта"),
         max_length=100,
-        blank=True,
-        unique=True
+        blank=True
     )
 
     class Meta:

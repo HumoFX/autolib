@@ -1,104 +1,51 @@
-"""
-This file was generated with the customdashboard management command, it
-contains the two classes for the main dashboard and app index dashboard.
-You can customize these classes as you want.
+from controlcenter import Dashboard, widgets
+from django.db.models import Sum, Count
+from mptt.admin import DraggableMPTTAdmin, MPTTModelAdmin
 
-To activate your index dashboard add the following to your settings.py::
-    ADMIN_TOOLS_INDEX_DASHBOARD = 'elib.dashboard.CustomIndexDashboard'
-
-And to activate the app index dashboard::
-    ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'elib.dashboard.CustomAppIndexDashboard'
-"""
-from admin_tools_stats.modules import get_active_graph, DashboardCharts
-from django.utils.translation import ugettext_lazy as _
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
-
-from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
-from admin_tools.utils import get_admin_site_name
+from api.v1.Book.models import *
 
 
-class CustomIndexDashboard(Dashboard):
-    """
-    Custom index dashboard for elib.
-    """
-    def init_with_context(self, context):
-        site_name = get_admin_site_name(context)
-        # append a link list module for "quick links"
-        self.children.append(modules.LinkList(
-            _('Quick links'),
-            layout='inline',
-            draggable=False,
-            deletable=False,
-            collapsible=True,
-            children=[
-                [_('Return to site'), '/'],
-                [_('Change password'),
-                 reverse('%s:password_change' % site_name)],
-                [_('Log out'), reverse('%s:logout' % site_name)],
-            ]
-        ))
-
-        # append an app list module for "Applications"
-        self.children.append(modules.AppList(
-            _('Applications'),
-            exclude=('django.contrib.*',),
-        ))
-
-        # append an app list module for "Administration"
-        self.children.append(modules.AppList(
-            _('Administration'),
-            models=('django.contrib.*',),
-        ))
-
-        # append a recent actions module
-        self.children.append(modules.RecentActions(_('Recent Actions'), 5))
-
-        self.children.append(modules.AppList(
-            _('Dashboard Stats Settings'),
-            models=('admin_tools_stats.*',),
-        ))
-
-        # Copy following code into your custom dashboard
-        # append following code after recent actions module or
-        # a link list module for "quick links"
-        graph_list = get_active_graph()
-        for i in graph_list:
-            kwargs = {}
-            kwargs['graph_key'] = i.graph_key
-            kwargs['require_chart_jscss'] = False
-
-            if context['request'].POST.get('select_box_' + i.graph_key):
-                kwargs['select_box_' + i.graph_key] = context['request'].POST['select_box_' + i.graph_key]
-
-            self.children.append(DashboardCharts(**kwargs))
+class BookItemList(widgets.ItemList):
+    title = "ТОП 30 часто используемых книг"
+    queryset = Book.objects.order_by('-used')
+    list_display = ('title', 'used')
+    limit_to = 30
 
 
-class CustomAppIndexDashboard(AppIndexDashboard):
-    """
-    Custom app index dashboard for elib.
-    """
+class MyBarChart(widgets.SingleBarChart):
+    title = 'Количество книг в разделах УДК - ТОП 30'
+    qs = UDC.objects.annotate(count=Count('book')).order_by('-count')
+    values_list = ['name', 'count']
+    limit_to = 30
+    queryset = qs
 
-    # we disable title because its redundant with the model list module
-    title = ''
+    class Chartist:
+        options = {
+            # Displays only integer values on y-axis
+            'onlyInteger': True,
+            # Visual tuning
+            'chartPadding': {
+                'top': 24,
+                'right': 0,
+                'bottom': 0,
+                'left': 0,
+            }
+        }
 
-    def __init__(self, *args, **kwargs):
-        AppIndexDashboard.__init__(self, *args, **kwargs)
+    def series(self):
+        # Y-axis
+        return [y for x, y in self.values]
 
-        # append a model list module and a recent actions module
-        self.children += [
-            modules.ModelList(self.app_title, self.models),
-            modules.RecentActions(
-                _('Recent Actions'),
-                include_list=self.get_app_content_types(),
-                limit=5
-            )
-        ]
+    def labels(self):
+        # Duplicates series on x-axis
+        return self.series
 
-    def init_with_context(self, context):
-        """
-        Use this method if you need to access the request context.
-        """
-        return super(CustomAppIndexDashboard, self).init_with_context(context)
+    def legend(self):
+        # Displays labels in legend
+        return [x for x, y in self.values]
+
+
+class MyDashboard(Dashboard):
+    widgets = (
+        BookItemList, MyBarChart,
+    )
