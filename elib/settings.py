@@ -13,8 +13,15 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import datetime
 import os
 import django_heroku
+import environ
 from django.utils.translation import ugettext_lazy as _
 
+# env = environ.Env(
+#     # set casting, default value
+#     DEBUG=(bool, False)
+# )
+# # reading .env file
+# environ.Env.read_env()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from datetime import timedelta
 
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'import_export',
     'mptt',
+    'silk',
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
@@ -54,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django_twilio',
     'notifications',
     'api.v1.University',
     'api.v1.User',
@@ -66,6 +75,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -129,16 +139,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         #
-        'NAME': 'avtolib',
-        # 'NAME': 'autolib',
+        # 'NAME': 'avtolib',
+        'NAME': 'autolib',
         # 'USER': 'riaztzeoxzmwek',
         'USER': 'postgres',
         # 'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
-        'PASSWORD': 'postgres',
-        # 'PASSWORD': 'Humo6779',
+        # 'PASSWORD': 'postgres',
+        'PASSWORD': 'Humo6779',
         # 'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
-        'HOST': 'db',
-        # 'HOST': 'localhost',
+        # 'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -152,8 +162,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    # 'PAGE_SIZE': 20
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 30
 }
 
 # Password validation
@@ -436,3 +446,6 @@ sentry_sdk.init(
 CONTROLCENTER_DASHBOARDS = (
     ('mydash', 'elib.dashboard.MyDashboard'),
 )
+#
+# TWILIO_ACCOUNT_SID = {TW}
+# TWILIO_AUTH_TOKEN = {}

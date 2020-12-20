@@ -8,12 +8,12 @@ class BookSerpy(serpy.Serializer):
     # time = datetime.now()
     id = serpy.MethodField()
     title = serpy.StrField()
-    author = serpy.StrField()
+    # author = serpy.StrField()
     udc = serpy.MethodField()
     isbn = serpy.StrField()
     key_words = serpy.StrField()
     university = serpy.MethodField()
-    faculty = serpy.MethodField()
+    # faculty = serpy.MethodField()
     quantity = serpy.IntField()
     price = serpy.FloatField()
     rating = serpy.FloatField()
@@ -23,9 +23,9 @@ class BookSerpy(serpy.Serializer):
     file = serpy.StrField()
     printed_book = serpy.BoolField()
     special_books = serpy.BoolField()
-    work_book = serpy.BoolField()
-    date_pub = serpy.Field()
-    date_get = serpy.Field()
+    # work_book = serpy.BoolField()
+    # date_pub = serpy.Field()
+    # date_get = serpy.Field()
     created = serpy.Field()
 
     def get_id(self, obj):
@@ -108,37 +108,15 @@ class CategorySerpy(serpy.Serializer):
 #     )
 
 
-# def serialize_user(obj: Book) -> Dict[str, Any]:
-#     return {
-#         "id": obj.id,
-#         "title": obj.title,
-#         "author": obj.author,
-#         "isbn": obj.isbn,
-#         "key_words": obj.key_words,
-#         "img": obj.img,
-#         "quantity": obj.quantity,
-#         "price": obj.price,
-#         "rating": obj.rating,
-#         "used": obj.used,
-#         "e_book": obj.e_book,
-#         "file": obj.file,
-#         "printed_book": obj.printed_book,
-#         "special_books": obj.special_books,
-#         "work_book": obj.work_book,
-#         "date_pub": obj.date_pub,
-#         "date_get": obj.date_get,
-#         "created": obj.created,
-#         "udc": obj.udc,
-#         "university": obj.university,
-#         "faculty": obj.faculty
-#     }
-
 class UDCSerializer(serializers.ModelSerializer):
     class Meta:
         model = UDC
-        # fields = ('id', 'id_number')
-
-    fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'children',
+            'parent'
+        ]
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -151,15 +129,27 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
+    img = serializers.ImageField()
+    file = serializers.FileField()
+
     class Meta:
         model = Book
+        # fields = [
+        #     'id',
+        #     'title',
+        #     'udc',
+        #     'isbn',
+        #     'key_words',
+        #     'university',
+        #     'quantity',
+        #     'price',
+        #     'rating',
+        #     'used',
+        #     'img',
+        #     'e_book',
+        #     'file',
+        #     'printed_book',
+        #     'special_books',
+        #     'created'
+        # ]
         fields = '__all__'
-
-    def to_representation(self, instance):
-        response = super(BookSerializer, self).to_representation(instance)
-        print(instance.file)
-        if instance.img:
-            response['img'] = instance.img.url
-        if instance.file:
-            response['file'] = instance.file.url
-        return response

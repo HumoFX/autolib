@@ -16,6 +16,7 @@ from rest_framework import generics, permissions, viewsets, status
 from .serializers import BookSerializer, CategorySerializer, UDCSerializer, BookSerpy, CategorySerpy
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework import filters
+from rest_framework.pagination import LimitOffsetPagination
 
 from .permissions import IsOwnerOrReadOnly
 
@@ -29,6 +30,11 @@ class BookListView(generics.ListAPIView):
     permission_classes = [AllowAny]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'udc__name', 'key_words']
+
+    # def get_queryset(self):
+    #     queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university',
+    #                                                                                                    'udc')
+    #     return queryset
 
     # def get_queryset(self):
     #     queryset = Book.objects.filter(university=self.request.user.university_id.id).prefetch_related('university'
@@ -113,7 +119,7 @@ class BookListView(generics.ListAPIView):
 #     return Response(BookSerpy(data, many=True).data, status=status.HTTP_200_OK)
 
 class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
-    # queryset = Book.objects.all().prefetch_related('university', 'faculty', 'udc')
+    queryset = Book.objects.all().prefetch_related('university', 'udc')
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
@@ -145,6 +151,15 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     permission_classes = [AllowAny]
+
+
+class UDCListAPIView(generics.ListAPIView):
+    serializer_class = UDCSerializer
+    permission_classes = [AllowAny, ]
+
+    def get_queryset(self):
+        qs = UDC.objects.filter(parent=None)
+        return qs
 
 
 # ADMIN VIEW

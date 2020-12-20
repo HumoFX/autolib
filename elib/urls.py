@@ -32,7 +32,6 @@ urlpatterns = [
     # sentry_sdk
     path('sentry-debug/', trigger_error),
 
-
     path('api/v1/client/', include('api.client.urls')),
     path('api/v1/admin/', include('api.admin.urls')),
     # path to djoser end points
@@ -49,3 +48,4 @@ urlpatterns = [
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += [url(r'^silk/', include('silk.urls', namespace='silk'))]
