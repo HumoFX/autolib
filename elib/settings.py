@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 # encoding: utf-8
 import datetime
 import os
-import django_heroku
 import environ
 from django.utils.translation import ugettext_lazy as _
 
@@ -139,16 +138,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         #
-        # 'NAME': 'avtolib',
-        'NAME': 'autolib',
+        'NAME': 'avtolib',
+        # 'NAME': 'autolib',
         # 'USER': 'riaztzeoxzmwek',
         'USER': 'postgres',
         # 'PASSWORD': '8be2b276ff52eaeec97e4c17db541933e464b793196fe809686b1bc724b7e1d2',
-        # 'PASSWORD': 'postgres',
-        'PASSWORD': 'Humo6779',
+        'PASSWORD': 'postgres',
+        # 'PASSWORD': 'Humo6779',
         # 'HOST': 'ec2-54-161-208-31.compute-1.amazonaws.com',
-        # 'HOST': 'db',
-        'HOST': 'localhost',
+        'HOST': 'db',
+        # 'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -204,8 +203,6 @@ LOCALE_PATHS = [
 
 USE_TZ = True
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
