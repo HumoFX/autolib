@@ -18,9 +18,9 @@ class AbstractHuman(models.Model):
     Note that this model may be linked to django registered users
     """
 
-    first_name = models.CharField(_("Имя"), max_length=100)
-    last_name = models.CharField(_("Фамилия"), max_length=100)
-    first_initial = models.CharField(_("Инициалы"), max_length=10, blank=True)
+    first_name = models.CharField(_("Имя"), max_length=100, null=True, blank=True)
+    last_name = models.CharField(_("Фамилия"), max_length=100, null=True)
+    first_initial = models.CharField(_("Инициалы"), max_length=10, blank=True, null=True)
 
     # This is a django user
     user = models.ForeignKey(
@@ -143,9 +143,11 @@ class Publisher(AbstractEntity):
 class UDC(MPTTModel):
     """Universal Decimal Classification"""
     udc = models.CharField(max_length=64, verbose_name='Код УДК')
-    name = models.TextField(verbose_name='Описание')
+    name = models.TextField(verbose_name='Название')
+    description = models.TextField(verbose_name='Описание', null=True, blank=True)
     parent = TreeForeignKey('self', null=True, default="", blank=True, related_name='children',
                             on_delete=models.CASCADE, verbose_name='Родительский удк')
+
 
     class Meta:
         verbose_name = _("УДК")
@@ -155,7 +157,7 @@ class UDC(MPTTModel):
         order_insertion_by = ['name']
 
     def __str__(self):
-        return "{} - {}".format(self.name, self.udc)
+        return "{}".format(self.id)
 
 
 class LibraryStorage(AbstractEntity):
@@ -189,11 +191,10 @@ class CopyrightMark(AbstractEntity):
 class Book(models.Model):
     udc = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='УДК', null=True,
                             verbose_name="УДК", help_text="Временно")
-    udc_new = models.ForeignKey(UDC, on_delete=models.CASCADE, null=True, verbose_name="УДК*",
+    udc_new = models.ForeignKey(UDC, on_delete=models.SET_NULL, null=True, verbose_name="УДК*",
                                 help_text="Универасальная "
                                           "десятичная "
-                                          "классификация(просим "
-                                          "заполнять эту таблицу)")
+                                          "классификация")
     copyright_mark = models.ForeignKey(CopyrightMark, on_delete=models.CASCADE, verbose_name="Авторский знак", null=True, blank=True)
     key_words = models.TextField(verbose_name="Ключевые слова", default='', blank=True)
     img = models.ImageField(upload_to='img/books', verbose_name='Обложка(Фото)', null=True)

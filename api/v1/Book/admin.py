@@ -3,7 +3,7 @@ from django.contrib.admin.templatetags.admin_urls import register
 from import_export import resources
 from import_export.admin import ImportExportActionModelAdmin
 from mptt.admin import DraggableMPTTAdmin, MPTTModelAdmin
-from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType, UDCImage, CopyrightMark
+from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType, UDCImage, CopyrightMark, AuthorEntryRank
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
@@ -81,7 +81,7 @@ class PublisherAdmin(AbstractEntityAdmin):
     pass
 
 
-class CategoryAdmin(AjaxSelectAdmin):
+class CategoryAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin):
     form = make_ajax_form(Category, {
         # fieldname: channel_name
         'udc_id': 'category',
@@ -89,7 +89,7 @@ class CategoryAdmin(AjaxSelectAdmin):
     })
 
 
-class UDCAdmin(AjaxSelectAdmin, DraggableMPTTAdmin):
+class UDCAdmin(ImportExportActionModelAdmin, AjaxSelectAdmin, DraggableMPTTAdmin):
     form = make_ajax_form(UDC, {
         # fieldname: channel_name
         'udc': 'udc_num',
@@ -102,6 +102,7 @@ class UDCAdmin(AjaxSelectAdmin, DraggableMPTTAdmin):
         'udc',
         'get_descendant_count'
     )
+    search_fields = ("name", "udc")
 
 
 class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin):
@@ -213,6 +214,7 @@ admin.site.register(LibraryStorageEntry)
 admin.site.register(LibraryStorage, LibraryStorageAdmin)
 admin.site.register(Language)
 admin.site.register(Author, AuthorAdmin)
+admin.site.register(AuthorEntryRank)
 admin.site.register(Editor, EditorAdmin)
 admin.site.register(Journal, JournalAdmin)
 admin.site.register(Publisher, PublisherAdmin)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Book, Category, UDC
+from .models import Book, Category, UDC, Author
 import serpy
 
 
@@ -37,9 +37,6 @@ class BookSerpy(serpy.Serializer):
             return obj.udc.pk
 
     def get_university(self, obj):
-        # a = Profile.objects.get(pk=obj.university)
-        # print(a)
-        # print(obj.university.pk)
         if obj is not None:
             return obj.university.pk
 
@@ -47,75 +44,18 @@ class BookSerpy(serpy.Serializer):
         if obj is not None:
             return obj.faculty.pk
 
-    # time1 = datetime.now()
-    # print('\n serpy=', time1 - time)
-
-
-class CategorySerpy(serpy.Serializer):
-    id = serpy.MethodField()
-    udc_id = serpy.StrField()
-    name = serpy.StrField()
-    parent = serpy.MethodField()
-
-    def get_id(self, obj):
-        if obj is not None:
-            return obj.pk
-
-    def get_parent(self, obj):
-        if obj is not None:
-            return obj.parent
-
-
-# class UDCSerpy(serpy.Serializer):
-#     id = serpy.MethodField()
-#     id_number = serpy.StrField()
-
-#     def as_getter(self, serializer_field_name, serializer_cls):
-#         return partial(get_related, serializer_field_name)
-#
-#
-# def get_related(name, instance):
-#     value = getattr(instance, name, None)
-#     if value and is_related(instance._meta, value):
-#         value = value.all()
-#     return value
-#
-#
-# def is_related(opts, value):
-#     field = None
-#     if hasattr(value, 'field'):
-#         field = value.field
-#     if not field and hasattr(value, 'source_field'):
-#         field = value.source_field
-#     if field and hasattr(field, 'remote_field'):
-#         return (
-#                 field.remote_field in related_fields(opts) or value.field in many_to_many_fields(opts)
-#         )
-#     return False
-#
-#
-# def related_fields(opts):
-#     return (
-#         f for f in opts.get_fields(include_hidden=True)
-#         if f.auto_created and not f.concrete and (f.one_to_one or f.one_to_many)
-#     )
-#
-#
-# def many_to_many_fields(opts):
-#     return (
-#         f for f in opts.get_fields(include_hidden=True)
-#         if f.many_to_many and f.auto_created
-#     )
-
 
 class UDCSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(source='udcimage.image', read_only=True)
+
     class Meta:
         model = UDC
         fields = [
             'id',
+            'udc',
             'name',
-            'children',
-            'parent'
+            'parent',
+            'image',
         ]
 
 
@@ -128,28 +68,59 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AuthorSerializer(serializers.ModelSerializer):
+    initial_name = serializers.SerializerMethodField()
+
+    def get_initial_name(self, obj):
+        return obj.get_formatted_name()
+
+    class Meta:
+        model = Author
+        fields = [
+            'id',
+            'initial_name'
+        ]
+
+
 class BookSerializer(serializers.ModelSerializer):
-    img = serializers.ImageField()
-    file = serializers.FileField()
+    img = serializers.ImageField(read_only=True)
+    authors = AuthorSerializer(many=True, read_only=True)
 
     class Meta:
         model = Book
-        # fields = [
-        #     'id',
-        #     'title',
-        #     'udc',
-        #     'isbn',
-        #     'key_words',
-        #     'university',
-        #     'quantity',
-        #     'price',
-        #     'rating',
-        #     'used',
-        #     'img',
-        #     'e_book',
-        #     'file',
-        #     'printed_book',
-        #     'special_books',
-        #     'created'
-        # ]
-        fields = '__all__'
+        fields = [
+            'id',
+            'title',
+            'authors',
+            'udc',
+            'key_words',
+            'university',
+            'rating',
+            'img',
+            'publication_date'
+        ]
+
+
+class BookDetailSerializer(serializers.ModelSerializer):
+    img = serializers.ImageField()
+    file = serializers.FileField()
+    authors = AuthorSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Book
+        fields = [
+            'id',
+            'title',
+            'authors',
+            'udc',
+            'isbn',
+            'university',
+            'quantity',
+            'rating',
+            'img',
+            'e_book',
+            'file',
+            'printed_book',
+            'special_books',
+            'publication_date'
+        ]

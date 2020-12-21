@@ -196,7 +196,7 @@ LOCALE_PATHS = [
 
 USE_TZ = True
 
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 102400000
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_URL = '/static/'

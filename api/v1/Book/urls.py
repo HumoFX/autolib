@@ -14,5 +14,7 @@ urlpatterns = [
     path('category/<int:pk>/', CategoryDetailView.as_view()),
     path('category/<int:category_id>/books/', BookCategoryDetailView.as_view()),
     path('udc/list/', UDCListAPIView.as_view()),
+    path('udc/<int:id>/', UDCChildrenListAPIView.as_view()),
+    path('udc/<udc_id>/books/', BookUDCListAPIView.as_view()),
 
 ]
