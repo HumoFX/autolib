@@ -142,8 +142,8 @@ class Publisher(AbstractEntity):
 
 class UDC(MPTTModel):
     """Universal Decimal Classification"""
-    udc = models.CharField(max_length=64, verbose_name='Код УДК')
-    name = models.TextField(verbose_name='Название')
+    udc = models.CharField(max_length=64, verbose_name='Код УДК', blank=True, null=True)
+    name = models.TextField(verbose_name='Название', blank=True, null=True)
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
     parent = TreeForeignKey('self', null=True, default="", blank=True, related_name='children',
                             on_delete=models.CASCADE, verbose_name='Родительский удк')
@@ -157,7 +157,7 @@ class UDC(MPTTModel):
         order_insertion_by = ['name']
 
     def __str__(self):
-        return "{}".format(self.id)
+        return "{}: {} - {}".format(self.id, self.udc, self.name)
 
 
 class LibraryStorage(AbstractEntity):

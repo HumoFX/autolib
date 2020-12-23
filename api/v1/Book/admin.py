@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.contrib.admin.templatetags.admin_urls import register
-from import_export import resources
+from import_export import resources, fields
 from import_export.admin import ImportExportActionModelAdmin
+from import_export.widgets import ForeignKeyWidget
 from mptt.admin import DraggableMPTTAdmin, MPTTModelAdmin
-from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType, UDCImage, CopyrightMark, AuthorEntryRank
+from .models import Category, UDC, Book, LibraryStorageEntry, LibraryStorage, DocumentType, UDCImage, CopyrightMark, \
+    AuthorEntryRank
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
@@ -89,7 +91,19 @@ class CategoryAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin):
     })
 
 
+class UDCResources(resources.ModelResource):
+    parent = fields.Field(
+        column_name='parent',
+        attribute='parent',
+        widget=ForeignKeyWidget(UDC, 'udc'))
+
+    class Meta:
+        model = UDC
+        # fields = ['udc', 'name', 'parent', 'id']
+
+
 class UDCAdmin(ImportExportActionModelAdmin, AjaxSelectAdmin, DraggableMPTTAdmin):
+    resource_class = UDCResources
     form = make_ajax_form(UDC, {
         # fieldname: channel_name
         'udc': 'udc_num',
@@ -190,6 +204,7 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
     ordering = ("-publication_date",)
     raw_id_fields = ("authors", "crossref")
     search_fields = ("title",)
+
     # save_as = True
     # save_on_top = True
     # change_list_template = 'Book/books.html'

@@ -27,7 +27,7 @@ from .permissions import IsOwnerOrReadOnly
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all().prefetch_related('university', 'udc', 'authors')
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'udc__name', 'key_words']
 
@@ -45,7 +45,7 @@ class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class BookCategoryDetailView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
     lookup_url_kwarg = 'category_id'
 
@@ -59,19 +59,19 @@ class BookCategoryDetailView(generics.ListAPIView):
 class CategoryListView(generics.ListAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 
 class UDCListAPIView(generics.ListAPIView):
     serializer_class = UDCSerializer
     pagination_class = None
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAuthenticated, ]
 
     def get_queryset(self):
         qs = UDC.objects.filter(parent=None).order_by('udc')
@@ -80,7 +80,7 @@ class UDCListAPIView(generics.ListAPIView):
 
 class UDCChildrenListAPIView(generics.ListAPIView):
     serializer_class = UDCSerializer
-    permission_classes = [AllowAny, ]
+    permission_classes = [IsAuthenticated, ]
     pagination_class = None
     lookup_url_kwarg = 'id'
 
@@ -91,7 +91,7 @@ class UDCChildrenListAPIView(generics.ListAPIView):
 
 class BookUDCListAPIView(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     lookup_url_kwarg = 'udc_id'
 
     def get_queryset(self):

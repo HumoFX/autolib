@@ -25,10 +25,8 @@ class OrderListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
         user = self.request.user
-        if not user.is_staff:
-            queryset = queryset.filter(user__id=user.id)
+        queryset = Order.objects.filter(user__id=user.id).prefetch_related('user', 'book').order_by('-time_of_get')
         return queryset
 
 
