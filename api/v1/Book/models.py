@@ -157,7 +157,7 @@ class UDC(MPTTModel):
         order_insertion_by = ['name']
 
     def __str__(self):
-        return "{}: {} - {}".format(self.id, self.udc, self.name)
+        return "{} - {}".format(self.udc, self.name)
 
 
 class LibraryStorage(AbstractEntity):
