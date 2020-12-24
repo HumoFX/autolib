@@ -143,7 +143,7 @@ class Publisher(AbstractEntity):
 class UDC(MPTTModel):
     """Universal Decimal Classification"""
     udc = models.CharField(max_length=64, verbose_name='Код УДК')
-    name = models.TextField(verbose_name='Название')
+    name = models.TextField(verbose_name='Название', null=True, blank=True)
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
     parent = TreeForeignKey('self', null=True, default="", blank=True, related_name='children',
                             on_delete=models.CASCADE, verbose_name='Родительский удк')
