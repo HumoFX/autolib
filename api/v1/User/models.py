@@ -32,7 +32,7 @@ class Profile(AbstractUser):
     kafedra = models.TextField(verbose_name='Кафедра', null=True, blank=True)
     position = models.TextField(verbose_name='Должность', null=True, blank=True)
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'role', 'full_name', 'university_id', 'faculty', 'tel_num']
+    REQUIRED_FIELDS = ['email', 'role', 'full_name', 'university_id']
 
     class Meta:
         verbose_name = 'Пользователь'
