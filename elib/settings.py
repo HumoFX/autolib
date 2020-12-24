@@ -35,7 +35,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'controlcenter',
     'jazzmin',
-    'django_celery_beat',
     'serpy',
     'djoser',
     'ajax_select',

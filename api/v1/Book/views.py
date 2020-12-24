@@ -32,7 +32,7 @@ class BookListView(generics.ListAPIView):
     search_fields = ['title', 'udc__name', 'key_words']
 
 
-class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
+class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all().prefetch_related('university', 'udc', 'authors')
     serializer_class = BookDetailSerializer
     permission_classes = [IsAuthenticated]
@@ -62,7 +62,7 @@ class CategoryListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
 
-class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+class CategoryDetailView(generics.RetrieveAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     permission_classes = [IsAuthenticated]

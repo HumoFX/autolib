@@ -1,11 +1,13 @@
 from django import forms
+from django.contrib.auth.hashers import make_password
 
 from .models import Users, Profile
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from rest_framework import permissions
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from django_registration.forms import RegistrationForm
+from import_export.admin import ImportExportActionModelAdmin
+from import_export import resources, fields
 
 
 # from .models import MyUser
@@ -149,16 +151,25 @@ class UserChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
-@admin.register(Profile)
-class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
+class UserResource(resources.ModelResource):
+    def before_import_row(self, row, **kwargs):
+        value = row['password']
+        row['password'] = make_password(value)
+
+    class Meta:
+        model = Profile
+
+
+class UserAdmin(ImportExportActionModelAdmin, BaseUserAdmin, admin.ModelAdmin):
+    resource_class = UserResource
     # The forms to add and change user instances
     # form = UserChangeForm
     # add_form = UserCreationForm
     fieldsets = (
         ('Основные данные', {'fields': ('username', 'email', 'password', 'role')}),
         ('Персональные данные', {'fields': ('full_name',
-                                            'university_id', 'faculty', 'group_name','avatar', 'kafedra', 'position',
-                                            'passport_serial_id','tel_num',)}),
+                                            'university_id', 'faculty', 'group_name', 'avatar', 'kafedra', 'position',
+                                            'passport_serial_id', 'tel_num',)}),
         ('Уровень доступа', {'fields': ('is_active', 'is_staff', 'is_superuser',
                                         'groups', 'user_permissions')}),
         ('Важные даты', {'fields': ('last_login', 'date_joined')}),
@@ -167,12 +178,13 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
         (None, {
             # 'classes': ('wide',),
             'fields': ('username', 'full_name', 'university_id', 'email', 'faculty', 'password1', 'password2',
-                       'group_name','avatar', 'kafedra', 'position','passport_serial_id','tel_num',),
+                       'group_name', 'avatar', 'kafedra', 'position', 'passport_serial_id', 'tel_num',),
         }),
     )
-    list_display = ('username', 'is_staff', 'date_joined', 'university_id','role',)
+    list_display = ('username', 'is_staff', 'date_joined', 'university_id', 'role',)
     search_fields = ('email', 'first_name', 'last_name',)
     ordering = ('username',)
+
 
 # @admin.register(Profile)
 # class UserAdmin(BaseUserAdmin):
@@ -184,4 +196,4 @@ class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
 # Register your models here.
 # admin.site.register(MyUser, UserAdmin)
 # admin.site.register(Users)
-# admin.site.register(Profile, UserAdmin)
+admin.site.register(Profile, UserAdmin)
