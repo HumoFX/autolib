@@ -90,6 +90,20 @@ class CategoryAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin):
     })
 
 
+class CopyrightResources(resources.ModelResource):
+    class Meta:
+        model = CopyrightMark
+        use_bulk = True
+        batch_size = 1000
+        skip_diff = True
+
+
+class CopyrightAdmin(ImportExportActionModelAdmin, AbstractEntityAdmin):
+    resource_class = CopyrightResources
+    list_display = ['name', 'abbreviation']
+    search_fields = ['name', 'abbreviation']
+
+
 class UDCResources(resources.ModelResource):
     parent = fields.Field(
         column_name='parent',
@@ -98,6 +112,8 @@ class UDCResources(resources.ModelResource):
 
     class Meta:
         model = UDC
+        use_bulk = True
+        batch_size = 1000
         # fields = ['udc', 'name', 'parent', 'id']
 
 
@@ -237,5 +253,5 @@ admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC, UDCAdmin)
 admin.site.register(UDCImage)
-admin.site.register(CopyrightMark, ImportExportActionModelAdmin)
+admin.site.register(CopyrightMark, CopyrightAdmin)
 admin.site.register(DocumentType)
