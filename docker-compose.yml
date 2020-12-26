@@ -10,10 +10,7 @@ services:
     volumes:
       - /private/var/lib/postgresql/data:/var/lib/postgresql/data
       - .:/code
-    deploy:
-      resources:
-        limits:
-          cpus: '4.00'
+    cpus: '10.00'
 
   web:
     build: .
@@ -30,7 +27,4 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=db
       - DB_PORT=5432
-    deploy:
-      resources:
-        limits:
-          cpus: '4.00'
+    cpus: '10.00'
