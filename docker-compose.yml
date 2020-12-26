@@ -10,7 +10,10 @@ services:
     volumes:
       - /private/var/lib/postgresql/data:/var/lib/postgresql/data
       - .:/code
-    cpus: '10.00'
+    cpu_count: 10
+    cpuset: "0-10"
+    cpus: 0.75
+
 
   web:
     build: .
@@ -27,4 +30,6 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=db
       - DB_PORT=5432
-    cpus: '10.00'
+    cpu_count: 10
+    cpuset: "0-10"
+    cpus: 0.75
