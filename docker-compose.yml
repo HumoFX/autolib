@@ -30,6 +30,6 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=db
       - DB_PORT=5432
-    cpu_count: 10
-    cpuset: "0-10"
+    cpu_count: 15
+    cpuset: "20-35"
     cpus: 0.75

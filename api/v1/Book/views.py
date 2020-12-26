@@ -81,7 +81,6 @@ class UDCListAPIView(generics.ListAPIView):
 class UDCChildrenListAPIView(generics.ListAPIView):
     serializer_class = UDCSerializer
     permission_classes = [IsAuthenticated, ]
-    pagination_class = None
     lookup_url_kwarg = 'id'
 
     def get_queryset(self):
