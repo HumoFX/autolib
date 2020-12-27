@@ -13,6 +13,15 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class OrderListSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Order
+        # fields = ['id', 'user', 'book', 'time_of_get', 'time_of_order']
+        fields = '__all__'
+
+
 class OrderSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)

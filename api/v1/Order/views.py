@@ -13,7 +13,7 @@ from django.utils.timezone import now
 from api.v1.Book.views import BookDetailView
 import calendar
 from .models import Order
-from .serializers import OrderSerializer, OrderDetailSerializer, OrderCreateSerializer
+from .serializers import OrderSerializer, OrderDetailSerializer, OrderCreateSerializer, OrderListSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from .permissions import IsOwnerOrReadOnly
 
@@ -110,6 +110,17 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class OrderListAdminView(generics.ListAPIView):
     serializer_class = OrderSerializer
+    permission_classes = [IsAdminUser]
+
+    def get_queryset(self):
+        queryset = Order.objects.all().prefetch_related('user', 'book').order_by('-time_of_get')
+        user = self.request.user
+        if not user.is_staff:
+            queryset = queryset.filter(user__id=user.id)
+        return queryset
+
+class OrderShortListAdminView(generics.ListAPIView):
+    serializer_class = OrderListSerializer
     permission_classes = [IsAdminUser]
 
     def get_queryset(self):

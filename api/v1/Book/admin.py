@@ -19,6 +19,15 @@ from .models import (
     Language
 )
 
+from django.core.paginator import Paginator
+
+
+class NoCountPaginator(Paginator):
+    @property
+    def count(self):
+        return 999999999  # Some arbitrarily large number,
+        # so we can still get our page tab.
+
 
 @register.filter
 def publication_date(entry):
@@ -103,6 +112,12 @@ class CopyrightAdmin(ImportExportActionModelAdmin, AbstractEntityAdmin):
     resource_class = CopyrightResources
     list_display = ['name', 'abbreviation']
     search_fields = ['name', 'abbreviation']
+    # paginator = NoCountPaginator
+    # show_full_result_count = False
+
+
+class UDCImageAdmin(admin.ModelAdmin):
+    autocomplete_fields = ('udc',)
 
 
 class UDCResources(resources.ModelResource):
@@ -113,10 +128,9 @@ class UDCResources(resources.ModelResource):
 
     class Meta:
         model = UDC
-        skip_unchanged = True
-        report_skipped = True
         use_bulk = True
-        batch_size = 10
+        batch_size = 100
+        skip_diff = True
         force_init_instance = True
         # fields = ['udc', 'name', 'parent', 'id']
 
@@ -136,6 +150,8 @@ class UDCAdmin(ImportExportActionModelAdmin, AjaxSelectAdmin, DraggableMPTTAdmin
         'get_descendant_count'
     )
     search_fields = ("name", "udc")
+    # paginator = NoCountPaginator
+    # show_full_result_count = False
 
 
 class BookAdmin(AjaxSelectAdmin, ImportExportActionModelAdmin, admin.ModelAdmin):
@@ -256,6 +272,6 @@ admin.site.register(Book, EntryAdmin)
 admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(UDC, UDCAdmin)
-admin.site.register(UDCImage)
+admin.site.register(UDCImage, UDCImageAdmin)
 admin.site.register(CopyrightMark, CopyrightAdmin)
 admin.site.register(DocumentType)
