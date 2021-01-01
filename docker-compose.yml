@@ -12,7 +12,7 @@ services:
       - .:/code
     cpu_count: 10
     cpuset: "0-10"
-    cpus: 0.75
+    cpus: 10.00
 
 
   web:
@@ -32,4 +32,4 @@ services:
       - DB_PORT=5432
     cpu_count: 15
     cpuset: "20-35"
-    cpus: 0.75
+    cpus: 10.00
