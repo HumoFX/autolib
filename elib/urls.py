@@ -43,6 +43,7 @@ urlpatterns = [
     # path to our account's app endpoints
     path('auth/', include('djoser.urls')),
     path('admin/', admin.site.urls),
+    path('datawizard/', include('data_wizard.urls')),
     path('admin/dashboard/', controlcenter.urls),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications of user')),
 ]
