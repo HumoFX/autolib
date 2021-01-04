@@ -2,7 +2,7 @@
 // Handles related-objects functionality: lookup link for raw_id_fields
 // and Add Another links.
 
-(function ($) {
+(function($) {
     'use strict';
 
     // IE doesn't accept periods or dashes in the window name, but the element IDs
@@ -58,13 +58,13 @@
 
     function updateRelatedObjectLinks(triggeringLink) {
         var $this = $(triggeringLink);
-        var siblings = $this.nextAll('.change-related, .delete-related');
+        var siblings = $this.nextAll('.view-related, .change-related, .delete-related');
         if (!siblings.length) {
             return;
         }
         var value = $this.val();
         if (value) {
-            siblings.each(function () {
+            siblings.each(function() {
                 var elm = $(this);
                 elm.attr('href', elm.attr('data-href-template').replace('__fk__', value));
             });
@@ -94,10 +94,6 @@
             var o = new Option(newRepr, newId);
             SelectBox.add_to_cache(toId, o);
             SelectBox.redisplay(toId);
-
-            if (SelectBox.add) {
-                SelectBox.add(name, newRepr, newId)
-            }
         }
         win.close();
     }
@@ -106,16 +102,13 @@
         var id = windowname_to_id(win.name).replace(/^edit_/, '');
         var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
         var selects = $(selectsSelector);
-        selects.find('option').each(function () {
+        selects.find('option').each(function() {
             if (this.value === objId) {
                 this.textContent = newRepr;
                 this.value = newId;
             }
         });
-        if(SelectBox.change){
-            SelectBox.change(id, newRepr, newId,objId);
-        }
-        selects.next().find('.select2-selection__rendered').each(function () {
+        selects.next().find('.select2-selection__rendered').each(function() {
             // The element can have a clear button as a child.
             // Use the lastChild to modify only the displayed value.
             this.lastChild.textContent = newRepr;
@@ -128,14 +121,11 @@
         var id = windowname_to_id(win.name).replace(/^delete_/, '');
         var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
         var selects = $(selectsSelector);
-        selects.find('option').each(function () {
+        selects.find('option').each(function() {
             if (this.value === objId) {
                 $(this).remove();
             }
         }).trigger('change');
-        if(SelectBox.remove){
-            SelectBox.remove(id,objId);
-        }
         win.close();
     }
 
@@ -155,12 +145,12 @@
     window.showAddAnotherPopup = showRelatedObjectPopup;
     window.dismissAddAnotherPopup = dismissAddRelatedObjectPopup;
 
-    $(document).ready(function () {
-        $("a[data-popup-opener]").click(function (event) {
+    $(document).ready(function() {
+        $("a[data-popup-opener]").on('click', function(event) {
             event.preventDefault();
             opener.dismissRelatedLookupPopup(window, $(this).data("popup-opener"));
         });
-        $('body').on('click', '.related-widget-wrapper-link', function (e) {
+        $('body').on('click', '.related-widget-wrapper-link', function(e) {
             e.preventDefault();
             if (this.href) {
                 var event = $.Event('django:show-related', {href: this.href});
@@ -170,7 +160,7 @@
                 }
             }
         });
-        $('body').on('change', '.related-widget-wrapper select', function (e) {
+        $('body').on('change', '.related-widget-wrapper select', function(e) {
             var event = $.Event('django:update-related');
             $(this).trigger(event);
             if (!event.isDefaultPrevented()) {
@@ -178,7 +168,7 @@
             }
         });
         $('.related-widget-wrapper select').trigger('change');
-        $('body').on('click', '.related-lookup', function (e) {
+        $('body').on('click', '.related-lookup', function(e) {
             e.preventDefault();
             var event = $.Event('django:lookup-related');
             $(this).trigger(event);
