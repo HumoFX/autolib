@@ -273,13 +273,13 @@ class Book(models.Model):
     # Book
     booktitle = models.CharField(
         _("Название книги"),
-        max_length=50,
+        max_length=512,
         blank=True,
         help_text=_("Название книги, если цитируется только ее часть"),
     )
     edition = models.CharField(
         _("Издание"),
-        max_length=100,
+        max_length=512,
         blank=True,
         help_text=_(
             "Издание книги"
@@ -290,7 +290,7 @@ class Book(models.Model):
     # PhD Thesis
     school = models.CharField(
         _("Школа"),
-        max_length=50,
+        max_length=100,
         blank=True,
         help_text=_("Школа, в которой была написана диссертация"),
     )
@@ -298,7 +298,7 @@ class Book(models.Model):
     # Proceedings
     organization = models.CharField(
         _("Организция"),
-        max_length=50,
+        max_length=100,
         blank=True,
         help_text=_("Спонсор конференции"),
     )
@@ -306,8 +306,8 @@ class Book(models.Model):
     # Misc
     editors = models.ManyToManyField("Editor", related_name="entries", blank=True, verbose_name="Редакторы")
     publisher = models.ForeignKey(
-        "Publisher",
-        related_name="entries",
+        Publisher,
+        related_name="publisher",
         null=True,
         blank=True,
         on_delete=models.CASCADE,

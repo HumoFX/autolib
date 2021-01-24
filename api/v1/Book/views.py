@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core.files.storage import default_storage
 from django.core.signals import request_started, request_finished
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
@@ -11,6 +12,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .imports import import_process
 from .models import Book, Category, UDC
 from rest_framework import generics, permissions, viewsets, status
 from .serializers import BookSerializer, CategorySerializer, UDCSerializer, BookSerpy, BookDetailSerializer
@@ -98,6 +100,19 @@ class BookUDCListAPIView(generics.ListAPIView):
                                        university=self.request.user.university_id.id).prefetch_related('university',
                                                                                                        'udc', 'authors')
         return queryset
+
+
+@api_view(["POST"])
+@csrf_exempt
+def custom_upload_csv(request):
+    if request.method == "POST":
+        print(request)
+        file = request.FILES["file"]
+        print(file)
+        file_name = default_storage.save(file.name, file)
+        return HttpResponse(import_process(file_name))
+    return HttpResponse(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 # ADMIN VIEW
 

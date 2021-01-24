@@ -68,7 +68,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'silk.middleware.SilkyMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -130,7 +130,7 @@ TEMPLATES = [
         },
     },
 ]
-# WSGI_APPLICATION = 'elib.wsgi.application'
+WSGI_APPLICATION = 'elib.wsgi.application'
 ACCOUNT_ACTIVATION_DAYS = 7
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Database
@@ -155,16 +155,16 @@ DATABASES = {
 }
 REST_FRAMEWORK = {
     # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated'
+    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 30
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    # 'PAGE_SIZE': 30
 }
 
 # Password validation
@@ -264,7 +264,7 @@ EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_HOST_USER = 'rasulganiyev1999@gmail.com'
 EMAIL_HOST_PASSWORD = 'mSfUv4O9CgRXczEK'
 
-ASGI_APPLICATION = 'elib.routing.application'
+# ASGI_APPLICATION = 'elib.routing.application'
 
 JAZZMIN_SETTINGS = {
     # title of the window

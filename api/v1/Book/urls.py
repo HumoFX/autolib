@@ -14,5 +14,6 @@ urlpatterns = [
     path('udc/list/', UDCListAPIView.as_view()),
     path('udc/<int:id>/', UDCChildrenListAPIView.as_view()),
     path('udc/<udc_id>/books/', BookUDCListAPIView.as_view()),
+    path('file/', custom_upload_csv)
 
 ]
