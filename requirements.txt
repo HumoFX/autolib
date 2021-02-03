@@ -90,7 +90,7 @@ pytz==2021.1
 PyYAML==5.4.1
 rcssmin==1.0.6
 regex==2020.11.13
-requests==2.25.1
+requests==2.24.0
 rsa==4.7
 sentry-sdk==0.19.5
 serpy==0.3.1
