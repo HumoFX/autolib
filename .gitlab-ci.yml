@@ -13,7 +13,7 @@ variables:
 
 before_script:
   - apk add --update py-pip &&
-      pip install docker-compose
+      pip install docker-compose && sudo apt-get install gcc
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
 
 build:
