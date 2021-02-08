@@ -40,4 +40,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=db
+<<<<<<< HEAD
       - DB_PORT=5432
+=======
+      - DB_PORT=5432
+>>>>>>> 4e7aa82a57785627acdaef2487dc436ebbdf6723
