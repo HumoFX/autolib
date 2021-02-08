@@ -10,7 +10,7 @@ variables:
 
 stages:
   - build
-  - release
+  - deploy
 
 build:
   stage: build
@@ -20,22 +20,11 @@ build:
     - docker push $CONTAINER_TEST_IMAGE
 
 release:
-  stage: release
+  stage: deploy
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - docker pull $CONTAINER_TEST_IMAGE
     - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
     - docker push $CONTAINER_RELEASE_IMAGE
-  only:
-    - master
-
-pages:
-  stage: release
-  script:
-    - echo "Release"
-  artifacts:
-    paths:
-      - public
-    expire_in: 30 days
   only:
     - master
