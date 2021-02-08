@@ -32,10 +32,7 @@ release:
 pages:
   stage: release
   script:
-    - mkdir -p public/coverage
-    - mv htmlcov/* public/coverage
-    - mkdir -p public/docs
-    - mv -v docs/_build/html/* public/docs
+    - echo "Release"
   artifacts:
     paths:
       - public
