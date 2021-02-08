@@ -23,8 +23,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 from controlcenter.views import controlcenter
 
 
-# def trigger_error(request):
-#     division_by_zero = 1 / 0
+def trigger_error(request):
+    division_by_zero = 1 / 0
 
 
 urlpatterns = [

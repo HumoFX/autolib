@@ -1,7 +1,19 @@
 version: "3.8"
 
 services:
+  nginx:
+    image: nginx:1.19.6
+    ports:
+      - 80:80
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/sites-available/autolib.conf
+      - ./static:/static
+    depends_on:
+      - web
+
   db:
+    restart: always
     image: postgres
     environment:
       - POSTGRES_DB=${DB_NAME}
@@ -10,12 +22,11 @@ services:
     volumes:
       - /private/var/lib/postgresql/data:/var/lib/postgresql/data
       - .:/code
-    cpu_count: 2
-    cpuset: "0-1"
-    cpus: 2.00
 
 
   web:
+    restart: always
+    image: autolib:latest
     build: .
     command: sh run.sh
     volumes:
@@ -30,6 +41,3 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=db
       - DB_PORT=5432
-    cpu_count: 2
-    cpuset: "2-3"
-    cpus: 2.00
