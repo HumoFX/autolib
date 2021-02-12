@@ -38,7 +38,9 @@ from .models import (
     Publisher,
     Collection,
     AuthorEntryRank,
-    Language
+    Language,
+    Department,
+    Discipline
 )
 
 from django.core.paginator import Paginator
@@ -551,8 +553,8 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
     # date_hierarchy = "publication_date"
     form = make_ajax_form(Book, {
         # fieldname: channel_name
-        'udc': 'udc',
-        'udc_new': 'udc_new',
+        # 'udc': 'udc',
+        # 'udc_new': 'udc_new',
         'editors': 'editors',
         'journal': 'journal',
         'publisher': 'publisher',
@@ -573,7 +575,7 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
             },
         ),
         ("Идентификаторы", {"fields": ("doi", "issn", "pmid", "inventory_number", "isbn", "isbn2")}),
-        ("Книжные поля", {"fields": ("booktitle", "edition", "chapter", "udc", "udc_new", 'copyright_mark')}),
+        ("Книжные поля", {"fields": ("booktitle", "edition", "chapter", "udc_new", 'copyright_mark')}),
         ("Кандидатская диссертация", {"fields": ("school",)}),
         ("Труды", {"fields": ("organization",)}),
         (
@@ -586,6 +588,9 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
             {
                 "fields": (
                     ("printed_book", "e_book", "special_books"),
+                    "faculty",
+                    "department",
+                    "discipline",
                     "img", "file",
                     "key_words",
                     "quantity", "real_time_count",
@@ -598,13 +603,14 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
         )
     )
     inlines = (AuthorEntryRankInline, LibraryStorageEntryInline)
-    list_display = ("title", "first_author", "type", "publication_date", "journal")
+    list_display = ("title", "first_author", "type", "publication_date")
     list_filter = ("publication_date", "journal", "authors", "type")
     list_per_page = 100
     list_select_related = True
-    ordering = ("-publication_date",)
-    raw_id_fields = ("authors", "crossref")
-    search_fields = ("title",)
+    ordering = ("-created",)
+    raw_id_fields = ("authors", "crossref",)
+    search_fields = ("title", "faculty")
+    autocomplete_fields = ("department", "udc_new", "discipline", "faculty")
 
     # save_as = True
     # save_on_top = True
@@ -613,7 +619,7 @@ class EntryAdmin(BookAdmin, admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         university = request.user.university_id
         obj.university = university
-        print(obj)
+        obj.librarian = request.user
         obj.save()
 
 
@@ -626,6 +632,16 @@ class CollectionAdmin(admin.ModelAdmin):
     raw_id_fields = ("entries",)
 
 
+class DepartmentAdmin(admin.ModelAdmin):
+    search_fields = ["name", ]
+
+
+class DisciplineAdmin(admin.ModelAdmin):
+    search_fields = ["name", ]
+
+
+admin.site.register(Department, DepartmentAdmin)
+admin.site.register(Discipline, DisciplineAdmin)
 admin.site.register(LibraryStorageEntry)
 admin.site.register(LibraryStorage, LibraryStorageAdmin)
 admin.site.register(Language)

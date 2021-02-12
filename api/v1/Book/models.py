@@ -140,6 +140,22 @@ class Publisher(AbstractEntity):
         verbose_name_plural = _("Издатели")
 
 
+class Department(AbstractEntity):
+    """University Department"""
+
+    class Meta:
+        verbose_name = _("Кафедра")
+        verbose_name_plural = _("Кафедры")
+
+
+class Discipline(models.Model):
+    name = models.CharField(_("Наименование"), max_length=150)
+
+    class Meta:
+        verbose_name = _("Дисциплина")
+        verbose_name_plural = _("Дисциплины")
+
+
 class UDC(MPTTModel):
     """Universal Decimal Classification"""
     udc = models.CharField(max_length=64, verbose_name='Код УДК')
@@ -147,7 +163,6 @@ class UDC(MPTTModel):
     description = models.TextField(verbose_name='Описание', null=True, blank=True)
     parent = TreeForeignKey('self', null=True, default="", blank=True, related_name='children',
                             on_delete=models.CASCADE, verbose_name='Родительский удк')
-
 
     class Meta:
         verbose_name = _("УДК")
@@ -195,11 +210,17 @@ class Book(models.Model):
                                 help_text="Универасальная "
                                           "десятичная "
                                           "классификация")
-    copyright_mark = models.ForeignKey(CopyrightMark, on_delete=models.CASCADE, verbose_name="Авторский знак", null=True, blank=True)
+    copyright_mark = models.ForeignKey(CopyrightMark, on_delete=models.CASCADE, verbose_name="Авторский знак",
+                                       null=True, blank=True)
     key_words = models.TextField(verbose_name="Ключевые слова", default='', blank=True)
     img = models.ImageField(upload_to='img/books', verbose_name='Обложка(Фото)', null=True)
     university = models.ForeignKey(University, on_delete=models.CASCADE, verbose_name='Университет',
                                    blank=False)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, verbose_name='Факультет', blank=True, null=True)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name='Кафедра', blank=True, null=True)
+    discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE, verbose_name='Дисциплина',
+                                   blank=True, null=True)
+    librarian = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.SET_NULL)
     date_get = models.DateField(auto_now_add=False, verbose_name='Дата получения', null=True)
     created = models.DateField(auto_now_add=True, )
 
