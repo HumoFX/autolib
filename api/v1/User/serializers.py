@@ -47,8 +47,10 @@ class UserSerializer(serializers.ModelSerializer):
             'is_active',
         ]
 
-    def to_representation(self, instance):
+    def to_representation(self, instance:Profile):
         response = super(UserSerializer, self).to_representation(instance)
+        response['university_name'] = instance.university_id.name
+        response['faculty_name'] = instance.faculty.name
         if instance.avatar:
             response['avatar'] = instance.avatar.url
         return response
