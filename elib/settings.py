@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 # encoding: utf-8
 import datetime
 import os
-from django.utils.translation import ugettext_lazy as _
 
+import django.db.models
+from django.urls import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 
 from datetime import timedelta
 
@@ -36,7 +38,7 @@ INSTALLED_APPS = [
     'data_wizard',
     'data_wizard.sources',
     'controlcenter',
-    'jazzmin',
+    # 'jazzmin',
     'serpy',
     'djoser',
     'ajax_select',
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
+    'apps.user',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -55,12 +58,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
-    'django_twilio',
     'notifications',
-    'api.v1.University',
-    'api.v1.User',
-    'api.v1.Book',
-    'api.v1.Order',
+    'apps.order',
+    'apps.book',
+    'apps.university',
+    'apps.label',
     'drf_spectacular',
 ]
 
@@ -90,7 +92,7 @@ MIDDLEWARE = [
 DATA_WIZARD = {
     'BACKEND': 'data_wizard.backends.threading',
     'LOADER': 'data_wizard.loaders.FileLoader',
-    'IDMAP': 'data_wizard.idmap.never',   # 'data_wizard.idmap.existing' in 2.0
+    'IDMAP': 'data_wizard.idmap.never',  # 'data_wizard.idmap.existing' in 2.0
     'AUTHENTICATION': 'rest_framework.authentication.SessionAuthentication',
     'PERMISSION': 'rest_framework.permissions.IsAdminUser',
 }
@@ -124,9 +126,9 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'loaders': [
-                'django.template.loaders.filesystem.Loader',
                 # 'admin_tools.template_loaders.Loader',
                 'django.template.loaders.app_directories.Loader',
+                'django.template.loaders.filesystem.Loader',
             ],
         },
     },
@@ -155,16 +157,26 @@ DATABASES = {
     }
 }
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework_datatables.renderers.DatatablesRenderer',
+    ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework_datatables.filters.DatatablesFilterBackend',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework_datatables.pagination.DatatablesLimitOffsetPagination',
     'PAGE_SIZE': 30
 }
 
@@ -186,7 +198,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'User.Profile'
+AUTH_USER_MODEL = 'user.Profile'
 
 # AUTHENTICATION_BACKENDS = 'django.contrib.auth.backends.ModelBackend'
 # Internationalization
@@ -209,9 +221,13 @@ USE_TZ = True
 DATA_UPLOAD_MAX_MEMORY_SIZE = 102400000
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
 STATIC_URL = '/static/'
-# STATICFILES_URL = '/staticfiles/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -284,7 +300,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "Autolib",
 
     # The model admin to search from the search bar, search bar omitted if excluded
-    "search_model": "Book.Book",
+    "search_model": "book.Book",
 
     # Field name on user model that contains avatar image
     "user_avatar": None,
@@ -297,7 +313,7 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
 
         # Url that gets reversed (Permissions can be added)
-        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
 
         # external url that opens in a new window (Permissions can be added)
         {"name": _("Statistics"), "url": "http://127.0.0.0:8000/admin/dashboard/mydash", "new_window": False},
@@ -306,7 +322,7 @@ JAZZMIN_SETTINGS = {
         {"model": "auth.User"},
 
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "Book"},
+        {"app": "book"},
     ],
 
     #############
@@ -449,3 +465,7 @@ CONTROLCENTER_DASHBOARDS = (
 #
 # TWILIO_ACCOUNT_SID = {TW}
 # TWILIO_AUTH_TOKEN = {}
+LOGIN_REDIRECT_URL = reverse_lazy('user:index')
+LOGOUT_REDIRECT_URL = reverse_lazy('user:login')
+LOGIN_URL = reverse_lazy('user:login')
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

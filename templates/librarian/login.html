@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+{% load static %}
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="author" content="Online Service Group">
+    <title>Авторизация</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'app-assets/images/ico/favicon.ico' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/vendors.min.css' %}">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap-extended.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/colors.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/components.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/dark-layout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/semi-dark-layout.css' %}">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/colors/palette-gradient.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/authentication.css' %}">
+    <!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/login.css' %}?v=12">
+    <!-- END: Custom CSS-->
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern semi-dark-layout 1-column  navbar-floating footer-static bg-full-screen-image  blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column" data-layout="semi-dark-layout">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section class="row flexbox-container">
+                    <div class="col-xl-8 col-11 d-flex justify-content-center">
+                        <div class="card bg-authentication rounded-0 mb-0" style="position: relative;">
+                            <div class="row m-0">
+                                <div class="col-lg-6 text-center">
+                                    <div class="login-banner">
+                                        <img src="{% static 'app-assets/images/pages/login.png' %}" alt="branding logo">
+                                        <div class="admininfo">
+                                            <span>Админ: <a href="tel:+998 71 239-13-79">+998 71 239-13-79</a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-12 p-0">
+                                    <div class="card rounded-0 mb-0 p-2">
+                                        <div class="card-header pb-1 pt-1">
+                                            <div class="card-title login-title">
+                                                <a class="login-logo" href="https://autolib.uz" target="_blank">
+                                                    <img src="{% static 'assets/images/logo.png' %}" alt="">
+                                                </a>
+                                                <h4 class="mb-0">ВХОД В ПАНЕЛЬ <br/><span style="color: #ed2553">AUTOLIB</span></h4>
+                                            </div>
+                                        </div>
+                                        {% if form.errors %}
+                                            <div class="text-danger text-center">
+                                                <p class="px-2">Введен неверный логин или пароль</p>
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="card-content">
+                                            <div class="card-body pt-1" style="padding-bottom: 8px;">
+                                                <form action="{% url 'user:login' %}" method="post">
+                                                    {% csrf_token %}
+
+                                                    {% if form.username.errors %}
+                                                        <div class="text-danger">
+                                                            {{ form.username.errors }}
+                                                        </div>
+                                                    {% endif %}
+
+                                                    <fieldset class="form-label-group form-group position-relative has-icon-left">
+                                                        <input type="text" name="{{ form.username.name }}" value="{% if form.username.value %}{{ form.username.value }}{% endif %}" class="form-control" id="username" placeholder="Пользователь" required>
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-user"></i>
+                                                        </div>
+                                                        <label for="username">Пользователь</label>
+                                                    </fieldset>
+
+                                                    {% if form.pwd.errors %}
+                                                        <div class="text-danger">
+                                                            {{ form.pwd.errors }}
+                                                        </div>
+                                                    {% endif %}
+
+                                                    <fieldset class="form-label-group position-relative has-icon-left">
+                                                        <input type="password" name="{{ form.password.name }}" class="form-control" id="password" placeholder="Пароль" required>
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-lock"></i>
+                                                        </div>
+                                                        <label for="password">Пароль</label>
+                                                    </fieldset>
+
+                                                    <div class="d-flex justify-content-center">
+                                                        <button type="submit" class="btn btn-primary">Вход в систему</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="login-footer">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="developer">
+                                <span>Разработка: <a href="https://autolib.uz" target="_blank" style="font-weight: 500;">Autolib LLC</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+    <!-- BEGIN: Vendor JS-->
+    <script src="{% static 'app-assets/vendors/js/vendors.min.js' %}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{% static 'app-assets/js/core/app-menu.js' %}"></script>
+    <script src="{% static 'app-assets/js/core/app.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/components.js' %}"></script>
+    <!-- END: Theme JS-->
+
+</body>
+<!-- END: Body-->
+</html>

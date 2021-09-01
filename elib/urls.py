@@ -28,7 +28,8 @@ def trigger_error(request):
 
 
 urlpatterns = [
-
+    path('user/', include('apps.user.urls')),
+    path('book/', include('apps.book.urls')),
     # sentry_sdk
     path('sentry-debug/', trigger_error),
 
@@ -39,7 +40,6 @@ urlpatterns = [
     # Optional UI:
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-
     # path to our account's app endpoints
     path('auth/', include('djoser.urls')),
     path('admin/', admin.site.urls),

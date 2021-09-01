@@ -1,8 +1,7 @@
 from controlcenter import Dashboard, widgets
-from django.db.models import Sum, Count
-from mptt.admin import DraggableMPTTAdmin, MPTTModelAdmin
+from django.db.models import Count
 
-from api.v1.Book.models import *
+from apps.book.models import *
 
 
 class BookItemList(widgets.ItemList):

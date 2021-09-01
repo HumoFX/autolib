@@ -1,0 +1,857 @@
+{% extends 'librarian/base.html' %}
+{% load static %}
+{% block content %}
+        <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- BEGIN: Book form-->
+                <div class="col-xl-10 col-md-12 col-sm-12">
+                  <div class="card">
+                      <div class="card-content">
+                          <div class="card-body">
+                              <h4 class="card-title">Изменить книгу</h4>
+                          </div>
+                          <div class="card-body">
+                              <div class="nav-vertical">
+                                  <ul class="nav nav-tabs nav-left flex-column pr-4" role="tablist">
+                                      <li class="nav-item">
+                                          <a class="nav-link active font-medium-2" id="baseVerticalLeft-tab1" data-toggle="tab" aria-controls="tabVerticalLeft1" href="#tabVerticalLeft1" role="tab" aria-selected="true">Основные поля публикации</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link font-medium-2" id="baseVerticalLeft-tab2" data-toggle="tab" aria-controls="tabVerticalLeft2" href="#tabVerticalLeft2" role="tab" aria-selected="false">Идентификаторы</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link font-medium-2" id="baseVerticalLeft-tab3" data-toggle="tab" aria-controls="tabVerticalLeft3" href="#tabVerticalLeft3" role="tab" aria-selected="false">Книжные поля</a>
+                                      </li>
+                                      <li class="nav-item">
+                                        <a class="nav-link font-medium-2" id="baseVerticalLeft-tab4" data-toggle="tab" aria-controls="tabVerticalLeft4" href="#tabVerticalLeft4" role="tab" aria-selected="false">Кандидатская диссертация</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link font-medium-2" id="baseVerticalLeft-tab5" data-toggle="tab" aria-controls="tabVerticalLeft5" href="#tabVerticalLeft5" role="tab" aria-selected="false">Труды</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link font-medium-2" id="baseVerticalLeft-tab6" data-toggle="tab" aria-controls="tabVerticalLeft6" href="#tabVerticalLeft6" role="tab" aria-selected="false">Разное</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link font-medium-2" id="baseVerticalLeft-tab7" data-toggle="tab" aria-controls="tabVerticalLeft7" href="#tabVerticalLeft7" role="tab" aria-selected="false">Перекрестные ссылки</a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link font-medium-2" id="baseVerticalLeft-tab8" data-toggle="tab" aria-controls="tabVerticalLeft8" href="#tabVerticalLeft8" role="tab" aria-selected="false">Дополнительная информация</a>
+                                  </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link font-medium-2" id="baseVerticalLeft-tab9" data-toggle="tab" aria-controls="tabVerticalLeft9" href="#tabVerticalLeft9" role="tab" aria-selected="false">Авторский рейтинг</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link font-medium-2" id="baseVerticalLeft-tab10" data-toggle="tab" aria-controls="tabVerticalLeft10" href="#tabVerticalLeft10" role="tab" aria-selected="false">Хранилище</a>
+                                </li>
+                                  </ul>
+                                  <div class="tab-content">
+                                      <div class="tab-pane active" id="tabVerticalLeft1" role="tabpanel" aria-labelledby="baseVerticalLeft-tab1">
+                                        <div class="card">
+                                              <div class="card-body pt-1">
+                                                  <form class="form form-horizontal">
+                                                      <div class="form-body">
+                                                          <div class="row">
+                                                              <div class="col-12">
+                                                                  <div class="form-group row">
+                                                                      <div class="col-md-3">
+                                                                          <span class="text-bold-600">Характер документа</span>
+                                                                      </div>
+                                                                      <div class="col-md-7">
+                                                                        <div class="form-group d-flex">
+                                                                          <select class="select2 form-control">
+                                                                              <option value="square">Square</option>
+                                                                              <option value="rectangle">Rectangle</option>
+                                                                              <option value="rombo">Rombo</option>
+                                                                              <option value="romboid">Romboid</option>
+                                                                              <option value="trapeze">Trapeze</option>
+                                                                              <option value="traible">Triangle</option>
+                                                                              <option value="polygon">Polygon</option>
+                                                                          </select>
+                                                                        </div>
+                                                                      </div>
+                                                                      <button class="btn btn-icon btn-flat-warning mb-1 waves-effect waves-light" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-pencil"></i></button>
+                                                                      <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Vertically Centered</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <p>Croissant jelly-o halvah chocolate sesame snaps. Brownie caramels candy canes chocolate cake
+                                                                                        marshmallow icing lollipop I love. Gummies macaroon donut caramels biscuit topping danish.
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Accept</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
+                                                              </div>
+                                                              <div class="col-12">
+                                                                  <div class="form-group row">
+                                                                      <div class="col-md-3">
+                                                                          <span class="text-bold-600">Заглавие</span>
+                                                                      </div>
+                                                                      <div class="col-md-7">
+                                                                          <input type="text" id="title" class="form-control" name="title" placeholder="">
+                                                                          </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="col-12">
+                                                                  <div class="form-group row d-flex">
+                                                                      <div class="col-md-3">
+                                                                          <span class="text-bold-600">Журнал</span>
+                                                                      </div>
+                                                                      <div class="col-md-7">
+                                                                          <input type="text" id="journal" class="form-control" name="journal" placeholder="">
+                                                                      </div>
+                                                                      <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="col-12">
+                                                                  <div class="form-group row">
+                                                                      <div class="col-md-3">
+                                                                          <span class="text-bold-600">Том</span>
+                                                                      </div>
+                                                                      <div class="col-md-7">
+                                                                          <input type="number" id="volume" class="form-control" name="volume" placeholder="">
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-3">
+                                                                        <span class="text-bold-600">Страницы</span>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        <input type="text" id="pages" class="form-control" name="pages" placeholder="">
+                                                                    </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-3">
+                                                                        <span class="text-bold-600">Язык</span>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                      <div class="form-group d-flex">
+                                                                        <select class="select2 form-control">
+                                                                            <option value="square">Square</option>
+                                                                            <option value="rectangle">Rectangle</option>
+                                                                            <option value="rombo">Rombo</option>
+                                                                            <option value="romboid">Romboid</option>
+                                                                            <option value="trapeze">Trapeze</option>
+                                                                            <option value="traible">Triangle</option>
+                                                                            <option value="polygon">Polygon</option>
+                                                                        </select>
+
+                                                                      </div>
+
+                                                                    </div>
+                                                                    <button class="btn btn-icon btn-flat-warning mb-1 waves-effect waves-light" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-pencil"></i></button>
+                                                                    <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-3">
+                                                                        <span class="text-bold-600">Дата издания *</span>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        <input type="date" id="date" class="form-control" name="date" placeholder="Дата издания">
+                                                                    </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="col-12">
+                                                                <div class="form-group row">
+                                                                    <div class="col-md-3">
+                                                                        <span class="text-bold-600">Дата частичной публикации?</span>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        <fieldset>
+                                                                            <label>
+                                                                                <input type="checkbox" value="">
+                                                                                Отметьте это, если дата публикации не указана (например, если действителен только год)
+                                                                            </label>
+                                                                        </fieldset>
+                                                                    </div>
+                                                                </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft2" role="tabpanel" aria-labelledby="baseVerticalLeft-tab2">
+                                        <div class="card">
+                                          <div class="card-body pt-1">
+                                              <form class="form form-horizontal">
+                                                  <div class="form-body">
+                                                      <div class="row">
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">DOI</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="text" id="DOI" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Идентификатор цифрового объекта этого ресурса</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">ISSN</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="text" id="ISSN" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Международный стандартный серийный номер</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">PMID</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                      <fieldset class="form-group m-0">
+                                                                        <input type="text" id="PMID" class="form-control" placeholder="">
+                                                                        <p class="m-0"><small>Pubmed ID</small></p>
+                                                                    </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Инвентарный номер</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="number" id="Inventory-number" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Инвертизационные номера, разделенные запятыми или двойным дефисом</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">ISBN</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                  <fieldset class="form-group m-0">
+                                                                    <input type="text" id="ISBN" class="form-control" placeholder="">
+                                                                    <p class="m-0"><small>Международный стандартный номер книги</small></p>
+                                                                </fieldset>
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">ISBN2</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="text" id="ISBN2" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Международный стандартный номер книги</small></p>
+                                                                  </fieldset>
+                                                                </div>
+                                                            </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft3" role="tabpanel" aria-labelledby="baseVerticalLeft-tab3">
+                                        <div class="card">
+                                          <div class="card-body pt-1">
+                                              <form class="form form-horizontal">
+                                                  <div class="form-body">
+                                                      <div class="row">
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Название книги</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="text" id="book-name" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Название книги, если цитируется только ее часть</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Издание</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="text" id="edition" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Издание книги</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Количество глав</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                        <input type="number" id="amount-chapters" class="form-control" placeholder="">
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">УДК *</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <div class="form-group">
+                                                                      <select class="select2 form-control">
+                                                                          <option value="square">Square</option>
+                                                                          <option value="rectangle">Rectangle</option>
+                                                                          <option value="rombo">Rombo</option>
+                                                                          <option value="romboid">Romboid</option>
+                                                                          <option value="trapeze">Trapeze</option>
+                                                                          <option value="traible">Triangle</option>
+                                                                          <option value="polygon">Polygon</option>
+                                                                      </select>
+                                                                    </div>
+                                                                  </div>
+                                                                  <button class="btn btn-icon btn-flat-warning mb-1 waves-effect waves-light" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-pencil"></i></button>
+                                                                  <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                                  <button class="btn btn-icon btn-flat-danger mb-1 waves-effect waves-light"><i class="fa fa-times"></i></button>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Авторский знак</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                  <div class="form-group">
+                                                                    <select class="select2 form-control">
+                                                                        <option value="square">Square</option>
+                                                                        <option value="rectangle">Rectangle</option>
+                                                                        <option value="rombo">Rombo</option>
+                                                                        <option value="romboid">Romboid</option>
+                                                                        <option value="trapeze">Trapeze</option>
+                                                                        <option value="traible">Triangle</option>
+                                                                        <option value="polygon">Polygon</option>
+                                                                    </select>
+                                                                  </div>
+                                                                </div>
+                                                                <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                                <button class="btn btn-icon btn-flat-danger mb-1 waves-effect waves-light"><i class="fa fa-times"></i></button>
+                                                            </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft4" role="tabpanel" aria-labelledby="baseVerticalLeft-tab4">
+                                        <div class="card">
+                                          <div class="card-body pt-1">
+                                              <form class="form form-horizontal">
+                                                  <div class="form-body">
+                                                      <div class="row">
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Школа</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="text" id="school" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Школа, в которой была написана диссертация</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft5" role="tabpanel" aria-labelledby="baseVerticalLeft-tab5">
+                                        <div class="card">
+                                          <div class="card-body pt-1">
+                                              <form class="form form-horizontal">
+                                                  <div class="form-body">
+                                                      <div class="row">
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Организция</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="text" id="organization" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Спонсор конференции</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft6" role="tabpanel" aria-labelledby="baseVerticalLeft-tab6">
+                                        <div class="card">
+                                          <div class="card-body pt-1">
+                                              <form class="form form-horizontal">
+                                                  <div class="form-body">
+                                                      <div class="row">
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Редакторы</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                      <input type="text" id="redactor" class="form-control" placeholder="">
+                                                                  </div>
+                                                                  <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Издатель</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                      <input type="text" id="publisher" class="form-control" placeholder="">
+                                                                  </div>
+                                                                  <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Адрес</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                        <input type="number" id="address" class="form-control" placeholder="">
+                                                                        <p class="m-0"><small>Адрес издателя</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Аннотация</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                  <fieldset class="form-group m-0"></fieldset>
+                                                                    <input type="text" id="annotation" class="form-control" placeholder="">
+                                                                    <p class="m-0"><small>Аннотация</small></p>
+                                                                  </fieldset>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Заметка</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                        <textarea class="form-control" id="notice" rows="5" placeholder=""></textarea>
+                                                                        <p class="m-0"><small>Разная дополнительная информация</small></p>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft7" role="tabpanel" aria-labelledby="baseVerticalLeft-tab7">
+                                        <div class="card">
+                                          <div class="card-body pt-1">
+                                              <form class="form form-horizontal">
+                                                  <div class="form-body">
+                                                      <div class="row">
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Связанные публикации</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <input type="text" id="related-publications" class="form-control" placeholder="">
+                                                                  </div>
+                                                                  <button class="btn btn-icon btn-flat-indigo mb-1 waves-effect waves-light"><i class="fa fa-search"></i></button>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft8" role="tabpanel" aria-labelledby="baseVerticalLeft-tab8">
+                                        <div class="card">
+                                          <div class="card-body pt-1">
+                                              <form class="form form-horizontal">
+                                                  <div class="form-body">
+                                                      <div class="row">
+                                                        <div class="pl-1 pb-1">
+                                                          <ul class="list-unstyled mb-0">
+                                                            <li class="d-inline-block mr-2">
+                                                                <fieldset>
+                                                                    <label class="font-medium-1">
+                                                                        <input type="checkbox" value="">
+                                                                        Печатная версия
+                                                                    </label>
+                                                                </fieldset>
+                                                            </li>
+                                                            <li class="d-inline-block mr-2">
+                                                              <fieldset>
+                                                                  <label class="font-medium-1">
+                                                                      <input type="checkbox" value="">
+                                                                      Электроная версия
+                                                                  </label>
+                                                              </fieldset>
+                                                            </li>
+                                                            <li class="d-inline-block mr-2">
+                                                              <fieldset>
+                                                                <label class="font-medium-1">
+                                                                    <input type="checkbox" value="">
+                                                                    Редкая книга
+                                                                </label>
+                                                              </fieldset>
+                                                            </li>
+                                                          </ul>
+                                                        </div>
+                                                        <div class="col-12">
+                                                          <div class="form-group row">
+                                                              <div class="col-md-3">
+                                                                  <span class="text-bold-600">Факультет</span>
+                                                              </div>
+                                                              <div class="col-md-7">
+                                                                <div class="form-group">
+                                                                  <select class="select2 form-control">
+                                                                      <option value="square">Square</option>
+                                                                      <option value="rectangle">Rectangle</option>
+                                                                      <option value="rombo">Rombo</option>
+                                                                      <option value="romboid">Romboid</option>
+                                                                      <option value="trapeze">Trapeze</option>
+                                                                      <option value="traible">Triangle</option>
+                                                                      <option value="polygon">Polygon</option>
+                                                                  </select>
+                                                                </div>
+                                                              </div>
+                                                              <button class="btn btn-icon btn-flat-warning mb-1 waves-effect waves-light"><i class="fa fa-pencil"></i></button>
+                                                              <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-3">
+                                                                <span class="text-bold-600">Кафедра</span>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                              <div class="form-group">
+                                                                <select class="select2 form-control">
+                                                                    <option value="square">Square</option>
+                                                                    <option value="rectangle">Rectangle</option>
+                                                                    <option value="rombo">Rombo</option>
+                                                                    <option value="romboid">Romboid</option>
+                                                                    <option value="trapeze">Trapeze</option>
+                                                                    <option value="traible">Triangle</option>
+                                                                    <option value="polygon">Polygon</option>
+                                                                </select>
+                                                              </div>
+                                                            </div>
+                                                            <button class="btn btn-icon btn-flat-warning mb-1 waves-effect waves-light"><i class="fa fa-pencil"></i></button>
+                                                            <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                      <div class="form-group row">
+                                                          <div class="col-md-3">
+                                                              <span class="text-bold-600">Дисциплина</span>
+                                                          </div>
+                                                          <div class="col-md-7">
+                                                            <div class="form-group">
+                                                              <select class="select2 form-control">
+                                                                  <option value="square">Square</option>
+                                                                  <option value="rectangle">Rectangle</option>
+                                                                  <option value="rombo">Rombo</option>
+                                                                  <option value="romboid">Romboid</option>
+                                                                  <option value="trapeze">Trapeze</option>
+                                                                  <option value="traible">Triangle</option>
+                                                                  <option value="polygon">Polygon</option>
+                                                              </select>
+                                                            </div>
+                                                          </div>
+                                                          <button class="btn btn-icon btn-flat-warning mb-1 waves-effect waves-light"><i class="fa fa-pencil"></i></button>
+                                                          <button class="btn btn-icon btn-flat-success mb-1 waves-effect waves-light"><i class="fa fa-plus"></i></button>
+                                                      </div>
+                                                    </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Обложка(Фото) *</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <p>На данный момент: <a href="#"></a> <br>Изменить: <button class="btn btn-outline-primary">Выберите файл</button></p>
+                                                                  </div>
+
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Файл</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <button class="btn btn-outline-primary">Выберите файл</button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Ключевые слова</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    <fieldset class="form-group m-0">
+                                                                        <textarea class="form-control" id="key-words" rows="3" placeholder=""></textarea>
+                                                                    </fieldset>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                          <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Количество *</span>
+                                                                  </div>
+                                                                  <div class="col-md-7">
+                                                                    <input type="number" id="amount" class="form-control" placeholder="" primary>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Количество книги на данный момент*</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                  <input type="number" id="amount-now" class="form-control" placeholder="" primary>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                          <div class="form-group row">
+                                                              <div class="col-md-3">
+                                                                  <span class="text-bold-600">Цена *</span>
+                                                              </div>
+                                                              <div class="col-md-7">
+                                                                <input type="number" id="price" class="form-control" placeholder="" primary>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-12">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-3">
+                                                                <span class="text-bold-600">Использовано *</span>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                              <input type="number" id="used" class="form-control" placeholder="" primary>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Рейтинг *</span>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                  <input type="number" id="rating" class="form-control" placeholder="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                          <div class="form-group row">
+                                                              <div class="col-md-3">
+                                                                  <span class="text-bold-600">Дата получения  *</span>
+                                                              </div>
+                                                              <div class="col-md-7">
+                                                                  <input type="date" id="receipt-edate" class="form-control" name="date" placeholder="">
+                                                              </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                  </div>
+                                              </form>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft9" role="tabpanel" aria-labelledby="baseVerticalLeft-tab9">
+                                        <div class="col-md-12 col-sm-12">
+                                          <div class="card">
+                                              <div class="card-content">
+                                                  <div class="card-body">
+                                                      <h4 class="card-title">Добавлено Авторский рейтинг</h4>
+                                                  </div>
+                                                  <div class="card-body">
+                                                      <form class="form">
+                                                          <div class="form-body">
+                                                            <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Author *</span>
+                                                                  </div>
+                                                                  <div class="col-md-9">
+                                                                    <div class="form-group">
+                                                                      <select class="select2 form-control">
+                                                                          <option value="square">Square</option>
+                                                                          <option value="rectangle">Rectangle</option>
+                                                                          <option value="rombo">Rombo</option>
+                                                                          <option value="romboid">Romboid</option>
+                                                                          <option value="trapeze">Trapeze</option>
+                                                                          <option value="traible">Triangle</option>
+                                                                          <option value="polygon">Polygon</option>
+                                                                      </select>
+                                                                    </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Ранг *</span>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                  <div class="form-group">
+                                                                    <input type="number" id="rating" class="form-control" placeholder="">
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                          </div>
+
+                                                          <div class="form-actions d-flex">
+                                                              <button type="submit" class="btn btn-danger ml-auto">Удалить</button>
+                                                          </div>
+                                                      </form>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      </div>
+                                      <div class="tab-pane" id="tabVerticalLeft10" role="tabpanel" aria-labelledby="baseVerticalLeft-tab10">
+                                        <div class="col-md-12 col-sm-12">
+                                          <div class="card">
+                                              <div class="card-content">
+                                                  <div class="card-body">
+                                                      <h4 class="card-title"> Добавлено Хранилище</h4>
+                                                  </div>
+                                                  <div class="card-body">
+                                                      <form class="form">
+                                                          <div class="form-body">
+                                                            <div class="col-12">
+                                                              <div class="form-group row">
+                                                                  <div class="col-md-3">
+                                                                      <span class="text-bold-600">Storage  *</span>
+                                                                  </div>
+                                                                  <div class="col-md-9">
+                                                                    <div class="form-group">
+                                                                      <select class="select2 form-control">
+                                                                          <option value="square">Square</option>
+                                                                          <option value="rectangle">Rectangle</option>
+                                                                          <option value="rombo">Rombo</option>
+                                                                          <option value="romboid">Romboid</option>
+                                                                          <option value="trapeze">Trapeze</option>
+                                                                          <option value="traible">Triangle</option>
+                                                                          <option value="polygon">Polygon</option>
+                                                                      </select>
+                                                                    </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+
+                                                          <div class="col-12">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-3">
+                                                                    <span class="text-bold-600">Количество книг *</span>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                  <div class="form-group">
+                                                                    <fieldset class="form-group m-0">
+                                                                      <input type="number" id="book-amounts" class="form-control" placeholder="">
+                                                                      <p class="m-0"><small>Количество книг в местах для хранения</small></p>
+                                                                  </fieldset>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                          </div>
+
+                                                          <div class="form-actions d-flex">
+                                                              <button type="submit" class="btn btn-danger ml-auto">Удалить</button>
+                                                          </div>
+                                                      </form>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+                <!-- END: Book form-->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block styles %}
+    <script src="{% static 'admin/js/autocomplete.js' %}"></script>
+    <link href="{% static 'ajax_select/css/ajax_select.css' %}" type="text/css" media="all" rel="stylesheet">
+    <script src="{% static 'ajax_select/js/bootstrap.js' %}"></script>
+    <script src="{% static 'ajax_select/js/ajax_select.js' %}"></script>
+{% endblock %}

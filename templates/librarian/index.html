@@ -1,0 +1,132 @@
+{% extends 'librarian/base.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/colors/palette-gradient.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/dashboard-analytics.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/card-analytics.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/plugins/tour/tour.css' %}">
+{% endblock %}
+{% block content %}
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <!-- Dashboard Analytics Start -->
+                <section id="dashboard-analytics">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex flex-column align-items-start pb-0">
+                                    <div class="avatar bg-rgba-primary p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-users text-primary font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700 mt-1">14.6тыс</h2>
+                                    <p class="mb-0">Зарегестрировано Пользователей</p>
+                                </div>
+                                <div class="card-content">
+                                    <div id="line-area-chart-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex flex-column align-items-start pb-0">
+                                    <div class="avatar bg-rgba-success p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-book-open text-success font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700 mt-1">97.5тыс</h2>
+                                    <p class="mb-0">Количество Книг</p>
+                                </div>
+                                <div class="card-content">
+                                    <div id="line-area-chart-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex flex-column align-items-start pb-0">
+                                    <div class="avatar bg-rgba-danger p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-shopping-cart text-danger font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700 mt-1">9.5тыс</h2>
+                                    <p class="mb-0">Количество Заказов</p>
+                                </div>
+                                <div class="card-content">
+                                    <div id="line-area-chart-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="card">
+                                <div class="card-header d-flex flex-column align-items-start pb-0">
+                                    <div class="avatar bg-rgba-warning p-50 m-0">
+                                        <div class="avatar-content">
+                                            <i class="feather icon-package text-warning font-medium-5"></i>
+                                        </div>
+                                    </div>
+                                    <h2 class="text-bold-700 mt-1">17.5тыс</h2>
+                                    <p class="mb-0">Новых Поступлений в Библиотеку</p>
+                                </div>
+                                <div class="card-content">
+                                    <div id="line-area-chart-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class="col-lg-6 col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Топовые книги</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="bar-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-lg-6 col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Column Chart</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div id="column-chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Dashboard Analytics end -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+{% endblock %}
+{% block script %}
+{#    <script src="{% static 'app-assets/vendors/js/vendors.min.js' %}"></script>#}
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="{% static 'app-assets/js/scripts/pages/dashboard-ecommerce.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/charts/chart-apex.js' %}"></script>
+{% endblock %}

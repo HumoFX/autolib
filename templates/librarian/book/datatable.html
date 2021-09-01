@@ -1,0 +1,199 @@
+{% extends 'librarian/base.html' %}
+{% load static %}
+
+{% block styles %}
+     <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/vendors.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/tables/datatable/datatables.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/file-uploaders/dropzone.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/tables/datatable/extensions/dataTables.checkboxes.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/colors/palette-gradient.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/plugins/file-uploaders/dropzone.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/data-list-view.css' %}">
+    <link rel="stylesheet" type="text/css" href="{%  static 'app-assets/css/plugins/forms/form-wizard.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-left mb-0">List View</h2>
+                            <div class="breadcrumb-wrapper col-12">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url 'user:index' %}">Главный</a>
+                                    </li>
+                                    <li class="breadcrumb-item"><a href="#">Data List</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">List View
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
+                    <div class="form-group breadcrum-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-settings"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Chat</a><a class="dropdown-item" href="#">Email</a><a class="dropdown-item" href="#">Calendar</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-body">
+                <section id=data-list-view" class="data-list-view-header">
+                    <div class="action-btns d-none">
+                        <div class="btn-dropdown mr-1 mb-1">
+                            <div class="btn-group dropdown actions-dropodown">
+                                <button type="button" class="btn btn-white px-1 py-1 dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#"><i class="feather icon-trash"></i>Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="feather icon-archive"></i>Archive</a>
+                                    <a class="dropdown-item" href="#"><i class="feather icon-file"></i>Print</a>
+                                    <a class="dropdown-item" href="#"><i class="feather icon-save"></i>Another Action</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table data-list-view">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Обложка</th>
+                                    <th width="300px">Заглавие</th>
+                                    <th>Авторы</th>
+                                    <th>УДК</th>
+                                    <th>Дата приема</th>
+                                    <th>Электронный вариант</th>
+                                    <th>Редкая книга</th>
+                                    <th>Язык</th>
+                                    <th>Опции</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for book in book_list %}
+                                <tr>
+                                    <td></td>
+                                    <td>{{ book.id }}</td>
+                                    <td class="product-img" ><img src="{{ book.img }}" alt=""></td>
+                                    <td class="product-name">{{ book.title.capitalize }}</td>
+                                    <td>{{ book.authors.first }}</td>
+                                    <td>{{ book.udc_new.udc }}</td>
+                                    <td>{{ book.date_get }}</td>
+                                    <td>{{ book.e_book }}</td>
+                                    <td>{{ book.special_books }}</td>
+                                    <td>{{ book.language }}</td>
+                                    <td class="product-action">
+                                        <span><a href="{% url 'book:book_detail' book.id %}"><i class="feather icon-edit"></i></a></span>
+                                        <span><i class="feather icon-trash"></i></span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="add-new-data-sidebar">
+                        <div class="overlay-bg"></div>
+                        <div class="add-new-data">
+                            <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
+                                <div>
+                                    <h4 class="text-uppercase">List View Data</h4>
+                                </div>
+                                <div class="hide-data-sidebar">
+                                    <i class="feather icon-x"></i>
+                                </div>
+                            </div>
+                            <div class="data-items pb-3">
+                                <div class="data-fields px-2 mt-3">
+                                    <div class="row">
+                                        <div class="col-sm-12 data-field-col">
+                                            <label for="data-name">Name</label>
+                                            <input type="text" class="form-control" id="data-name">
+                                        </div>
+                                        <div class="col-sm-12 data-field-col">
+                                            <label for="data-category"> Category </label>
+                                            <select class="form-control" id="data-category">
+                                                <option>Audio</option>
+                                                <option>Computers</option>
+                                                <option>Fitness</option>
+                                                <option>Appliance</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-12 data-field-col">
+                                            <label for="data-status">Order Status</label>
+                                            <select class="form-control" id="data-status">
+                                                <option>Pending</option>
+                                                <option>Canceled</option>
+                                                <option>Delivered</option>
+                                                <option>On Hold</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-12 data-field-col">
+                                            <label for="data-price">Price</label>
+                                            <input type="text" class="form-control" id="data-price">
+                                        </div>
+                                        <div class="col-sm-12 data-field-col data-list-upload">
+                                            <form action="#" class="dropzone dropzone-area" id="dataListUpload">
+                                                <div class="dz-message">Upload Image</div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
+                                <div class="add-data-btn">
+                                    <button class="btn btn-primary">Add Data</button>
+                                </div>
+                                <div class="cancel-data-btn">
+                                    <button class="btn btn-outline-danger">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- add new sidebar ends -->
+                </section>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block script %}
+{#    <script src="{% static 'app-assets/vendors/js/tables/datatable/pdfmake.min.js' %}""></script>#}
+    <script src="{% static 'app-assets/vendors/js/vendors.min.js' %}"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="{% static 'app-assets/vendors/js/extensions/dropzone.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/datatables.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/datatables.buttons.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/dataTables.select.min.js' %}"></script>
+    <script src="{% static 'app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js' %}"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="{% static 'app-assets/js/core/app-menu.js' %}"></script>
+    <script src="{% static 'app-assets/js/core/app.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/components.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/ui/data-list-view.js' %}"></script>
+    
+
+    <script>
+        $(document).ready(function () {
+            $('#myStaticDatatable').DataTable();
+        });
+    </script>
+{% endblock %}

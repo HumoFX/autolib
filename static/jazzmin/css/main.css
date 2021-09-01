@@ -8,6 +8,11 @@ div.inline-related {
     padding: 5px;
 }
 
+.help-block ul {
+    margin: 10px 0 0 15px;
+    padding: 0;
+}
+
 .table tr.form-row {
     display: table-row;
 }
@@ -36,6 +41,10 @@ td.delete input {
 
 tr.djn-tr>.original {
     padding-left: 20px;
+}
+
+.hidden {
+    display: none;
 }
 
 /* Checkbox selection table header */
@@ -799,4 +808,20 @@ iframe.related-iframe {
 
 .control-sidebar {
     overflow: hidden scroll;
+}
+
+/* tweaks to allow bootstrap styling */
+body.jazzmin-login-page {
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.callout {
+    color: black;
 }
