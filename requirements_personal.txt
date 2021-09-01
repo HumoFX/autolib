@@ -19,7 +19,7 @@ oauthlib==3.1.0
 odfpy==1.4.1
 openpyxl==3.0.3
 Pillow==7.1.2
-Pygments==2.6.1
+Pygments==2.7.4
 pymarc==4.0.0
 python3-openid==3.1.0
 pytz==2019.3
